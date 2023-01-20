@@ -5,12 +5,14 @@
   --font-family-main: "press-start-2p";
 
   /* Colors */
+  --color-game:       var(--color-green-0);
   --color-background: var(--color-green-25);
   --color-fill:       var(--color-green-50);
   --color-border:     var(--color-green-50);
   --color-font:       var(--color-green-75);
 
   /* Sizes */
+  --size-game-width: calc((24px * 16) + 2rem);
   --size-tile: 24px;
 
   --size-border: 4px;

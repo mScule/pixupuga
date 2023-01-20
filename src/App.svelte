@@ -1,10 +1,10 @@
 <script>
-  import Grid from "./lib/components/Grid.svelte";
+  import Game from "./lib/components/Game.svelte";
 </script>
 
 <main>
   <h1>{"Sixteen bytes".toUpperCase()}</h1>
-  <Grid />
+  <Game />
 </main>
 
 <style>
