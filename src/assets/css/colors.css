@@ -1,0 +1,8 @@
+/* Contains all the base colors that are used in the config.css */
+
+:root {
+  --color-green-0:  #2b3c24;
+  --color-green-25: #48603f;
+  --color-green-50: #94a84d;
+  --color-green-75: #a4b854;
+}

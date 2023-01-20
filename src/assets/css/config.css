@@ -1,0 +1,22 @@
+/* Config for styles */
+
+:root {
+  /* Fonts */
+  --font-family-main: "press-start-2p";
+
+  /* Colors */
+  --color-background: var(--color-green-25);
+  --color-fill:       var(--color-green-50);
+  --color-border:     var(--color-green-50);
+  --color-font:       var(--color-green-75);
+
+  /* Sizes */
+  --size-tile: 24px;
+
+  --size-border: 4px;
+  --size-border-radius: 8px;
+
+  --size-buffer-small:  0.5rem;
+  --size-buffer-medium: 1rem;
+  --size-buffer-large:  4rem;
+}
