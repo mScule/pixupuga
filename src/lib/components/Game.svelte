@@ -3,18 +3,37 @@
   import Controls from "./Controls.svelte";
   import { createLevel } from "../game/LevelCreator";
 
-  let grid = createLevel({
-    groundSolid: 100,
-    wallSolid: 0,
-    collectableBox: 0,
-    collectableBitOne: 0,
-    collectableBitZero: 0,
-  });
+  const probabilities = {
+    groundSolid: 80,
+    wallSolid: 10,
+    collectableBox: 5,
+    collectableBitOne: 1,
+    collectableBitZero: 1,
+  };
+
+  let grid = createLevel(probabilities);
 </script>
 
 <section class="game">
+  <h1>{"16 BYTES"}</h1>
   <Display stacks={grid} />
-  <Controls />
+  <Controls
+    handleUp={() => {
+      console.log("Up");
+    }}
+    handleDown={() => {
+      console.log("Down");
+    }}
+    handleLeft={() => {
+      console.log("Left");
+    }}
+    handleRight={() => {
+      console.log("Right");
+    }}
+    handleAction={() => {
+      console.log("Action");
+    }}
+  />
 </section>
 
 <style>
@@ -26,11 +45,5 @@
     width: var(--size-game-width);
     border-radius: var(--size-border-radius);
     height: 100%;
-  }
-  :global(.game > *) {
-    margin-bottom: var(--size-buffer-medium);
-  }
-  :global(.game > *:last-child) {
-    margin-bottom: 0;
   }
 </style>

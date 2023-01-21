@@ -1,25 +1,31 @@
 <script lang="ts">
     import arrow from "../../assets/img/16x16/button/icon/arrow.png";
     import box   from "../../assets/img/16x16/button/icon/box.png";
+
+    export let handleUp = () => {};
+    export let handleDown = () => {};
+    export let handleLeft = () => {};
+    export let handleRight = () => {};
+    export let handleAction = () => {};
 </script>
 
 <nav>
   <div class="d-pad">
-    <button class="up">
+    <button class="up" on:click={handleUp}>
         <img  src={arrow} alt="Arrow up"/>
     </button>
-    <button class="down">
+    <button class="down" on:click={handleDown}>
         <img src={arrow} alt="Arrow down"/>
     </button>
-    <button class="left">
+    <button class="left" on:click={handleLeft}>
         <img src={arrow} alt="Arrow left"/>
     </button>
-    <button class="right">
+    <button class="right" on:click={handleRight}>
         <img src={arrow} alt="Arrow right"/>
     </button>
   </div>
 
-  <button>
+  <button on:click={handleAction}>
         <img src={box} alt="Use box" />
   </button>
 </nav>
@@ -79,7 +85,7 @@
     margin-top: calc((var(--size-control-button) / 1.2) - var(--size-control-button));
   }
 
-  img:active {
+  button:active > img {
     margin-top: 0;
   }
 </style>

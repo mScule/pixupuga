@@ -3,7 +3,6 @@
 </script>
 
 <main>
-  <h1>{"Sixteen Bytes"}</h1>
   <Game />
 </main>
 
