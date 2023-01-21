@@ -12,6 +12,9 @@
     div {
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+    }
+    h2 {
+        margin: 0;
     }
 </style>

@@ -14,6 +14,7 @@
   /* Sizes */
   --size-game-width: calc((24px * 16) + 2rem);
   --size-tile: 24px;
+  --size-control-button: 64px;
 
   --size-border: 4px;
   --size-border-radius: 0px;
@@ -21,4 +22,35 @@
   --size-buffer-small:  0.5rem;
   --size-buffer-medium: 1rem;
   --size-buffer-large:  4rem;
+
+  --size-h1: x-large;
+  --size-h2: larger;
+}
+
+@media only screen and (max-width: 470px) {
+  :root {
+    --size-game-width: 100%;
+    --size-tile: 16px;
+    --size-control-button: 48px;
+
+    --size-h1: large;
+    --size-h2: normal;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  :root {
+    --size-tile: 8px;
+    --size-control-button: 32px;
+
+    --size-h1: normal;
+    --size-h2: small;
+  }
+}
+
+@media only screen and (max-width: 230px) {
+  :root {
+    --size-h1: small;
+    --size-h2: smaller;
+  }
 }

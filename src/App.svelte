@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <h1>{"Sixteen bytes".toUpperCase()}</h1>
+  <h1>{"Sixteen Bytes"}</h1>
   <Game />
 </main>
 
@@ -12,5 +12,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
   }
 </style>

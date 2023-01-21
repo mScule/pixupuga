@@ -1,7 +1,23 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
 button {
     background-color: var(--color-fill);
     color:            var(--color-background);
     font-family:      var(--font-family-main);
     padding:          var(--size-buffer-small);
     border: solid var(--color-border) var(--size-border);
+}
+
+h1 {
+    font-size: var(--size-h1);
+}
+
+h2 {
+    font-size: var(--size-h2);
 }

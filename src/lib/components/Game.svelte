@@ -1,38 +1,36 @@
 <script>
-  import ScoreBoard from "./ScoreBoard.svelte";
-  import Grid from "./Grid.svelte";
-  import { initGrid, createLevel } from "../game/LevelCreator";
+  import Display from "./Display.svelte";
+  import Controls from "./Controls.svelte";
+  import { createLevel } from "../game/LevelCreator";
 
-  let grid = initGrid();
+  let grid = createLevel({
+    groundSolid: 100,
+    wallSolid: 0,
+    collectableBox: 0,
+    collectableBitOne: 0,
+    collectableBitZero: 0,
+  });
 </script>
 
-<section>
-  <ScoreBoard bits={0} boxes={20} />
-  <Grid stacks={grid} />
-  <button
-    on:click={() => {
-      grid = createLevel({
-        groundSolid: 100,
-        wallSolid: 0,
-        collectableBox: 0,
-        collectableBitOne: 0,
-        collectableBitZero: 0,
-      });
-    }}>Init</button>
+<section class="game">
+  <Display stacks={grid} />
+  <Controls />
 </section>
 
 <style>
   section {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     width: var(--size-game-width);
-    background-color: var(--color-game);
-    padding: var(--size-buffer-medium);
     border-radius: var(--size-border-radius);
+    height: 100%;
   }
-
-  section > * {
-    margin-top: var(--size-buffer-medium);
+  :global(.game > *) {
+    margin-bottom: var(--size-buffer-medium);
+  }
+  :global(.game > *:last-child) {
+    margin-bottom: 0;
   }
 </style>
