@@ -1,0 +1,7 @@
+button {
+    background-color: var(--color-fill);
+    color:            var(--color-background);
+    font-family:      var(--font-family-main);
+    padding:          var(--size-buffer-small);
+    border: solid var(--color-border) var(--size-border);
+}

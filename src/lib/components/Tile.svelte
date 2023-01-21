@@ -59,6 +59,7 @@
         break;
 
       case TileType.Void:
+        src = null;
         break;
     }
   }

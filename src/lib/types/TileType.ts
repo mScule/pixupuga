@@ -2,10 +2,13 @@ enum TileType {
   CollectableBitZero,
   CollectableBitOne,
   CollectableBox,
+
   GroundBox,
   GroundSolid,
+
   WallBox,
   WallSolid,
+
   Player,
   Void,
 }
