@@ -8,7 +8,7 @@ const upperLevel: number = 1;
 export function initGrid() {
   const grid = Array(gridArea);
   for (let i = 0; i < gridArea; i++) {
-    grid[i] = [TileType.Void];
+    grid[i] = [TileType.Void, TileType.Void];
   }
   return grid;
 }

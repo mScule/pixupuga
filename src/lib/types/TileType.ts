@@ -1,7 +1,6 @@
 enum TileType {
-  CollectableBitZero,
-  CollectableBitOne,
-  CollectableBox,
+  Void,
+  Player,
 
   GroundBox,
   GroundSolid,
@@ -9,8 +8,9 @@ enum TileType {
   WallBox,
   WallSolid,
 
-  Player,
-  Void,
+  CollectableBitOne,
+  CollectableBitZero,
+  CollectableBox,
 }
 
 export default TileType;

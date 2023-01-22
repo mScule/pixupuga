@@ -1,0 +1,15 @@
+Lower level elements:
+
+  Space: Void
+  s:     Solid ground
+  b:     Box
+
+Higher level elements:
+
+  Space: Void
+  s:     Solid wall
+  b:     Box wall
+  p:     Player
+  1:     Point 1
+  5:     Point 5
+  B:     Collectable box

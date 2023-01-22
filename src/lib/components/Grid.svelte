@@ -18,7 +18,5 @@
     width: fit-content;
     display: grid;
     grid-template-columns: repeat(16, auto);
-
-    filter: drop-shadow(0 calc(var(--size-tile) / 4) 4px black);
   }
 </style>

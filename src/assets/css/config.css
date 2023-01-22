@@ -25,6 +25,9 @@
 
   --size-h1: x-large;
   --size-h2: larger;
+
+  /* Filters */
+  --drop-shadow: drop-shadow(0 var(--size-buffer-small) 4px #00000055);
 }
 
 @media only screen and (max-width: 470px) {
