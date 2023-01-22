@@ -5,12 +5,12 @@
   import TileType from "../types/TileType";
   import readLevel from "../game/LevelReader";
 
-  import Level1 from "../../assets/levels/1.json";
+  import TestLevel from "../../assets/level/test.json";
 
   let bits = 0;
   let boxes = 0;
 
-  let { player, grid } = readLevel(Level1);
+  let { player, grid } = readLevel(TestLevel);
 
   enum Movement {
     Up,

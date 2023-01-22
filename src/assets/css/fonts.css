@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "press-start-2p";
-  src:         url(../fonts/press-start-2p/regular.ttf) format("truetype");
+  src:         url(../font/press-start-2p/regular.ttf) format("truetype");
   font-weight: normal;
   font-style:  normal;
 }

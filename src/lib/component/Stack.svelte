@@ -3,10 +3,10 @@
   import TileType from "../types/TileType";
   import type TileStack from "../types/TileStack";
 
-  export let tiles: TileStack = [TileType.Void];
+  export let tiles: TileStack = [TileType.Void, TileType.Void];
 </script>
 
-<figure>
+<figure class="stack">
   {#each tiles as type, zIndex}
     <Tile {type} {zIndex} />
   {/each}
@@ -22,5 +22,9 @@
 
     margin: 0;
     padding: 0;
+  }
+
+  :global(.stack > *) {
+    filter: var(--drop-shadow-game);
   }
 </style>
