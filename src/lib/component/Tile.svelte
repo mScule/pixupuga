@@ -1,15 +1,15 @@
 <script lang="ts">
-  import CollectableBitZero from "../../assets/img/8x8/collectable/bit-0.png";
-  import CollectableBitOne  from "../../assets/img/8x8/collectable/bit-1.png";
-  import CollectableBox     from "../../assets/img/8x8/collectable/box.png";
+  import LowerBox   from "../../assets/img/8x8/lower/box.png";
+  import LowerSolid from "../../assets/img/8x8/lower/solid.png";
 
-  import GroundBox          from "../../assets/img/8x8/ground/box.png";
-  import GroundSolid        from "../../assets/img/8x8/ground/solid.png";
+  import UpperBox    from "../../assets/img/8x8/upper/box.png";
+  import UpperSolid  from "../../assets/img/8x8/upper/solid.png";
 
-  import WallBox            from "../../assets/img/8x8/wall/box.png";
-  import WallSolid          from "../../assets/img/8x8/wall/solid.png";
+  import PointOne        from "../../assets/img/8x8/collectable/point/1.png";
+  import PointFive       from "../../assets/img/8x8/collectable/point/5.png";
+  import CollectableBox  from "../../assets/img/8x8/collectable/box.png";
 
-  import Player             from "../../assets/img/8x8/player.png";
+  import Player from "../../assets/img/8x8/player.png";
 
   import TileType from "../types/TileType";
 
@@ -21,35 +21,39 @@
 
   $: {
     switch (type) {
-      case TileType.CollectableBitOne:
-        src = CollectableBitOne;
-        alt = 'Collectable bit "0"';
+      case TileType.CollectablePointOne:
+        src = PointOne;
+        alt = "Collectable point 1";
         break;
-      case TileType.CollectableBitZero:
-        src = CollectableBitZero;
-        alt = 'Collectable bit "1"';
+
+      case TileType.CollectablePointFive:
+        src = PointFive;
+        alt = "Collectable point 5";
         break;
+
       case TileType.CollectableBox:
         src = CollectableBox;
         alt = "Collectable box";
         break;
 
-      case TileType.GroundBox:
-        src = GroundBox;
-        alt = "Box ground";
-        break;
-      case TileType.GroundSolid:
-        src = GroundSolid;
-        alt = "Solid ground";
+      case TileType.LowerBox:
+        src = LowerBox;
+        alt = "Lower Box";
         break;
 
-      case TileType.WallBox:
-        src = WallBox;
-        alt = "Box wall";
+      case TileType.LowerSolid:
+        src = LowerSolid;
+        alt = "Lower solid";
         break;
-      case TileType.WallSolid:
-        src = WallSolid;
-        alt = "Box wall";
+
+      case TileType.UpperBox:
+        src = UpperBox;
+        alt = "Upper box";
+        break;
+
+      case TileType.UpperSolid:
+        src = UpperSolid;
+        alt = "Upper solid";
         break;
 
       case TileType.Player:

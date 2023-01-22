@@ -7,7 +7,7 @@
 
   import TestLevel from "../../assets/level/test.json";
 
-  let bits = 0;
+  let points = 0;
   let boxes = 0;
 
   let { player, grid } = readLevel(TestLevel);
@@ -22,12 +22,12 @@
 
   let lastMovement: Movement = Movement.None;
 
-  const getGround = (location: number): TileType =>
+  const getLower = (location: number): TileType =>
     isInsideGrid(location) ? grid[location][0] : TileType.Void;
   const getUpper = (location: number): TileType =>
     isInsideGrid(location) ? grid[location][1] : TileType.Void;
 
-  function setGround(location: number, tile: TileType) {
+  function setLower(location: number, tile: TileType) {
     if (isInsideGrid(location)) grid[location][0] = tile;
   }
   function setUpper(location: number, tile: TileType) {
@@ -52,7 +52,7 @@
 
   function isWalkable(tile: TileType): boolean {
     switch (tile) {
-      case TileType.GroundSolid: case TileType.GroundBox:
+      case TileType.LowerSolid: case TileType.LowerBox:
         return true;
       default:
         return false;
@@ -67,15 +67,32 @@
     const newLocation = move(player, movement);
     lastMovement = movement;
 
-    if (isWalkable(getGround(newLocation))) {
-      if (getGround(player) === TileType.GroundBox) {
-        setGround(player, TileType.Void);
+    if (
+        isWalkable(getLower(newLocation)) &&
+        getUpper(newLocation) !== TileType.UpperSolid
+    ) {
+
+      if (getUpper(newLocation) === TileType.UpperBox) {
+        const boxNewLocation = move(newLocation, movement);
+        if (boxNewLocation === newLocation) {
+          return;
+        } else if (getLower(boxNewLocation) === TileType.Void) {
+          setLower(boxNewLocation, TileType.LowerBox);
+        } else if (getUpper(boxNewLocation) !== TileType.Void) {
+          return;
+        } else {
+          setUpper(boxNewLocation, TileType.UpperBox);
+        }
       }
-      if (getUpper(newLocation) === TileType.CollectableBitOne) {
-        bits++;
+
+      if (getLower(player) === TileType.LowerBox) {
+        setLower(player, TileType.Void);
       }
-      if (getUpper(newLocation) === TileType.CollectableBitZero) {
-        bits += 5;
+      if (getUpper(newLocation) === TileType.CollectablePointOne) {
+        points++;
+      }
+      if (getUpper(newLocation) === TileType.CollectablePointFive) {
+        points += 5;
       }
       if (getUpper(newLocation) === TileType.CollectableBox) {
         boxes++;
@@ -95,15 +112,15 @@
         isInsideGrid(spawnPosition) &&
         getUpper(spawnPosition) === TileType.Void &&
         (
-          getGround(spawnPosition) === TileType.GroundSolid ||
-          getGround(spawnPosition) === TileType.Void
+          getLower(spawnPosition) === TileType.LowerSolid ||
+          getLower(spawnPosition) === TileType.Void
         )
       ) {
         boxes--;
-        if (getGround(spawnPosition) === TileType.Void) {
-          setGround(spawnPosition, TileType.GroundBox);
+        if (getLower(spawnPosition) === TileType.Void) {
+          setLower(spawnPosition, TileType.LowerBox);
         } else {
-          setUpper(spawnPosition, TileType.WallBox);
+          setUpper(spawnPosition, TileType.UpperBox);
         }
       }
     }
@@ -127,7 +144,7 @@
 </script>
 
 <section class="game">
-  <Display {bits} {boxes} stacks={grid} />
+  <Display {points} {boxes} stacks={grid} />
   <Title />
   <Controls {handleUp} {handleDown} {handleLeft} {handleRight} {handleAction} />
 </section>
