@@ -37,6 +37,7 @@
     width: 100%;
     justify-content: space-around;
     align-items: center;
+    padding-top: var(--size-buffer-large);
   }
 
   button, img {
@@ -53,6 +54,7 @@
     border: 0;
 
     background-image: url("../../assets/img/16x16/button/up.png");
+    filter: drop-shadow(0 var(--size-buffer-small) 4px black);
   }
 
   button:active {

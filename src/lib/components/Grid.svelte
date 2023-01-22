@@ -4,12 +4,12 @@
   import TileType from "../types/TileType";
   import type TileGrid from "../types/TileGrid";
 
-  export let stacks: TileGrid = [[TileType.Void]]
+  export let stacks: TileGrid = [[TileType.Void]];
 </script>
 
 <section>
   {#each stacks as tiles}
-    <Stack {tiles}/>
+    <Stack {tiles} />
   {/each}
 </section>
 
@@ -18,5 +18,7 @@
     width: fit-content;
     display: grid;
     grid-template-columns: repeat(16, auto);
+
+    filter: drop-shadow(0 calc(var(--size-tile) / 4) 4px black);
   }
 </style>

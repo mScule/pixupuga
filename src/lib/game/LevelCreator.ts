@@ -36,16 +36,20 @@ function populateGrid(
   }
 }
 
-function insertPlayer(grid: TileGrid) {
+/**
+ * @returns The index where the player is located.
+ */
+function insertPlayer(grid: TileGrid): number {
   let insertionTrials: number = 10;
 
   for (let i = 0; i < insertionTrials; i++) {
     const randomLocation = Math.floor(Math.random() * gridArea);
     if (grid[randomLocation][groundLevel] === TileType.GroundSolid) {
       grid[randomLocation][upperLevel] = TileType.Player;
-      break;
+      return randomLocation;
     }
   }
+  return -1;
 }
 
 function isTileTypeWalkable(tileType: TileType) {
@@ -86,7 +90,6 @@ function populateLevel(grid: TileGrid, probabilities: Probabilities) {
     probabilities.collectableBitZero,
     isTileTypeWalkable
   );
-  insertPlayer(grid);
 }
 
 interface Probabilities {
@@ -97,8 +100,14 @@ interface Probabilities {
   collectableBitZero: number;
 }
 
-export function createLevel(probabilities: Probabilities): TileGrid {
+interface Level {
+  player: number,
+  grid: TileGrid
+}
+
+export function createLevel(probabilities: Probabilities): Level {
   const grid = initGrid();
   populateLevel(grid, probabilities);
-  return [...grid];
+  const player = insertPlayer(grid);
+  return {player, grid: [...grid]};
 }

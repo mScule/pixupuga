@@ -3,11 +3,14 @@
   import Grid from "./Grid.svelte";
   import type TileGrid from "../types/TileGrid";
 
+  export let bits: number;
+  export let boxes: number;
+
   export let stacks: TileGrid;
 </script>
 
 <section class="display">
-  <ScoreBoard bits={0} boxes={20} />
+  <ScoreBoard {bits} {boxes} />
   <Grid {stacks} />
 </section>
 
