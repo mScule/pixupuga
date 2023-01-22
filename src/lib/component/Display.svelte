@@ -5,18 +5,24 @@
 
   export let points: number;
   export let boxes: number;
+  export let winningPoints: number;
 
   export let stacks: TileGrid;
 </script>
 
 <section class="display">
   <ScoreBoard {points} {boxes} />
-  <Grid {stacks} />
+  {#if points >= winningPoints}
+    <h1>Level passed!</h1>
+  {:else}
+    <Grid {stacks} />
+  {/if}
 </section>
 
 <style>
   section {
     display: flex;
+    min-height: calc(var(--size-tile) * 16);
     flex-direction: column;
     align-items: center;
     width: var(--size-game-width);

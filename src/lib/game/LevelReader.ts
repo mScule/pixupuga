@@ -14,7 +14,8 @@ enum LevelAtom {
   CollectableFive = "5",
 }
 
-interface Level {
+export interface Level {
+  winningPoints: number;
   lower: GridDefinition;
   upper: GridDefinition;
 }

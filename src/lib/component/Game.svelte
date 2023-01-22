@@ -3,14 +3,15 @@
   import Title from "./Title.svelte";
   import Controls from "./Controls.svelte";
   import TileType from "../types/TileType";
-  import readLevel from "../game/LevelReader";
+  import readLevel, { type Level } from "../game/LevelReader";
 
-  import TestLevel from "../../assets/level/test.json";
+  export let level: Level;
 
   let points = 0;
   let boxes = 0;
+  let winningPoints = level.winningPoints
 
-  let { player, grid } = readLevel(TestLevel);
+  let { player, grid } = readLevel(level);
 
   enum Movement {
     Up,
@@ -144,7 +145,7 @@
 </script>
 
 <section class="game">
-  <Display {points} {boxes} stacks={grid} />
+  <Display {points} {boxes} {winningPoints} stacks={grid} />
   <Title />
   <Controls {handleUp} {handleDown} {handleLeft} {handleRight} {handleAction} />
 </section>
