@@ -22,3 +22,7 @@ h1 {
 h2 {
     font-size: var(--size-h2);
 }
+
+p {
+    font-size: var(--size-p);
+}

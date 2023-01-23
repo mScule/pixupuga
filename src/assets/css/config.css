@@ -12,9 +12,14 @@
   --color-font:       var(--color-green-75);
 
   /* Sizes */
-  --size-game-width: calc((24px * 16) + 2rem);
-  --size-tile: 24px;
-  --size-control-button: 64px;
+  --size-p: 1rem;
+  --size-8x8: 24px;
+  --size-16x16: 64px;
+
+  --size-game: calc((var(--size-8x8) * 16) + 2rem);
+  --size-tile: var(--size-8x8);
+  --size-control-button: var(--size-16x16);
+  --size-selection: var(--size-16x16);
 
   --size-border: 4px;
   --size-border-radius: 0px;
@@ -33,9 +38,9 @@
 
 @media only screen and (max-width: 470px) {
   :root {
-    --size-game-width: 100%;
-    --size-tile: 16px;
-    --size-control-button: 48px;
+    --size-p: 0.50rem;
+    --size-8x8: 16px;
+    --size-16x16: 48px;
 
     --size-h1: large;
     --size-h2: normal;
@@ -44,8 +49,9 @@
 
 @media only screen and (max-width: 330px) {
   :root {
-    --size-tile: 8px;
-    --size-control-button: 32px;
+    --size-p: 0.25rem;
+    --size-8x8: 8px;
+    --size-16x16: 24px;
 
     --size-h1: normal;
     --size-h2: small;

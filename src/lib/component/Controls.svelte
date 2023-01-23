@@ -1,6 +1,6 @@
 <script lang="ts">
     import arrow from "../../assets/img/16x16/button/icon/arrow.png";
-    import box   from "../../assets/img/16x16/button/icon/box.png";
+    import o   from "../../assets/img/16x16/button/icon/o.png";
 
     export let handleUp = () => {};
     export let handleDown = () => {};
@@ -26,7 +26,7 @@
   </div>
 
   <button on:click={handleAction}>
-        <img src={box} alt="Use box" />
+        <img src={o} alt={'Action button "o"'} />
   </button>
 </nav>
 
@@ -34,7 +34,7 @@
   nav {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: calc(var(--size-game) + var(--size-buffer-large));
     justify-content: space-around;
     align-items: center;
     padding-top: var(--size-buffer-medium);

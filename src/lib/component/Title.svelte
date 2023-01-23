@@ -1,5 +1,9 @@
+<script lang="ts">
+    export let title: string = "";
+</script>
+
 <header>
-    <h1>Adventure 4096</h1>
+    <h1>{title}</h1>
 </header>
 
 <style>

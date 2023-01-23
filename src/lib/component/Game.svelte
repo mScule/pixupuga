@@ -1,25 +1,20 @@
 <script lang="ts">
-  import Display from "./Display.svelte";
+  import GameDisplay from "./GameDisplay.svelte";
   import Title from "./Title.svelte";
   import Controls from "./Controls.svelte";
   import TileType from "../types/TileType";
   import readLevel, { type Level } from "../game/LevelReader";
+  import Movement from "../types/Movement";
 
+  export let title: string;
   export let level: Level;
+  export let handleWinning: () => void;
 
   let points = 0;
   let boxes = 0;
   let winningPoints = level.winningPoints
 
   let { player, grid } = readLevel(level);
-
-  enum Movement {
-    Up,
-    Down,
-    Left,
-    Right,
-    None
-  }
 
   let lastMovement: Movement = Movement.None;
 
@@ -131,9 +126,16 @@
   function handleDown() { movePlayer(Movement.Down); }
   function handleLeft() { movePlayer(Movement.Left); }
   function handleRight() { movePlayer(Movement.Right); }
-  function handleAction() { spawnBox(); }
+  function handleAction() {
+    if (points < winningPoints) {
+      spawnBox();
+    } else {
+      removeEventListeners();
+      handleWinning();
+    }
+  }
 
-  window.addEventListener("keypress", (event) => {
+  function handleKeyboard(event:KeyboardEvent) {
     switch (event.key) {
       case "w": return handleUp();
       case "s": return handleDown();
@@ -141,23 +143,16 @@
       case "d": return handleRight();
       case "e": return handleAction()
     }
-  });
+  }
+
+  window.addEventListener("keypress", handleKeyboard);
+
+  function removeEventListeners() {
+    window.removeEventListener("keypress", handleKeyboard);
+  }
 </script>
 
-<section class="game">
-  <Display {points} {boxes} {winningPoints} stacks={grid} />
-  <Title />
-  <Controls {handleUp} {handleDown} {handleLeft} {handleRight} {handleAction} />
-</section>
 
-<style>
-  section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: var(--size-game-width);
-    border-radius: var(--size-border-radius);
-    height: 70%;
-  }
-</style>
+<GameDisplay {title} {points} {boxes} {winningPoints} stacks={grid} />
+<Title {title} />
+<Controls {handleUp} {handleDown} {handleLeft} {handleRight} {handleAction} />

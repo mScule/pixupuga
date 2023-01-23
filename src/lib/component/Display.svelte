@@ -1,39 +1,18 @@
-<script lang="ts">
-  import ScoreBoard from "./ScoreBoard.svelte";
-  import Grid from "./Grid.svelte";
-  import type TileGrid from "../types/TileGrid";
-
-  export let points: number;
-  export let boxes: number;
-  export let winningPoints: number;
-
-  export let stacks: TileGrid;
-</script>
-
-<section class="display">
-  <ScoreBoard {points} {boxes} />
-  {#if points >= winningPoints}
-    <h1>Level passed!</h1>
-  {:else}
-    <Grid {stacks} />
-  {/if}
+<section>
+    <slot></slot>
 </section>
 
 <style>
-  section {
-    display: flex;
-    min-height: calc(var(--size-tile) * 16);
-    flex-direction: column;
-    align-items: center;
-    width: var(--size-game-width);
-    border-radius: var(--size-border-radius);
-    padding: var(--size-buffer-medium) 0 var(--size-buffer-medium) 0;
-    background-color: var(--color-game);
-  }
-  :global(.display > *) {
-    margin-bottom: var(--size-buffer-medium);
-  }
-  :global(.display > *:last-child) {
-    margin-bottom: 0;
-  }
+    section {
+        background-color: var(--color-game);
+        padding: var(--size-buffer-medium);
+
+        min-width: var(--size-game);
+        width: var(--size-game);
+        max-width: var(--size-game);
+
+        min-height: var(--size-game);
+        height: var(--size-game);
+        max-height: var(--size-game);
+    }
 </style>
