@@ -1,7 +1,7 @@
 # Adventure 4096
 
-Game made entirely with Svelte, vanilla CSS and TypeScript. Name 4096 comes
-from the amount of tiles there will be in the finished games (one level is
+Game made entirely with Svelte, vanilla CSS and TypeScript. Number 4096 comes
+from the amount of tiles there will be in the finished game (one level is
 256 tiles. 256 * 16 levels = 4096 tiles in total in the whole game).
 
 ## Setup & quick start
