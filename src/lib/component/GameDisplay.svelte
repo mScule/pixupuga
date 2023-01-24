@@ -8,15 +8,19 @@
   export let points: number;
   export let boxes: number;
   export let winningPoints: number;
+  export let winningText: string | null = null;
 
   export let stacks: TileGrid;
 </script>
 
 <Display>
   <div class="game-display">
-    <ScoreBoard {points} {boxes} />
+    <ScoreBoard {points} {boxes} {winningPoints} />
     {#if points >= winningPoints}
       <h2>{title} passed!</h2>
+      {#if winningText}
+        <p>{winningText}</p>
+      {/if}
       <p>Press "e" to proceed</p>
     {:else}
       <Grid {stacks} />
@@ -29,6 +33,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: var(--size-buffer-small);
   }
 
   :global(.game-display > *) {

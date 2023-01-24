@@ -121,6 +121,7 @@
 
 <style>
   .level-menu {
+    padding: var(--size-buffer-small);
     display: flex;
     flex-direction: column;
     justify-content: space-around;

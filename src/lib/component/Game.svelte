@@ -9,10 +9,11 @@
   export let title: string;
   export let level: Level;
   export let handleWinning: () => void;
+  export let handleExit: () => void;
 
   let points = 0;
   let boxes = 0;
-  let winningPoints = level.winningPoints
+  let winningPoints = level.winningPoints;
 
   let { player, grid } = readLevel(level);
 
@@ -34,21 +35,30 @@
     let newLocation = location;
     let oldLocation = location;
 
-    switch(movement) {
-      case Movement.Up:   newLocation = location - 16; break;
-      case Movement.Down: newLocation = location + 16; break;
+    switch (movement) {
+      case Movement.Up:
+        newLocation = location - 16;
+        break;
+      case Movement.Down:
+        newLocation = location + 16;
+        break;
 
-      case Movement.Left:  newLocation = location - 1; break;
-      case Movement.Right: newLocation = location + 1; break;
+      case Movement.Left:
+        newLocation = location - 1;
+        break;
+      case Movement.Right:
+        newLocation = location + 1;
+        break;
     }
 
-    if(isInsideGrid(newLocation)) return newLocation;
+    if (isInsideGrid(newLocation)) return newLocation;
     return oldLocation;
   }
 
   function isWalkable(tile: TileType): boolean {
     switch (tile) {
-      case TileType.LowerSolid: case TileType.LowerBox:
+      case TileType.LowerSolid:
+      case TileType.LowerBox:
         return true;
       default:
         return false;
@@ -64,10 +74,9 @@
     lastMovement = movement;
 
     if (
-        isWalkable(getLower(newLocation)) &&
-        getUpper(newLocation) !== TileType.UpperSolid
+      isWalkable(getLower(newLocation)) &&
+      getUpper(newLocation) !== TileType.UpperSolid
     ) {
-
       if (getUpper(newLocation) === TileType.UpperBox) {
         const boxNewLocation = move(newLocation, movement);
         if (boxNewLocation === newLocation) {
@@ -107,10 +116,8 @@
       if (
         isInsideGrid(spawnPosition) &&
         getUpper(spawnPosition) === TileType.Void &&
-        (
-          getLower(spawnPosition) === TileType.LowerSolid ||
-          getLower(spawnPosition) === TileType.Void
-        )
+        (getLower(spawnPosition) === TileType.LowerSolid ||
+          getLower(spawnPosition) === TileType.Void)
       ) {
         boxes--;
         if (getLower(spawnPosition) === TileType.Void) {
@@ -122,10 +129,18 @@
     }
   }
 
-  function handleUp() { movePlayer(Movement.Up); }
-  function handleDown() { movePlayer(Movement.Down); }
-  function handleLeft() { movePlayer(Movement.Left); }
-  function handleRight() { movePlayer(Movement.Right); }
+  function handleUp() {
+    movePlayer(Movement.Up);
+  }
+  function handleDown() {
+    movePlayer(Movement.Down);
+  }
+  function handleLeft() {
+    movePlayer(Movement.Left);
+  }
+  function handleRight() {
+    movePlayer(Movement.Right);
+  }
   function handleAction() {
     if (points < winningPoints) {
       spawnBox();
@@ -135,13 +150,25 @@
     }
   }
 
-  function handleKeyboard(event:KeyboardEvent) {
+  function handleAlterAction() {
+    removeEventListeners();
+    handleWinning();
+  }
+
+  function handleKeyboard(event: KeyboardEvent) {
     switch (event.key) {
-      case "w": return handleUp();
-      case "s": return handleDown();
-      case "a": return handleLeft();
-      case "d": return handleRight();
-      case "e": return handleAction()
+      case "w":
+        return handleUp();
+      case "s":
+        return handleDown();
+      case "a":
+        return handleLeft();
+      case "d":
+        return handleRight();
+      case "e":
+        return handleAction();
+      case "q":
+        return handleExit();
     }
   }
 
@@ -152,7 +179,20 @@
   }
 </script>
 
-
-<GameDisplay {title} {points} {boxes} {winningPoints} stacks={grid} />
+<GameDisplay
+  {title}
+  {points}
+  {boxes}
+  {winningPoints}
+  winningText={level.winningText}
+  stacks={grid}
+/>
 <Title {title} />
-<Controls {handleUp} {handleDown} {handleLeft} {handleRight} {handleAction} />
+<Controls
+  {handleUp}
+  {handleDown}
+  {handleLeft}
+  {handleRight}
+  {handleAction}
+  {handleAlterAction}
+/>

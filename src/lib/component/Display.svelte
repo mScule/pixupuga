@@ -5,14 +5,13 @@
 <style>
     section {
         background-color: var(--color-game);
-        padding: var(--size-buffer-medium);
 
-        min-width: var(--size-game);
-        width: var(--size-game);
-        max-width: var(--size-game);
+        min-width: var(--size-game-width);
+        width: var(--size-game-width);
+        max-width: var(--size-game-width);
 
-        min-height: var(--size-game);
-        height: var(--size-game);
-        max-height: var(--size-game);
+        min-height: var(--size-game-height);
+        height: var(--size-game-height);
+        max-height: var(--size-game-height);
     }
 </style>

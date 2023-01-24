@@ -16,6 +16,8 @@ enum LevelAtom {
 
 export interface Level {
   winningPoints: number;
+  winningText?: string;
+
   lower: GridDefinition;
   upper: GridDefinition;
 }
