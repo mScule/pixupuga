@@ -43,7 +43,7 @@
       case TileType.LowerBox:
         src = LowerBox;
         alt = "Lower Box";
-        styleClass = "";
+        styleClass = "in-water";
         break;
 
       case TileType.LowerSolid:

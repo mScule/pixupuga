@@ -18,7 +18,7 @@
   import Lvl15 from "./assets/level/15.json";
   import Lvl16 from "./assets/level/16.json";
 
-  import SplashScreen from "./lib/component/SplashScreen.svelte";
+  import StartScreen from "./lib/component/StartScreen.svelte";
   import LevelMenu from "./lib/component/LevelMenu.svelte";
   import Game from "./lib/component/Game.svelte";
 
@@ -33,7 +33,7 @@
   let inGame           = false;
   let selected         = 0;
 
-  function handleSplashScreen() {
+  function handleStart() {
     showSplashScreen = false;
   }
 
@@ -57,7 +57,7 @@
 
 <main>
   {#if showSplashScreen}
-    <SplashScreen {handleSplashScreen} />
+    <StartScreen {handleStart} />
   {:else if inGame}
     <Game
       title={`Level - ${selected + 1}`}
@@ -66,7 +66,10 @@
       handleExit={() => handleExit(selected)}
     />
   {:else}
-    <LevelMenu levelAmount={levels.length} {handleLevelSelection} />
+    <LevelMenu
+      cursor={selected}
+      levelAmount={levels.length}
+      {handleLevelSelection} />
   {/if}
 </main>
 

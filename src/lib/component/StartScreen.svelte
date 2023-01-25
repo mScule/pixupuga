@@ -1,10 +1,10 @@
 <script lang="ts">
-  import splashScreen from "../../assets/img/128x128/splash-screen.png";
+  import startScreen from "../../assets/img/128x128/start-screen.png";
   import Controls from "./Controls.svelte";
   import Display from "./Display.svelte";
   import Title from "./Title.svelte";
 
-  export let handleSplashScreen: () => void;
+  export let handleStart: () => void;
 
   function handleKeyboard(event: KeyboardEvent) {
     switch (event.key) {
@@ -21,14 +21,14 @@
   }
 
   function handleAction() {
-    handleSplashScreen();
+    handleStart();
     removeEventListeners();
   }
 </script>
 
 <Display>
   <div>
-    <img src={splashScreen} alt="Splash screen" />
+    <img src={startScreen} alt="Splash screen" />
     <h2>Press "e" to play</h2>
   </div>
 </Display>
@@ -43,7 +43,8 @@
     width: var(--size-game-height);
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: end;
     align-items: center;
   }
   img {
@@ -51,5 +52,21 @@
     height: var(--size-game-height);
     width: var(--size-game-height);
     image-rendering: pixelated;
+  }
+  h2 {
+    margin-bottom: var(--size-buffer-large);
+    animation-name: start-screen-text;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes start-screen-text {
+    0%, 49%{
+      filter: opacity(0%)
+    }
+
+    50%, 100% {
+      filter: opacity(100%)
+    }
   }
 </style>

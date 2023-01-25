@@ -16,9 +16,9 @@
 
   export let handleLevelSelection: (levelIndex: number) => void;
   export let levelAmount: number;
+  export let cursor = 0;
 
   let levels = Array(levelAmount).fill(Selection.Unselected);
-  let cursor = 0;
   levels[cursor] = Selection.Selected;
 
   function isLevelOpened(levelIndex: number) {

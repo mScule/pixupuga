@@ -76,7 +76,7 @@
   }
 
   button:disabled > img{
-    visibility: hidden;
+    filter: opacity(45%)
   }
 
   .d-pad {
