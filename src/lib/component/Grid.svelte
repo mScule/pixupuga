@@ -18,5 +18,13 @@
     width: fit-content;
     display: grid;
     grid-template-columns: repeat(16, auto);
+
+    background: url(../../assets/img/16x16/background/water.gif);
+    background-size: calc(var(--size-tile) * 2);
+    image-rendering: pixelated;
+
+    animation-name: water;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
   }
 </style>
