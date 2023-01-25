@@ -104,7 +104,7 @@
     animation-name: collectable-hover;
     animation-duration: 2s;
     animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out
+    animation-timing-function: ease-in-out;
   }
 
   @keyframes collectable-hover {
