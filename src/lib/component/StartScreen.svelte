@@ -1,41 +1,29 @@
 <script lang="ts">
-  import startScreen from "../../assets/img/128x128/start-screen.png";
+  import KeyboardInput from "../types/KeyboardInput";
+
   import Controls from "./Controls.svelte";
   import Display from "./Display.svelte";
   import Title from "./Title.svelte";
 
+  import startScreen from "../../assets/img/128x128/start-screen.png";
+
   export let handleStart: () => void;
 
-  function handleKeyboard(event: KeyboardEvent) {
-    switch (event.key) {
-      case "e":
-        return handleAction();
-
-    }
-  }
-
-  window.addEventListener("keypress", handleKeyboard);
-
-  function removeEventListeners() {
-    window.removeEventListener("keypress", handleKeyboard);
-  }
-
-  function handleAction() {
+  function handleActionPrimary() {
     handleStart();
-    removeEventListeners();
   }
 </script>
 
 <Display>
   <div>
     <img src={startScreen} alt="Splash screen" />
-    <h2>Press "e" to play</h2>
+    <h2>Press {KeyboardInput.ActionPrimary} to play</h2>
   </div>
 </Display>
 
 <Title title={"Adventure 4096"} />
 
-<Controls {handleAction} />
+<Controls {handleActionPrimary} />
 
 <style>
   div {

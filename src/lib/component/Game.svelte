@@ -141,41 +141,16 @@
   function handleRight() {
     movePlayer(Movement.Right);
   }
-  function handleAction() {
-    if (points < winningPoints) {
+
+  function handleActionPrimary() {
+    if (points < winningPoints)
       spawnBox();
-    } else {
-      removeEventListeners();
+    else
       handleWinning();
-    }
   }
 
-  function handleAlterAction() {
-    removeEventListeners();
-    handleWinning();
-  }
-
-  function handleKeyboard(event: KeyboardEvent) {
-    switch (event.key) {
-      case "w":
-        return handleUp();
-      case "s":
-        return handleDown();
-      case "a":
-        return handleLeft();
-      case "d":
-        return handleRight();
-      case "e":
-        return handleAction();
-      case "q":
-        return handleExit();
-    }
-  }
-
-  window.addEventListener("keypress", handleKeyboard);
-
-  function removeEventListeners() {
-    window.removeEventListener("keypress", handleKeyboard);
+  function handleActionSecondary() {
+    handleExit();
   }
 </script>
 
@@ -193,6 +168,6 @@
   {handleDown}
   {handleLeft}
   {handleRight}
-  {handleAction}
-  {handleAlterAction}
+  {handleActionPrimary}
+  {handleActionSecondary}
 />

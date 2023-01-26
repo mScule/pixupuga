@@ -1,28 +1,29 @@
 html {
-    height: 100%;
-    touch-action: manipulation
+  height:       100%;
+  touch-action: manipulation;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 button {
-    background-color: var(--color-fill);
-    color:            var(--color-background);
-    font-family:      var(--font-family-main);
-    padding:          var(--size-buffer-small);
-    border: solid var(--color-border) var(--size-border);
+  background-color: var(--color-fill);
+  color:            var(--color-background);
+  font-family:      var(--font-family-main);
+  padding:          var(--size-buffer-small);
+
+  border: solid var(--color-border) var(--size-border);
 }
 
 h1 {
-    font-size: var(--size-h1);
+  font-size: var(--size-h1);
 }
 
 h2 {
-    font-size: var(--size-h2);
+  font-size: var(--size-h2);
 }
 
 p {
-    font-size: var(--size-p);
+  font-size: var(--size-p);
 }

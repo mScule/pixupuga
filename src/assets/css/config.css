@@ -12,18 +12,18 @@
   --color-font:       var(--color-green-75);
 
   /* Sizes */
-  --size-p: 1rem;
-  --size-8x8: 24px;
+  --size-p:     1rem;
+  --size-8x8:   24px;
   --size-16x16: 64px;
 
-  --size-game-width: calc((var(--size-8x8) * 16) + 2rem);
+  --size-game-width:  calc((var(--size-8x8) * 16) + 2rem);
   --size-game-height: calc((var(--size-8x8) * 16) + 2rem);
 
-  --size-tile: var(--size-8x8);
+  --size-tile:           var(--size-8x8);
   --size-control-button: var(--size-16x16);
-  --size-selection: var(--size-16x16);
+  --size-selection:      var(--size-16x16);
 
-  --size-border: 4px;
+  --size-border:        4px;
   --size-border-radius: 0px;
 
   --size-buffer-small:  0.5rem;
@@ -34,8 +34,8 @@
   --size-h2: large;
 
   /* Filters */
-  --drop-shadow: drop-shadow(0px var(--size-buffer-small) 4px #00000055);
-  --drop-shadow-game: drop-shadow(0px var(--size-buffer-small) 0px #00000055)
+  --drop-shadow:      drop-shadow(0px var(--size-buffer-small) 4px #00000055);
+  --drop-shadow-game: drop-shadow(0px var(--size-buffer-small) 0px #00000055);
 }
 
 @media only screen and (max-width: 470px) {
@@ -44,8 +44,8 @@
 
     --size-game-width: 100%;
 
-    --size-p: 0.50rem;
-    --size-8x8: 16px;
+    --size-p:     0.5rem;
+    --size-8x8:   16px;
     --size-16x16: 48px;
 
     --size-h1: normal;
@@ -55,8 +55,8 @@
 
 @media only screen and (max-width: 330px) {
   :root {
-    --size-p: 0.25rem;
-    --size-8x8: 8px;
+    --size-p:     0.25rem;
+    --size-8x8:   8px;
     --size-16x16: 24px;
 
     --size-h1: 0.7rem;

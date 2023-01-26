@@ -29,8 +29,8 @@
     Lvl13, Lvl14, Lvl15, Lvl16,
   ];
 
-  let showSplashScreen = false;
-  let inGame           = true;
+  let showSplashScreen = true;
+  let inGame           = false;
   let selected         = 4;
 
   function handleStart() {

@@ -1,14 +1,17 @@
 <script lang="ts">
+  import KeyboardInput from "../types/KeyboardInput";
+  
   import Display from "./Display.svelte";
   import ScoreBoard from "./ScoreBoard.svelte";
   import Grid from "./Grid.svelte";
   import type TileGrid from "../types/TileGrid";
 
-  export let title: string;
+  export let title:  string;
   export let points: number;
-  export let boxes: number;
+  export let boxes:  number;
+
   export let winningPoints: number;
-  export let winningText: string | null = null;
+  export let winningText:   string | null = null;
 
   export let stacks: TileGrid;
 </script>
@@ -21,7 +24,7 @@
       {#if winningText}
         <p>{winningText}</p>
       {/if}
-      <p>Press "e" to proceed</p>
+      <p>Press {KeyboardInput.ActionPrimary} to proceed</p>
     {:else}
       <Grid {stacks} />
     {/if}

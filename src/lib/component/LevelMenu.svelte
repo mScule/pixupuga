@@ -8,6 +8,7 @@
   import Display from "./Display.svelte";
   import Controls from "./Controls.svelte";
   import Title from "./Title.svelte";
+  import KeyboardInput from "../types/KeyboardInput";
 
   enum Selection {
     Selected,
@@ -70,30 +71,9 @@
   function handleRight() {
     moveCursor(Movement.Right);
   }
-  function handleAction() {
+
+  function handleActionPrimary() {
     handleLevelSelection(cursor);
-    removeEventListeners();
-  }
-
-  function handleKeyboard(event: KeyboardEvent) {
-    switch (event.key) {
-      case "w":
-        return handleUp();
-      case "s":
-        return handleDown();
-      case "a":
-        return handleLeft();
-      case "d":
-        return handleRight();
-      case "e":
-        return handleAction();
-    }
-  }
-
-  window.addEventListener("keypress", handleKeyboard);
-
-  function removeEventListeners() {
-    window.removeEventListener("keypress", handleKeyboard);
   }
 </script>
 
@@ -101,7 +81,8 @@
   <div class="level-menu">
     <h2>Levels</h2>
     <p>
-      Navigate to level with d-pad, and select it with the action button ("e")
+      Navigate to level with d-pad, and select it with the action button
+      "{KeyboardInput.ActionPrimary}"
     </p>
     <div class="level-grid">
       {#each levels as selection, level}
@@ -117,7 +98,13 @@
   </div>
 </Display>
 <Title title="Adventure 4096" />
-<Controls {handleUp} {handleDown} {handleLeft} {handleRight} {handleAction} />
+<Controls
+  {handleUp}
+  {handleDown}
+  {handleLeft}
+  {handleRight}
+  {handleActionPrimary}
+/>
 
 <style>
   .level-menu {

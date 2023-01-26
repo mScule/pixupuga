@@ -1,43 +1,74 @@
 <script lang="ts">
-  import arrow from "../../assets/img/16x16/button/icon/arrow.png";
-  import eLetter from "../../assets/img/16x16/button/icon/e.png";
-  import qLetter from "../../assets/img/16x16/button/icon/q.png";
+  import { onMount, onDestroy } from "svelte";
 
-  export let handleUp: () => void | null = null;
-  export let handleDown: () => void | null = null;
-  export let handleLeft: () => void | null = null;
+  import KeyboardInput from "../types/KeyboardInput";
+
+  import arrow           from "../../assets/img/16x16/button/icon/arrow.png";
+  import actionPrimary   from "../../assets/img/16x16/button/icon/action/primary.png";
+  import actionSecondary from "../../assets/img/16x16/button/icon/action/secondary.png";
+
+  export let handleUp:    () => void | null = null;
+  export let handleDown:  () => void | null = null;
+  export let handleLeft:  () => void | null = null;
   export let handleRight: () => void | null = null;
-  export let handleAction = () => {};
-  export let handleAlterAction: () => void | null = null;
+
+  export let handleActionPrimary:   () => void        = () => {};
+  export let handleActionSecondary: () => void | null = null;
+
+  function handleKeyboardInput(event: KeyboardEvent) {
+    switch (event.key) {
+      case KeyboardInput.ActionPrimary:
+        return handleActionPrimary();
+      case KeyboardInput.ActionSecondary:
+        return handleActionSecondary && handleActionSecondary();
+
+      case KeyboardInput.Up:
+        return handleUp    && handleUp();
+      case KeyboardInput.Down:
+        return handleDown  && handleDown();
+      case KeyboardInput.Left:
+        return handleLeft  && handleLeft();
+      case KeyboardInput.Right:
+        return handleRight && handleRight();
+    }
+  }
+
+  onMount(() => {
+    window.addEventListener("keypress", handleKeyboardInput);
+  });
+
+  onDestroy(() => {
+    window.removeEventListener("keypress", handleKeyboardInput);
+  });
 </script>
 
 <nav>
   <div class="d-pad">
     <button class="up" on:click={handleUp} disabled={!handleUp}>
-      <img src={arrow} alt="Arrow up" />
+      <img src={arrow} alt="Arrow - Up" />
     </button>
     <button class="down" on:click={handleDown} disabled={!handleDown}>
-      <img src={arrow} alt="Arrow down" />
+      <img src={arrow} alt="Arrow - Down" />
     </button>
     <button class="left" on:click={handleLeft} disabled={!handleLeft}>
-      <img src={arrow} alt="Arrow left" />
+      <img src={arrow} alt="Arrow - Left" />
     </button>
     <button class="right" on:click={handleRight} disabled={!handleRight}>
-      <img src={arrow} alt="Arrow right" />
+      <img src={arrow} alt="Arrow - Right" />
     </button>
   </div>
 
   <div class="action-buttons">
-    <button class="action-primary" on:click={handleAction}>
-      <img src={eLetter} alt="Primary action button" />
+    <button class="action-primary" on:click={handleActionPrimary}>
+      <img src={actionPrimary} alt="Action button - Primary" />
     </button>
 
     <button
       class="action-secondary"
-      on:click={handleAlterAction}
-      disabled={!handleAlterAction}
+      on:click={handleActionSecondary}
+      disabled={!handleActionSecondary}
     >
-      <img src={qLetter} alt="Alternate action button" />
+      <img src={actionSecondary} alt="Action button - Secondary" />
     </button>
   </div>
 </nav>
@@ -75,8 +106,8 @@
     background-image: url("../../assets/img/16x16/button/down.png");
   }
 
-  button:disabled > img{
-    filter: opacity(45%)
+  button:disabled > img {
+    filter: opacity(45%);
   }
 
   .d-pad {
