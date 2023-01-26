@@ -7,7 +7,5 @@
 </header>
 
 <style>
-    h1 {
-        filter: var(--drop-shadow);
-    }
+    h1 { filter: var(--drop-shadow); }
 </style>

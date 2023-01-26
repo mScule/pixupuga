@@ -1,18 +1,24 @@
+<!--TODO: Refactor into smaller core files inside the game folder-->
+
 <script lang="ts">
-  import GameDisplay from "./GameDisplay.svelte";
-  import Title from "./Title.svelte";
-  import Controls from "./Controls.svelte";
+  import type Level from "../types/Level";
+
   import TileType from "../types/TileType";
-  import readLevel, { type Level } from "../game/LevelReader";
   import Movement from "../types/Movement";
+
+  import GameDisplay from "./GameDisplay.svelte";
+  import Title       from "./Title.svelte";
+  import Controls    from "./Controls.svelte";
+
+  import readLevel from "../game/LevelReader";
 
   export let title: string;
   export let level: Level;
   export let handleWinning: () => void;
-  export let handleExit: () => void;
+  export let handleExit:    () => void;
 
   let points = 0;
-  let boxes = 0;
+  let boxes  = 0;
   let winningPoints = level.winningPoints;
 
   let { player, grid } = readLevel(level);
@@ -129,18 +135,10 @@
     }
   }
 
-  function handleUp() {
-    movePlayer(Movement.Up);
-  }
-  function handleDown() {
-    movePlayer(Movement.Down);
-  }
-  function handleLeft() {
-    movePlayer(Movement.Left);
-  }
-  function handleRight() {
-    movePlayer(Movement.Right);
-  }
+  const handleUp    = () => movePlayer(Movement.Up);
+  const handleDown  = () => movePlayer(Movement.Down);
+  const handleLeft  = () => movePlayer(Movement.Left);
+  const handleRight = () => movePlayer(Movement.Right);
 
   function handleActionPrimary() {
     if (points < winningPoints)
@@ -149,9 +147,7 @@
       handleWinning();
   }
 
-  function handleActionSecondary() {
-    handleExit();
-  }
+  const handleActionSecondary = () => handleExit();
 </script>
 
 <GameDisplay
@@ -169,5 +165,5 @@
   {handleLeft}
   {handleRight}
   {handleActionPrimary}
-  {handleActionSecondary}
+  handleActionSecondary={points < winningPoints ? handleActionSecondary : null}
 />

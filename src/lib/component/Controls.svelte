@@ -75,30 +75,41 @@
 
 <style>
   nav {
-    display: flex;
-    flex-direction: row;
-    width: var(--size-game-width);
+    display:         flex;
+    flex-direction:  row;
     justify-content: space-around;
-    align-items: center;
-    padding-top: var(--size-buffer-large);
+    align-items:     center;
+    padding-top:     var(--size-buffer-large);
+
+    width: var(--size-game-width);
   }
 
-  button,
   img {
     image-rendering: pixelated;
-    width: var(--size-control-button);
+
+    width:  var(--size-control-button);
     height: var(--size-control-button);
+
+    margin-top: calc(
+      (var(--size-control-button) / 1.2) - var(--size-control-button)
+    );
   }
 
   button {
-    padding: 0;
-    display: block;
-    background-color: transparent;
-    background-size: var(--size-control-button);
-    border: 0;
-    font-size: 1.3rem;
+    image-rendering: pixelated;
 
+    width:  var(--size-control-button);
+    height: var(--size-control-button);
+
+    display: block;
+    padding: 0;
+    border:  0;
+
+    background-color: transparent;
     background-image: url("../../assets/img/16x16/button/up.png");
+    background-size:  var(--size-control-button);
+    font-size:        1.3rem;
+
     filter: var(--drop-shadow);
   }
 
@@ -106,73 +117,43 @@
     background-image: url("../../assets/img/16x16/button/down.png");
   }
 
-  button:disabled > img {
-    filter: opacity(45%);
-  }
+  button:active > img   { margin-top: 0;        }
+  button:disabled > img { filter: opacity(45%); }
 
   .d-pad {
     display: grid;
+
     grid-template-columns: repeat(3, var(--size-control-button));
-    grid-template-rows: var(--size-control-button);
+    grid-template-rows:    var(--size-control-button);
     grid-template-areas:
       ".    up   .    "
       "left .    right"
       ".    down .    ";
   }
 
+  .up          { grid-area: up;                      }
+  .up > img    { transform: rotate(calc(90deg * 1)); }
+
+  .down        { grid-area: down;                    }
+  .down > img  { transform: rotate(calc(90deg * 3)); }
+
+  .left        { grid-area: left;                    }
+  .left > img  { transform: rotate(calc(90deg * 0)); }
+
+  .right       { grid-area: right;                   }
+  .right > img { transform: rotate(calc(90deg * 2)); }
+
   .action-buttons {
     display: grid;
+
     grid-template-columns: repeat(3, var(--size-control-button));
-    grid-template-rows: repeat(3, var(--size-control-button));
+    grid-template-rows:    repeat(3, var(--size-control-button));
     grid-template-areas:
-      ". . ."
-      "q . e"
-      ". . .";
+      ".         . .      "
+      "secondary . primary"
+      ".         . .      ";
   }
 
-  .action-primary {
-    grid-area: e;
-  }
-
-  .action-secondary {
-    grid-area: q;
-  }
-
-  .up {
-    grid-area: up;
-  }
-  .up > img {
-    transform: rotate(calc(90deg * 1));
-  }
-
-  .down {
-    grid-area: down;
-  }
-  .down > img {
-    transform: rotate(calc(90deg * 3));
-  }
-
-  .left {
-    grid-area: left;
-  }
-  .left > img {
-    transform: rotate(calc(90deg * 0));
-  }
-
-  .right {
-    grid-area: right;
-  }
-  .right > img {
-    transform: rotate(calc(90deg * 2));
-  }
-
-  img {
-    margin-top: calc(
-      (var(--size-control-button) / 1.2) - var(--size-control-button)
-    );
-  }
-
-  button:active > img {
-    margin-top: 0;
-  }
+  .action-primary   { grid-area: primary;   }
+  .action-secondary { grid-area: secondary; }
 </style>

@@ -1,26 +1,10 @@
 import type TileGrid from "../types/TileGrid";
-import TileType from "../types/TileType";
+import type Level    from "../types/Level";
+
+import TileType  from "../types/TileType";
+import LevelAtom from "../types/LevelAtom";
+
 import createGrid from "./GridCreator";
-
-type GridDefinition = Record<string, string>;
-
-enum LevelAtom {
-  Void            = ".",
-  Solid           = "s",
-  Box             = "b",
-  Player          = "p",
-  CollectableBox  = "B",
-  CollectableOne  = "1",
-  CollectableFive = "5",
-}
-
-export interface Level {
-  winningPoints: number;
-  winningText?: string;
-
-  lower: GridDefinition;
-  upper: GridDefinition;
-}
 
 function definitionToString(definition: Record<string, string>): string {
   const { _, ...lines } = definition;
@@ -39,6 +23,7 @@ function getLowerTile(atom:LevelAtom): TileType {
         case LevelAtom.Void:  return TileType.Void;
         case LevelAtom.Solid: return TileType.LowerSolid;
         case LevelAtom.Box:   return TileType.LowerBox;
+
         default: throw new Error(`Bad level atom for lower grid "${atom}"`);
     }
 }
@@ -54,6 +39,7 @@ function getUpperTile(atom:LevelAtom): TileType {
         case LevelAtom.CollectableBox:  return TileType.CollectableBox;
         case LevelAtom.CollectableOne:  return TileType.CollectablePointOne;
         case LevelAtom.CollectableFive: return TileType.CollectablePointFive;
+
         default: throw new Error(`Bad level atom for upper grid "${atom}"`);
     }
 }

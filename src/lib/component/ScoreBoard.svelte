@@ -1,7 +1,7 @@
 <script lang="ts">
-    export let points: number = 0;
+    export let points:        number = 0;
     export let winningPoints: number = 0;
-    export let boxes: number = 0;
+    export let boxes:         number = 0;
 </script>
 
 <div>
@@ -11,9 +11,10 @@
 
 <style>
     div {
-        width: 100%;
-        display: flex;
+        display:         flex;
         justify-content: space-around;
+
+        width: 100%;
     }
     h2 {
         margin: 0;

@@ -1,5 +1,8 @@
 <script lang="ts">
-  import boolean from "./lib/util/parse/boolean";
+  import { isLevelOpen, setLevelOpen } from "./lib/game/Progress";
+
+  import ActiveView from "./lib/types/ActiveView";
+  import type Level from "./lib/types/Level";
 
   import Lvl1  from "./assets/level/1.json";
   import Lvl2  from "./assets/level/2.json";
@@ -18,66 +21,79 @@
   import Lvl15 from "./assets/level/15.json";
   import Lvl16 from "./assets/level/16.json";
 
-  import StartScreen from "./lib/component/StartScreen.svelte";
-  import LevelMenu from "./lib/component/LevelMenu.svelte";
-  import Game from "./lib/component/Game.svelte";
+  import StartScreen    from "./lib/component/StartScreen.svelte";
+  import LevelSelection from "./lib/component/LevelSelection.svelte";
+  import Game           from "./lib/component/Game.svelte";
 
-  const levels = [
+  const levels: Level[] = [
     Lvl1,  Lvl2,  Lvl3,  Lvl4,
     Lvl5,  Lvl6,  Lvl7,  Lvl8,
     Lvl9,  Lvl10, Lvl11, Lvl12,
     Lvl13, Lvl14, Lvl15, Lvl16,
   ];
 
-  let showSplashScreen = true;
-  let inGame           = false;
-  let selected         = 4;
+  let activeView: ActiveView = ActiveView.StartScreen;
+  let selectedLevel: number = 0;
 
   function handleStart() {
-    showSplashScreen = false;
+    activeView = ActiveView.LevelSelection;
   }
 
   function handleWinning(levelIndex: number) {
-    localStorage.setItem(`level-${levelIndex}`, boolean.toString(true));
-    localStorage.setItem(`level-${levelIndex + 1}`, boolean.toString(true));
-    selected = levelIndex;
-    inGame = false;
+    setLevelOpen(levelIndex);
+
+    if (levelIndex < levels.length - 1) {
+      setLevelOpen(levelIndex + 1);
+    }
+
+    selectedLevel = levelIndex < levels.length - 1
+      ? levelIndex + 1
+      : levelIndex;
+
+    activeView = ActiveView.LevelSelection;
   }
 
   function handleExit(levelIndex: number) {
-    selected = levelIndex;
-    inGame = false;
+    selectedLevel = levelIndex;
+    activeView    = ActiveView.LevelSelection;
   }
 
   function handleLevelSelection(levelIndex: number) {
-    inGame = true;
-    selected = levelIndex;
+    if (isLevelOpen(levelIndex)) {
+      selectedLevel = levelIndex;
+      activeView    = ActiveView.Game;
+    }
   }
 </script>
 
 <main>
-  {#if showSplashScreen}
+  {#if activeView === ActiveView.StartScreen}
     <StartScreen {handleStart} />
-  {:else if inGame}
-    <Game
-      title={`Level - ${selected + 1}`}
-      level={levels[selected]}
-      handleWinning={() => handleWinning(selected)}
-      handleExit={() => handleExit(selected)}
-    />
-  {:else}
-    <LevelMenu
-      cursor={selected}
+  {/if}
+
+  {#if activeView === ActiveView.LevelSelection}
+    <LevelSelection
+      cursorLocation={selectedLevel}
       levelAmount={levels.length}
-      {handleLevelSelection} />
+      {handleLevelSelection}
+    />
+  {/if}
+
+  {#if activeView === ActiveView.Game}
+    <Game
+      title={`Level - ${selectedLevel + 1}`}
+      level={levels[selectedLevel]}
+      handleWinning={() => handleWinning(selectedLevel)}
+      handleExit={() => handleExit(selectedLevel)}
+    />
   {/if}
 </main>
 
 <style>
   main {
-    display: flex;
+    display:        flex;
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
+    align-items:    center;
+    height:         100vh;
   }
 </style>
