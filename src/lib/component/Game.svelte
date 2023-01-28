@@ -1,5 +1,3 @@
-<!--TODO: Refactor into smaller core files inside the game folder-->
-
 <script lang="ts">
   import type Level from "../types/Level";
 
@@ -10,107 +8,87 @@
   import Title       from "./Title.svelte";
   import Controls    from "./Controls.svelte";
 
+  import { isInsideGrid, moveTileInGrid } from "../game/Grid";
+  import { isWalkable } from "../game/Tile";
+
   import readLevel from "../game/LevelReader";
+  import StackLevel from "../types/StackLevel";
 
   export let title: string;
   export let level: Level;
+
   export let handleWinning: () => void;
   export let handleExit:    () => void;
 
-  let points = 0;
-  let boxes  = 0;
-  let winningPoints = level.winningPoints;
+  const winningPoints = level.winningPoints;
 
-  let { player, grid } = readLevel(level);
-
+  let { player, grid }       = readLevel(level);
   let lastMovement: Movement = Movement.None;
 
-  const getLower = (location: number): TileType =>
-    isInsideGrid(location) ? grid[location][0] : TileType.Void;
-  const getUpper = (location: number): TileType =>
-    isInsideGrid(location) ? grid[location][1] : TileType.Void;
+  let points = 0;
+  let boxes  = 0;
 
-  function setLower(location: number, tile: TileType) {
-    if (isInsideGrid(location)) grid[location][0] = tile;
-  }
-  function setUpper(location: number, tile: TileType) {
-    if (isInsideGrid(location)) grid[location][1] = tile;
-  }
+  const getLowerTileAt = (location: number): TileType =>
+    isInsideGrid(grid, location) ? grid[location][StackLevel.Lower] : TileType.Void;
 
-  function move(location: number, movement: Movement): number {
-    let newLocation = location;
-    let oldLocation = location;
-
-    switch (movement) {
-      case Movement.Up:
-        newLocation = location - 16;
-        break;
-      case Movement.Down:
-        newLocation = location + 16;
-        break;
-
-      case Movement.Left:
-        newLocation = location - 1;
-        break;
-      case Movement.Right:
-        newLocation = location + 1;
-        break;
-    }
-
-    if (isInsideGrid(newLocation)) return newLocation;
-    return oldLocation;
+  function setLowerTileAt(location: number, tile: TileType) {
+    if (isInsideGrid(grid, location))
+      grid[location][StackLevel.Lower] = tile;
   }
 
-  function isWalkable(tile: TileType): boolean {
-    switch (tile) {
-      case TileType.LowerSolid:
-      case TileType.LowerBox:
-        return true;
-      default:
-        return false;
-    }
-  }
+  const getHigherTileAt = (location: number): TileType =>
+    isInsideGrid(grid, location) ? grid[location][StackLevel.Higher] : TileType.Void;
 
-  function isInsideGrid(location: number) {
-    return location >= 0 && location < grid.length;
+  function setHigherTileAt(location: number, tile: TileType) {
+    if (isInsideGrid(grid, location))
+      grid[location][StackLevel.Higher] = tile;
   }
 
   function movePlayer(movement: Movement) {
-    const newLocation = move(player, movement);
+    const newLocation = moveTileInGrid(grid, player, movement);
     lastMovement = movement;
 
+    const handleBoxInteraction = () => {
+      const newBoxLocation = moveTileInGrid(grid, newLocation, movement);
+
+      const newLocationIsOutsideGrid = () =>
+        newBoxLocation === newLocation;
+
+      const tileIsNotVoidAt = (location: number) =>
+        getHigherTileAt(location) !== TileType.Void;
+
+      if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation))
+        return;
+
+      else if (getLowerTileAt(newBoxLocation) === TileType.Void) 
+        setLowerTileAt(newBoxLocation, TileType.LowerBox);
+
+      else
+        setHigherTileAt(newBoxLocation, TileType.UpperBox);
+    }
+
     if (
-      isWalkable(getLower(newLocation)) &&
-      getUpper(newLocation) !== TileType.UpperSolid
+      isWalkable(getLowerTileAt(newLocation)) &&
+      getHigherTileAt(newLocation) !== TileType.UpperSolid
     ) {
-      if (getUpper(newLocation) === TileType.UpperBox) {
-        const boxNewLocation = move(newLocation, movement);
-        if (boxNewLocation === newLocation) {
-          return;
-        } else if (getLower(boxNewLocation) === TileType.Void) {
-          setLower(boxNewLocation, TileType.LowerBox);
-        } else if (getUpper(boxNewLocation) !== TileType.Void) {
-          return;
-        } else {
-          setUpper(boxNewLocation, TileType.UpperBox);
-        }
-      }
+      if (getHigherTileAt(newLocation) === TileType.UpperBox)
+        return handleBoxInteraction();
 
-      if (getLower(player) === TileType.LowerBox) {
-        setLower(player, TileType.Void);
-      }
-      if (getUpper(newLocation) === TileType.CollectablePointOne) {
+      if (getLowerTileAt(player) === TileType.LowerBox)
+        setLowerTileAt(player, TileType.Void);
+
+      if (getHigherTileAt(newLocation) === TileType.CollectablePointOne)
         points++;
-      }
-      if (getUpper(newLocation) === TileType.CollectablePointFive) {
-        points += 5;
-      }
-      if (getUpper(newLocation) === TileType.CollectableBox) {
-        boxes++;
-      }
 
-      setUpper(player, TileType.Void);
-      setUpper(newLocation, TileType.Player);
+      if (getHigherTileAt(newLocation) === TileType.CollectablePointFive)
+        points += 5;
+
+      if (getHigherTileAt(newLocation) === TileType.CollectableBox)
+        boxes++;
+
+
+      setHigherTileAt(player, TileType.Void);
+      setHigherTileAt(newLocation, TileType.Player);
 
       player = newLocation;
     }
@@ -118,19 +96,22 @@
 
   function spawnBox() {
     if (lastMovement !== Movement.None && boxes > 0) {
-      const spawnPosition = move(player, lastMovement);
+      const spawnPosition = moveTileInGrid(grid, player, lastMovement);
       if (
-        isInsideGrid(spawnPosition) &&
-        getUpper(spawnPosition) === TileType.Void &&
-        (getLower(spawnPosition) === TileType.LowerSolid ||
-          getLower(spawnPosition) === TileType.Void)
+        isInsideGrid(grid, spawnPosition) &&
+        getHigherTileAt(spawnPosition) === TileType.Void &&
+        (
+          getLowerTileAt(spawnPosition) === TileType.LowerSolid ||
+          getLowerTileAt(spawnPosition) === TileType.Void
+        )
       ) {
         boxes--;
-        if (getLower(spawnPosition) === TileType.Void) {
-          setLower(spawnPosition, TileType.LowerBox);
-        } else {
-          setUpper(spawnPosition, TileType.UpperBox);
-        }
+
+        if (getLowerTileAt(spawnPosition) === TileType.Void)
+          setLowerTileAt(spawnPosition, TileType.LowerBox);
+
+        else
+          setHigherTileAt(spawnPosition, TileType.UpperBox);
       }
     }
   }
