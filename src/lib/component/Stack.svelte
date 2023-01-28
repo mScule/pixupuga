@@ -1,30 +1,30 @@
 <script lang="ts">
-  import Tile from "./Tile.svelte";
-  import TileType from "../types/TileType";
-  import type TileStack from "../types/TileStack";
+    import Tile from "./Tile.svelte";
+    import TileType from "../types/TileType";
+    import type TileStack from "../types/TileStack";
 
-  export let tiles: TileStack = [TileType.Void, TileType.Void];
+    export let tiles: TileStack = [TileType.Void, TileType.Void];
 </script>
 
 <figure class="stack">
-  {#each tiles as type, zIndex}
-    <Tile {type} {zIndex} />
-  {/each}
+    {#each tiles as type, zIndex}
+        <Tile {type} {zIndex} />
+    {/each}
 </figure>
 
 <style>
-  figure {
-    display: block;
-    position: relative;
+    figure {
+        display: block;
+        position: relative;
 
-    width: var(--size-tile);
-    height: var(--size-tile);
+        width: var(--size-tile);
+        height: var(--size-tile);
 
-    margin: 0;
-    padding: 0;
-  }
+        margin: 0;
+        padding: 0;
+    }
 
-  :global(.stack > *) {
-    filter: var(--drop-shadow-game);
-  }
+    :global(.stack > *) {
+        filter: var(--drop-shadow-game);
+    }
 </style>
