@@ -62,10 +62,12 @@
                 getHigherTileAt(location) !== TileType.Void;
 
             if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation))
-                return;
+                return false;
             else if (getLowerTileAt(newBoxLocation) === TileType.Void)
                 setLowerTileAt(newBoxLocation, TileType.LowerBox);
-            else setHigherTileAt(newBoxLocation, TileType.UpperBox);
+            else
+                setHigherTileAt(newBoxLocation, TileType.UpperBox);
+            return true;
         };
 
         if (
@@ -73,7 +75,8 @@
             getHigherTileAt(newLocation) !== TileType.UpperSolid
         ) {
             if (getHigherTileAt(newLocation) === TileType.UpperBox)
-                return handleBoxInteraction();
+                if (!handleBoxInteraction())
+                    return;
 
             if (getLowerTileAt(player) === TileType.LowerBox)
                 setLowerTileAt(player, TileType.Void);
