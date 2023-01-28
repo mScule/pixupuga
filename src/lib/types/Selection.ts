@@ -1,6 +1,6 @@
 enum Selection {
-    Selected,
-    Unselected
+  Selected,
+  Unselected
 }
 
 export default Selection;

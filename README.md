@@ -2,7 +2,7 @@
 
 Game made entirely with Svelte, vanilla CSS and TypeScript. Number 4096 comes
 from the amount of tiles there will be in the finished game (one level is
-256 tiles. 256 * 16 levels = 4096 tiles in total in the whole game).
+256 tiles. 256 \* 16 levels = 4096 tiles in total in the whole game).
 
 ## Setup & quick start
 
@@ -16,8 +16,8 @@ from the amount of tiles there will be in the finished game (one level is
 `yarn dev` Starts the dev server.
 
 `yarn dev --host` Starts the dev server, but also makes it avaliable for others
-                  in the same network.
+in the same network.
 
 `yarn build` Builds the project.
 
-*To terminate any of the commands in the terminal, hit `CTRL + C`*
+_To terminate any of the commands in the terminal, hit `CTRL + C`_

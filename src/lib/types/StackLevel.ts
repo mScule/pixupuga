@@ -1,5 +1,5 @@
 enum StackLevel {
-  Lower  = 0,
+  Lower = 0,
   Higher = 1,
 }
 

@@ -3,16 +3,16 @@
 
   import KeyboardInput from "../types/KeyboardInput";
 
-  import arrow           from "../../assets/img/16x16/button/icon/arrow.png";
-  import actionPrimary   from "../../assets/img/16x16/button/icon/action/primary.png";
+  import arrow from "../../assets/img/16x16/button/icon/arrow.png";
+  import actionPrimary from "../../assets/img/16x16/button/icon/action/primary.png";
   import actionSecondary from "../../assets/img/16x16/button/icon/action/secondary.png";
 
-  export let handleUp:    () => void | null = null;
-  export let handleDown:  () => void | null = null;
-  export let handleLeft:  () => void | null = null;
+  export let handleUp: () => void | null = null;
+  export let handleDown: () => void | null = null;
+  export let handleLeft: () => void | null = null;
   export let handleRight: () => void | null = null;
 
-  export let handleActionPrimary:   () => void        = () => {};
+  export let handleActionPrimary: () => void = () => {};
   export let handleActionSecondary: () => void | null = null;
 
   function handleKeyboardInput(event: KeyboardEvent) {
@@ -23,11 +23,11 @@
         return handleActionSecondary && handleActionSecondary();
 
       case KeyboardInput.Up:
-        return handleUp    && handleUp();
+        return handleUp && handleUp();
       case KeyboardInput.Down:
-        return handleDown  && handleDown();
+        return handleDown && handleDown();
       case KeyboardInput.Left:
-        return handleLeft  && handleLeft();
+        return handleLeft && handleLeft();
       case KeyboardInput.Right:
         return handleRight && handleRight();
     }
@@ -75,11 +75,11 @@
 
 <style>
   nav {
-    display:         flex;
-    flex-direction:  row;
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
-    align-items:     center;
-    padding-top:     var(--size-buffer-large);
+    align-items: center;
+    padding-top: var(--size-buffer-large);
 
     width: var(--size-game-width);
   }
@@ -87,7 +87,7 @@
   img {
     image-rendering: pixelated;
 
-    width:  var(--size-control-button);
+    width: var(--size-control-button);
     height: var(--size-control-button);
 
     margin-top: calc(
@@ -98,17 +98,17 @@
   button {
     image-rendering: pixelated;
 
-    width:  var(--size-control-button);
+    width: var(--size-control-button);
     height: var(--size-control-button);
 
     display: block;
     padding: 0;
-    border:  0;
+    border: 0;
 
     background-color: transparent;
     background-image: url("../../assets/img/16x16/button/up.png");
-    background-size:  var(--size-control-button);
-    font-size:        1.3rem;
+    background-size: var(--size-control-button);
+    font-size: 1.3rem;
 
     filter: var(--drop-shadow);
   }
@@ -117,43 +117,67 @@
     background-image: url("../../assets/img/16x16/button/down.png");
   }
 
-  button:active > img   { margin-top: 0;        }
-  button:disabled > img { filter: opacity(45%); }
+  button:active > img {
+    margin-top: 0;
+  }
+  button:disabled > img {
+    filter: opacity(45%);
+  }
 
   .d-pad {
     display: grid;
 
     grid-template-columns: repeat(3, var(--size-control-button));
-    grid-template-rows:    var(--size-control-button);
+    grid-template-rows: var(--size-control-button);
     grid-template-areas:
       ".    up   .    "
       "left .    right"
       ".    down .    ";
   }
 
-  .up          { grid-area: up;                      }
-  .up > img    { transform: rotate(calc(90deg * 1)); }
+  .up {
+    grid-area: up;
+  }
+  .up > img {
+    transform: rotate(calc(90deg * 1));
+  }
 
-  .down        { grid-area: down;                    }
-  .down > img  { transform: rotate(calc(90deg * 3)); }
+  .down {
+    grid-area: down;
+  }
+  .down > img {
+    transform: rotate(calc(90deg * 3));
+  }
 
-  .left        { grid-area: left;                    }
-  .left > img  { transform: rotate(calc(90deg * 0)); }
+  .left {
+    grid-area: left;
+  }
+  .left > img {
+    transform: rotate(calc(90deg * 0));
+  }
 
-  .right       { grid-area: right;                   }
-  .right > img { transform: rotate(calc(90deg * 2)); }
+  .right {
+    grid-area: right;
+  }
+  .right > img {
+    transform: rotate(calc(90deg * 2));
+  }
 
   .action-buttons {
     display: grid;
 
     grid-template-columns: repeat(3, var(--size-control-button));
-    grid-template-rows:    repeat(3, var(--size-control-button));
+    grid-template-rows: repeat(3, var(--size-control-button));
     grid-template-areas:
       ".         . .      "
       "secondary . primary"
       ".         . .      ";
   }
 
-  .action-primary   { grid-area: primary;   }
-  .action-secondary { grid-area: secondary; }
+  .action-primary {
+    grid-area: primary;
+  }
+  .action-secondary {
+    grid-area: secondary;
+  }
 </style>

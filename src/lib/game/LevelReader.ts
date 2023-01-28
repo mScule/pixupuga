@@ -1,7 +1,7 @@
 import type TileGrid from "../types/TileGrid";
-import type Level    from "../types/Level";
+import type Level from "../types/Level";
 
-import TileType  from "../types/TileType";
+import TileType from "../types/TileType";
 import LevelAtom from "../types/LevelAtom";
 
 import createGrid from "./GridCreator";
@@ -18,41 +18,41 @@ function definitionToString(definition: Record<string, string>): string {
   return string;
 }
 
-function getLowerTile(atom:LevelAtom): TileType {
-    switch(atom) {
-        case LevelAtom.Void:  return TileType.Void;
-        case LevelAtom.Solid: return TileType.LowerSolid;
-        case LevelAtom.Box:   return TileType.LowerBox;
+function getLowerTile(atom: LevelAtom): TileType {
+  switch (atom) {
+    case LevelAtom.Void: return TileType.Void;
+    case LevelAtom.Solid: return TileType.LowerSolid;
+    case LevelAtom.Box: return TileType.LowerBox;
 
-        default: throw new Error(`Bad level atom for lower grid "${atom}"`);
-    }
+    default: throw new Error(`Bad level atom for lower grid "${atom}"`);
+  }
 }
 
-function getUpperTile(atom:LevelAtom): TileType {
-    switch(atom) {
-        case LevelAtom.Void:  return TileType.Void;
-        case LevelAtom.Solid: return TileType.UpperSolid;
-        case LevelAtom.Box:   return TileType.UpperBox;
-    
-        case LevelAtom.Player: return TileType.Player;
+function getUpperTile(atom: LevelAtom): TileType {
+  switch (atom) {
+    case LevelAtom.Void: return TileType.Void;
+    case LevelAtom.Solid: return TileType.UpperSolid;
+    case LevelAtom.Box: return TileType.UpperBox;
 
-        case LevelAtom.CollectableBox:  return TileType.CollectableBox;
-        case LevelAtom.CollectableOne:  return TileType.CollectablePointOne;
-        case LevelAtom.CollectableFive: return TileType.CollectablePointFive;
+    case LevelAtom.Player: return TileType.Player;
 
-        default: throw new Error(`Bad level atom for upper grid "${atom}"`);
-    }
+    case LevelAtom.CollectableBox: return TileType.CollectableBox;
+    case LevelAtom.CollectableOne: return TileType.CollectablePointOne;
+    case LevelAtom.CollectableFive: return TileType.CollectablePointFive;
+
+    default: throw new Error(`Bad level atom for upper grid "${atom}"`);
+  }
 }
 
 function findPlayer(grid: TileGrid): number {
-    let player = 0;
+  let player = 0;
 
-    grid.map((stack, location) => {
-        if (stack[1] === TileType.Player)
-            player = location;
-    });
+  grid.map((stack, location) => {
+    if (stack[1] === TileType.Player)
+      player = location;
+  });
 
-    return player;
+  return player;
 }
 
 function readLevel(level: Level) {

@@ -5,8 +5,8 @@
   import Movement from "../types/Movement";
 
   import GameDisplay from "./GameDisplay.svelte";
-  import Title       from "./Title.svelte";
-  import Controls    from "./Controls.svelte";
+  import Title from "./Title.svelte";
+  import Controls from "./Controls.svelte";
 
   import { isInsideGrid, moveTileInGrid } from "../game/Grid";
   import { isWalkable } from "../game/Tile";
@@ -18,30 +18,32 @@
   export let level: Level;
 
   export let handleWinning: () => void;
-  export let handleExit:    () => void;
+  export let handleExit: () => void;
 
   const winningPoints = level.winningPoints;
 
-  let { player, grid }       = readLevel(level);
+  let { player, grid } = readLevel(level);
   let lastMovement: Movement = Movement.None;
 
   let points = 0;
-  let boxes  = 0;
+  let boxes = 0;
 
   const getLowerTileAt = (location: number): TileType =>
-    isInsideGrid(grid, location) ? grid[location][StackLevel.Lower] : TileType.Void;
+    isInsideGrid(grid, location)
+      ? grid[location][StackLevel.Lower]
+      : TileType.Void;
 
   function setLowerTileAt(location: number, tile: TileType) {
-    if (isInsideGrid(grid, location))
-      grid[location][StackLevel.Lower] = tile;
+    if (isInsideGrid(grid, location)) grid[location][StackLevel.Lower] = tile;
   }
 
   const getHigherTileAt = (location: number): TileType =>
-    isInsideGrid(grid, location) ? grid[location][StackLevel.Higher] : TileType.Void;
+    isInsideGrid(grid, location)
+      ? grid[location][StackLevel.Higher]
+      : TileType.Void;
 
   function setHigherTileAt(location: number, tile: TileType) {
-    if (isInsideGrid(grid, location))
-      grid[location][StackLevel.Higher] = tile;
+    if (isInsideGrid(grid, location)) grid[location][StackLevel.Higher] = tile;
   }
 
   function movePlayer(movement: Movement) {
@@ -51,21 +53,16 @@
     const handleBoxInteraction = () => {
       const newBoxLocation = moveTileInGrid(grid, newLocation, movement);
 
-      const newLocationIsOutsideGrid = () =>
-        newBoxLocation === newLocation;
+      const newLocationIsOutsideGrid = () => newBoxLocation === newLocation;
 
       const tileIsNotVoidAt = (location: number) =>
         getHigherTileAt(location) !== TileType.Void;
 
-      if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation))
-        return;
-
-      else if (getLowerTileAt(newBoxLocation) === TileType.Void) 
+      if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation)) return;
+      else if (getLowerTileAt(newBoxLocation) === TileType.Void)
         setLowerTileAt(newBoxLocation, TileType.LowerBox);
-
-      else
-        setHigherTileAt(newBoxLocation, TileType.UpperBox);
-    }
+      else setHigherTileAt(newBoxLocation, TileType.UpperBox);
+    };
 
     if (
       isWalkable(getLowerTileAt(newLocation)) &&
@@ -83,9 +80,7 @@
       if (getHigherTileAt(newLocation) === TileType.CollectablePointFive)
         points += 5;
 
-      if (getHigherTileAt(newLocation) === TileType.CollectableBox)
-        boxes++;
-
+      if (getHigherTileAt(newLocation) === TileType.CollectableBox) boxes++;
 
       setHigherTileAt(player, TileType.Void);
       setHigherTileAt(newLocation, TileType.Player);
@@ -100,32 +95,26 @@
       if (
         isInsideGrid(grid, spawnPosition) &&
         getHigherTileAt(spawnPosition) === TileType.Void &&
-        (
-          getLowerTileAt(spawnPosition) === TileType.LowerSolid ||
-          getLowerTileAt(spawnPosition) === TileType.Void
-        )
+        (getLowerTileAt(spawnPosition) === TileType.LowerSolid ||
+          getLowerTileAt(spawnPosition) === TileType.Void)
       ) {
         boxes--;
 
         if (getLowerTileAt(spawnPosition) === TileType.Void)
           setLowerTileAt(spawnPosition, TileType.LowerBox);
-
-        else
-          setHigherTileAt(spawnPosition, TileType.UpperBox);
+        else setHigherTileAt(spawnPosition, TileType.UpperBox);
       }
     }
   }
 
-  const handleUp    = () => movePlayer(Movement.Up);
-  const handleDown  = () => movePlayer(Movement.Down);
-  const handleLeft  = () => movePlayer(Movement.Left);
+  const handleUp = () => movePlayer(Movement.Up);
+  const handleDown = () => movePlayer(Movement.Down);
+  const handleLeft = () => movePlayer(Movement.Left);
   const handleRight = () => movePlayer(Movement.Right);
 
   function handleActionPrimary() {
-    if (points < winningPoints)
-      spawnBox();
-    else
-      handleWinning();
+    if (points < winningPoints) spawnBox();
+    else handleWinning();
   }
 
   const handleActionSecondary = () => handleExit();

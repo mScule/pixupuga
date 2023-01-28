@@ -4,15 +4,15 @@
   import ActiveView from "./lib/types/ActiveView";
   import type Level from "./lib/types/Level";
 
-  import Lvl1  from "./assets/level/1.json";
-  import Lvl2  from "./assets/level/2.json";
-  import Lvl3  from "./assets/level/3.json";
-  import Lvl4  from "./assets/level/4.json";
-  import Lvl5  from "./assets/level/5.json";
-  import Lvl6  from "./assets/level/6.json";
-  import Lvl7  from "./assets/level/7.json";
-  import Lvl8  from "./assets/level/8.json";
-  import Lvl9  from "./assets/level/9.json";
+  import Lvl1 from "./assets/level/1.json";
+  import Lvl2 from "./assets/level/2.json";
+  import Lvl3 from "./assets/level/3.json";
+  import Lvl4 from "./assets/level/4.json";
+  import Lvl5 from "./assets/level/5.json";
+  import Lvl6 from "./assets/level/6.json";
+  import Lvl7 from "./assets/level/7.json";
+  import Lvl8 from "./assets/level/8.json";
+  import Lvl9 from "./assets/level/9.json";
   import Lvl10 from "./assets/level/10.json";
   import Lvl11 from "./assets/level/11.json";
   import Lvl12 from "./assets/level/12.json";
@@ -21,15 +21,27 @@
   import Lvl15 from "./assets/level/15.json";
   import Lvl16 from "./assets/level/16.json";
 
-  import StartScreen    from "./lib/component/StartScreen.svelte";
+  import StartScreen from "./lib/component/StartScreen.svelte";
   import LevelSelection from "./lib/component/LevelSelection.svelte";
-  import Game           from "./lib/component/Game.svelte";
+  import Game from "./lib/component/Game.svelte";
 
   const levels: Level[] = [
-    Lvl1,  Lvl2,  Lvl3,  Lvl4,
-    Lvl5,  Lvl6,  Lvl7,  Lvl8,
-    Lvl9,  Lvl10, Lvl11, Lvl12,
-    Lvl13, Lvl14, Lvl15, Lvl16,
+    Lvl1,
+    Lvl2,
+    Lvl3,
+    Lvl4,
+    Lvl5,
+    Lvl6,
+    Lvl7,
+    Lvl8,
+    Lvl9,
+    Lvl10,
+    Lvl11,
+    Lvl12,
+    Lvl13,
+    Lvl14,
+    Lvl15,
+    Lvl16,
   ];
 
   let activeView: ActiveView = ActiveView.StartScreen;
@@ -46,22 +58,21 @@
       setLevelOpen(levelIndex + 1);
     }
 
-    selectedLevel = levelIndex < levels.length - 1
-      ? levelIndex + 1
-      : levelIndex;
+    selectedLevel =
+      levelIndex < levels.length - 1 ? levelIndex + 1 : levelIndex;
 
     activeView = ActiveView.LevelSelection;
   }
 
   function handleExit(levelIndex: number) {
     selectedLevel = levelIndex;
-    activeView    = ActiveView.LevelSelection;
+    activeView = ActiveView.LevelSelection;
   }
 
   function handleLevelSelection(levelIndex: number) {
     if (isLevelOpen(levelIndex)) {
       selectedLevel = levelIndex;
-      activeView    = ActiveView.Game;
+      activeView = ActiveView.Game;
     }
   }
 </script>
@@ -91,9 +102,9 @@
 
 <style>
   main {
-    display:        flex;
+    display: flex;
     flex-direction: column;
-    align-items:    center;
-    height:         100vh;
+    align-items: center;
+    height: 100vh;
   }
 </style>

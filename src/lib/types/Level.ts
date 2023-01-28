@@ -2,7 +2,7 @@ import type GridDefinition from "./GridDefinition";
 
 export interface Level {
   winningPoints: number;
-  winningText?:  string;
+  winningText?: string;
 
   lower: GridDefinition;
   upper: GridDefinition;
