@@ -1,16 +1,16 @@
 enum TileType {
-  Void,
-  Player,
+    Void,
+    Player,
 
-  LowerBox,
-  LowerSolid,
+    LowerBox,
+    LowerSolid,
 
-  UpperBox,
-  UpperSolid,
+    UpperBox,
+    UpperSolid,
 
-  CollectablePointOne,
-  CollectablePointFive,
-  CollectableBox,
+    CollectablePointOne,
+    CollectablePointFive,
+    CollectableBox,
 }
 
 export default TileType;

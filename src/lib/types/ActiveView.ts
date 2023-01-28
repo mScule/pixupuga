@@ -1,7 +1,7 @@
 enum ActiveView {
-  StartScreen,
-  LevelSelection,
-  Game
+    StartScreen,
+    LevelSelection,
+    Game
 }
 
 export default ActiveView;
