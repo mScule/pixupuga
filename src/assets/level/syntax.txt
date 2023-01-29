@@ -1,15 +1,19 @@
 Lower level elements:
 
-  Space: Void
-  s:     Solid ground
-  b:     Box
+  . Void
+  s Solid ground
+  b Box
+  r Boulder - Sunken
+  R Boulder - Afloat
 
 Higher level elements:
 
-  Space: Void
-  s:     Solid wall
-  b:     Box wall
-  p:     Player
-  1:     Point 1
-  5:     Point 5
-  B:     Collectable box
+  . Void
+  s Solid
+  b Box
+  r Boulder
+  p Player
+
+  1 Point 1
+  5 Point 5
+  B Collectable box

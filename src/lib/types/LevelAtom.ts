@@ -5,6 +5,8 @@ enum LevelAtom {
 
     // Dynamic
     Box = "b",
+    Boulder = "r",
+    BoulderAfloat = "R",
     Player = "p",
 
     // Collectable

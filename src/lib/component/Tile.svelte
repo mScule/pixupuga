@@ -1,9 +1,13 @@
 <script lang="ts">
     import LowerBox from "../../assets/img/8x8/lower/box.png";
     import LowerSolid from "../../assets/img/8x8/lower/solid.png";
+    import LowerBoulderSunken from "../../assets/img/8x8/lower/boulder/sunken.gif";
+    import LowerBoulderAfloat from "../../assets/img/8x8/lower/boulder/afloat.png";
 
     import UpperBox from "../../assets/img/8x8/upper/box.png";
     import UpperSolid from "../../assets/img/8x8/upper/solid.png";
+    import UpperBoulderStill from "../../assets/img/8x8/upper/boulder/still.png";
+    import UpperBoulderMoving from "../../assets/img/8x8/upper/boulder/moving.gif";
 
     import PointOne from "../../assets/img/8x8/collectable/point/1.png";
     import PointFive from "../../assets/img/8x8/collectable/point/5.png";
@@ -52,12 +56,28 @@
                 setTile(LowerSolid, "Lower solid", null);
                 break;
 
+            case TileType.LowerBoulderSunken:
+                setTile(LowerBoulderSunken, "Lower Boulder - Sunken", null);
+                break;
+
+            case TileType.LowerBoulderAfloat:
+                setTile(LowerBoulderAfloat, "Lower Boulder - Afloat", null);
+                break;
+
             case TileType.UpperBox:
                 setTile(UpperBox, "Upper box", null);
                 break;
 
             case TileType.UpperSolid:
                 setTile(UpperSolid, "Upper solid", null);
+                break;
+
+            case TileType.UpperBoulder:
+                setTile(UpperBoulderStill, "Upper Boulder", null);
+                break;
+
+            case TileType.UpperBoulderMoving:
+                setTile(UpperBoulderMoving, "Upper Boulder - Moving", null);
                 break;
 
             case TileType.Player:

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount, onDestroy } from "svelte";
+
     import type Level from "../types/Level";
 
     import TileType from "../types/TileType";
@@ -28,6 +30,9 @@
     let points = 0;
     let boxes = 0;
 
+    let boulders: ({ location: number; movement: Movement } | null)[] = [];
+    let boulderInterval = null;
+
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
             ? grid[location][StackLevel.Lower]
@@ -48,6 +53,9 @@
             grid[location][StackLevel.Higher] = tile;
     }
 
+    const tileIsNotVoidAt = (location: number) =>
+        getHigherTileAt(location) !== TileType.Void;
+
     function movePlayer(movement: Movement) {
         const newLocation = moveTileInGrid(grid, player, movement);
         lastMovement = movement;
@@ -58,25 +66,62 @@
             const newLocationIsOutsideGrid = () =>
                 newBoxLocation === newLocation;
 
-            const tileIsNotVoidAt = (location: number) =>
-                getHigherTileAt(location) !== TileType.Void;
-
             if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation))
                 return false;
             else if (getLowerTileAt(newBoxLocation) === TileType.Void)
                 setLowerTileAt(newBoxLocation, TileType.LowerBox);
-            else
-                setHigherTileAt(newBoxLocation, TileType.UpperBox);
+            else setHigherTileAt(newBoxLocation, TileType.UpperBox);
+            return true;
+        };
+
+        const handleBoulderInteraction = () => {
+            const newBoulderLocation = moveTileInGrid(
+                grid,
+                newLocation,
+                movement
+            );
+
+            const newLocationIsOutsideGrid = () =>
+                newBoulderLocation === newLocation;
+
+            if (
+                newLocationIsOutsideGrid() ||
+                tileIsNotVoidAt(newBoulderLocation)
+            ) {
+                return false;
+            } else if (getLowerTileAt(newBoulderLocation) === TileType.Void) {
+                setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
+            } else if (
+                getLowerTileAt(newBoulderLocation) ===
+                TileType.LowerBoulderSunken
+            ) {
+                setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
+            } else {
+                setHigherTileAt(
+                    newBoulderLocation,
+                    TileType.UpperBoulderMoving
+                );
+                boulders = [
+                    ...boulders,
+                    {
+                        location: newBoulderLocation,
+                        movement: movement,
+                    },
+                ];
+            }
             return true;
         };
 
         if (
             isWalkable(getLowerTileAt(newLocation)) &&
-            getHigherTileAt(newLocation) !== TileType.UpperSolid
+            getHigherTileAt(newLocation) !== TileType.UpperSolid &&
+            getHigherTileAt(newLocation) !== TileType.UpperBoulderMoving
         ) {
+            if (getHigherTileAt(newLocation) === TileType.UpperBoulder)
+                if (!handleBoulderInteraction()) return;
+
             if (getHigherTileAt(newLocation) === TileType.UpperBox)
-                if (!handleBoxInteraction())
-                    return;
+                if (!handleBoxInteraction()) return;
 
             if (getLowerTileAt(player) === TileType.LowerBox)
                 setLowerTileAt(player, TileType.Void);
@@ -114,6 +159,53 @@
             }
         }
     }
+    function moveBoulder(location: number, movement: Movement) {
+        const newBoulderLocation = moveTileInGrid(grid, location, movement);
+
+        const newLocationIsOutsideGrid = () => newBoulderLocation === location;
+
+        const removeFromMovingBoulders = () => {
+            boulders[
+                boulders.findIndex(
+                    (b) =>
+                        b && b.location === location && b.movement === movement
+                )
+            ] = null;
+        };
+
+        setHigherTileAt(location, TileType.Void);
+
+        if (
+            newLocationIsOutsideGrid() ||
+            getHigherTileAt(newBoulderLocation) !== TileType.Void
+        ) {
+            setHigherTileAt(location, TileType.UpperBoulder);
+            removeFromMovingBoulders();
+            return;
+        }
+
+        if (getLowerTileAt(newBoulderLocation) === TileType.Void) {
+            setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
+            removeFromMovingBoulders();
+            return;
+        }
+
+        if (
+            getLowerTileAt(newBoulderLocation) === TileType.LowerBoulderSunken
+        ) {
+            setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
+            removeFromMovingBoulders();
+            return;
+        }
+
+        setHigherTileAt(newBoulderLocation, TileType.UpperBoulderMoving);
+        const foundIndex = boulders.findIndex(
+            (b) => b && b.location === location && b.movement === movement
+        );
+
+        if (foundIndex !== -1 && boulders[foundIndex])
+            boulders[foundIndex].location = newBoulderLocation;
+    }
 
     const handleUp = () => movePlayer(Movement.Up);
     const handleDown = () => movePlayer(Movement.Down);
@@ -121,11 +213,36 @@
     const handleRight = () => movePlayer(Movement.Right);
 
     function handleActionPrimary() {
-        if (points < winningPoints) spawnBox();
-        else handleWinning();
+        if (points < winningPoints) {
+            spawnBox();
+        } else {
+            handleWinning();
+        }
     }
 
     const handleActionSecondary = () => handleExit();
+
+    function updateBoulders() {
+        if (boulders.length === 0) {
+            return;
+        }
+
+        for (const boulder of boulders) {
+            if (boulder !== null) {
+                moveBoulder(boulder.location, boulder.movement);
+            }
+        }
+
+        boulders = [...boulders.filter((boulder) => boulder !== null)];
+    }
+
+    onMount(() => {
+        boulderInterval = setInterval(updateBoulders, 300);
+    });
+
+    onDestroy(() => {
+        clearInterval(boulderInterval);
+    });
 </script>
 
 <GameDisplay

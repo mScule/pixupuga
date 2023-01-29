@@ -4,13 +4,17 @@ enum TileType {
 
     LowerBox,
     LowerSolid,
+    LowerBoulderSunken,
+    LowerBoulderAfloat,
 
     UpperBox,
     UpperSolid,
+    UpperBoulder,
+    UpperBoulderMoving,
 
     CollectablePointOne,
     CollectablePointFive,
-    CollectableBox,
+    CollectableBox
 }
 
 export default TileType;
