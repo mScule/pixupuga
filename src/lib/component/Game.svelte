@@ -29,6 +29,7 @@
 
     let points = 0;
     let boxes = 0;
+    let died = false;
 
     let boulders: ({ location: number; movement: Movement } | null)[] = [];
     let boulderInterval = null;
@@ -216,7 +217,14 @@
     const handleRight = () => movePlayer(Movement.Right);
 
     function handleActionPrimary() {
-        if (points < winningPoints) {
+        if (died) {
+            const restartedLevel = readLevel(level);
+            player = restartedLevel.player;
+            grid = restartedLevel.grid;
+            traps = restartedLevel.traps;
+            died = false;
+            boxes = 0;
+        } else if (points < winningPoints) {
             spawnBox();
         } else {
             handleWinning();
@@ -244,7 +252,7 @@
             if (getLowerTileAt(trap) === TileType.LowerTrapSpikesOff) {
                 setLowerTileAt(trap, TileType.LowerTrapSpikesOn);
                 if (getHigherTileAt(trap) === TileType.Player) {
-
+                    died = true;
                 } else {
                     setHigherTileAt(trap, TileType.Void);
                 }
@@ -269,6 +277,7 @@
     {title}
     {points}
     {boxes}
+    {died}
     {winningPoints}
     winningText={level.winningText}
     stacks={grid}
@@ -280,7 +289,7 @@
     {handleLeft}
     {handleRight}
     {handleActionPrimary}
-    handleActionSecondary={points < winningPoints
+    handleActionSecondary={!died && points < winningPoints
         ? handleActionSecondary
         : null}
 />
