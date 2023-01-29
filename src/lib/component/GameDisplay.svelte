@@ -9,6 +9,7 @@
     export let title: string;
     export let points: number;
     export let boxes: number;
+    export let died: boolean;
 
     export let winningPoints: number;
     export let winningText: string | null = null;
@@ -25,6 +26,9 @@
                 <p>{winningText}</p>
             {/if}
             <p>Press "{KeyboardInput.ActionPrimary}" to proceed</p>
+        {:else if died}
+            <h2>You DIED</h2>
+            <p>Press "{KeyboardInput.ActionPrimary}" to retry</p>
         {:else}
             <Grid {stacks} />
         {/if}

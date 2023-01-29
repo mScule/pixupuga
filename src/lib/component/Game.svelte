@@ -24,14 +24,18 @@
 
     const winningPoints = level.winningPoints;
 
-    let { player, grid } = readLevel(level);
+    let { player, traps, grid } = readLevel(level);
     let lastMovement: Movement = Movement.None;
 
     let points = 0;
     let boxes = 0;
+    let died = false;
 
     let boulders: ({ location: number; movement: Movement } | null)[] = [];
     let boulderInterval = null;
+
+    let trapSpikes: number[] = traps;
+    let trapSpikesInterval = null;
 
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
@@ -213,7 +217,14 @@
     const handleRight = () => movePlayer(Movement.Right);
 
     function handleActionPrimary() {
-        if (points < winningPoints) {
+        if (died) {
+            const restartedLevel = readLevel(level);
+            player = restartedLevel.player;
+            grid = restartedLevel.grid;
+            traps = restartedLevel.traps;
+            died = false;
+            boxes = 0;
+        } else if (points < winningPoints) {
             spawnBox();
         } else {
             handleWinning();
@@ -236,12 +247,29 @@
         boulders = [...boulders.filter((boulder) => boulder !== null)];
     }
 
+    function updateTraps() {
+        for (const trap of trapSpikes) {
+            if (getLowerTileAt(trap) === TileType.LowerTrapSpikesOff) {
+                setLowerTileAt(trap, TileType.LowerTrapSpikesOn);
+                if (getHigherTileAt(trap) === TileType.Player) {
+                    died = true;
+                } else {
+                    setHigherTileAt(trap, TileType.Void);
+                }
+            } else {
+                setLowerTileAt(trap, TileType.LowerTrapSpikesOff);
+            }
+        }
+    }
+
     onMount(() => {
-        boulderInterval = setInterval(updateBoulders, 300);
+        boulderInterval = setInterval(updateBoulders, 200);
+        trapSpikesInterval = setInterval(updateTraps, 1000);
     });
 
     onDestroy(() => {
         clearInterval(boulderInterval);
+        clearInterval(trapSpikesInterval);
     });
 </script>
 
@@ -249,6 +277,7 @@
     {title}
     {points}
     {boxes}
+    {died}
     {winningPoints}
     winningText={level.winningText}
     stacks={grid}
@@ -260,7 +289,7 @@
     {handleLeft}
     {handleRight}
     {handleActionPrimary}
-    handleActionSecondary={points < winningPoints
+    handleActionSecondary={!died && points < winningPoints
         ? handleActionSecondary
         : null}
 />
