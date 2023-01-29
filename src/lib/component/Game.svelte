@@ -237,7 +237,7 @@
     }
 
     onMount(() => {
-        boulderInterval = setInterval(updateBoulders, 300);
+        boulderInterval = setInterval(updateBoulders, 200);
     });
 
     onDestroy(() => {
