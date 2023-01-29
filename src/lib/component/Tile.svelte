@@ -93,16 +93,15 @@
 
 {#if src && sClass && sClass === "collectable"}
     <img
-        class={sClass}
-        style={`z-index:${zIndex};` +
-            `animation-delay: ${Math.random() * 1000 * 2}ms;`}
         {src}
         {alt}
+        style="z-index:{zIndex}; animation-delay: {Math.random() * 1000 * 2}ms"
+        class={sClass}
     />
 {:else if src && sClass}
-    <img class={sClass} {src} {alt} />
+    <img {src} {alt} style="z-index:{zIndex}"  class={sClass} />
 {:else if src}
-    <img {src} {alt} />
+    <img {src} {alt} style="z-index:{zIndex}" />
 {/if}
 
 <style>
