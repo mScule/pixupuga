@@ -23,6 +23,8 @@ function getLowerTile(atom: LevelAtom): TileType {
         case LevelAtom.Void: return TileType.Void;
         case LevelAtom.Solid: return TileType.LowerSolid;
         case LevelAtom.Box: return TileType.LowerBox;
+        case LevelAtom.Boulder: return TileType.LowerBoulderSunken;
+        case LevelAtom.BoulderAfloat: return TileType.LowerBoulderAfloat;
 
         default: throw new Error(`Bad level atom for lower grid "${atom}"`);
     }
@@ -33,6 +35,7 @@ function getUpperTile(atom: LevelAtom): TileType {
         case LevelAtom.Void: return TileType.Void;
         case LevelAtom.Solid: return TileType.UpperSolid;
         case LevelAtom.Box: return TileType.UpperBox;
+        case LevelAtom.Boulder: return TileType.UpperBoulder;
 
         case LevelAtom.Player: return TileType.Player;
 
