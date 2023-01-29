@@ -25,6 +25,8 @@ function getLowerTile(atom: LevelAtom): TileType {
         case LevelAtom.Box: return TileType.LowerBox;
         case LevelAtom.Boulder: return TileType.LowerBoulderSunken;
         case LevelAtom.BoulderAfloat: return TileType.LowerBoulderAfloat;
+        case LevelAtom.TrapSpikesOff: return TileType.LowerTrapSpikesOff;
+        case LevelAtom.TrapSpikesOn: return TileType.LowerTrapSpikesOn;
 
         default: throw new Error(`Bad level atom for lower grid "${atom}"`);
     }
@@ -58,6 +60,17 @@ function findPlayer(grid: TileGrid): number {
     return player;
 }
 
+function findTraps(grid: TileGrid): number[] {
+    let traps = [];
+
+    grid.map((stack, location) => {
+        if (stack[0] === TileType.LowerTrapSpikesOff || stack[0] === TileType.LowerTrapSpikesOn)
+            traps.push(location);
+    });
+
+    return traps;
+}
+
 function readLevel(level: Level) {
     const grid = createGrid();
 
@@ -69,7 +82,7 @@ function readLevel(level: Level) {
         grid[i][1] = getUpperTile(upper[i] as unknown as LevelAtom);
     }
 
-    return { player: findPlayer(grid), grid };
+    return { player: findPlayer(grid), traps: findTraps(grid), grid };
 }
 
 export default readLevel;

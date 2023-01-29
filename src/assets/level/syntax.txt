@@ -3,7 +3,8 @@ Lower level elements:
   . Void
   s Solid ground
   b Box
-  t Trap spikes
+  t Trap spikes - Off
+  T Trap spikes - On
   r Rock boulder - Sunken
   R Rock boulder - Afloat
 

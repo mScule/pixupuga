@@ -3,6 +3,8 @@
     import LowerSolid from "../../assets/img/8x8/lower/solid.png";
     import LowerBoulderSunken from "../../assets/img/8x8/lower/boulder/sunken.gif";
     import LowerBoulderAfloat from "../../assets/img/8x8/lower/boulder/afloat.png";
+    import LowerTrapSpikesOff from "../../assets/img/8x8/lower/trap-spikes/off.png";
+    import LowerTrapSpikesOn from "../../assets/img/8x8/lower/trap-spikes/on.png";
 
     import UpperBox from "../../assets/img/8x8/upper/box.png";
     import UpperSolid from "../../assets/img/8x8/upper/solid.png";
@@ -64,6 +66,14 @@
                 setTile(LowerBoulderAfloat, "Lower Boulder - Afloat", null);
                 break;
 
+            case TileType.LowerTrapSpikesOff:
+                setTile(LowerTrapSpikesOff, "Lower Trap spikes - Off", null);
+                break;
+
+            case TileType.LowerTrapSpikesOn:
+                setTile(LowerTrapSpikesOn, "Lower Trap spikes - On", null);
+                break;
+
             case TileType.UpperBox:
                 setTile(UpperBox, "Upper box", null);
                 break;
@@ -99,7 +109,7 @@
         class={sClass}
     />
 {:else if src && sClass}
-    <img {src} {alt} style="z-index:{zIndex}"  class={sClass} />
+    <img {src} {alt} style="z-index:{zIndex}" class={sClass} />
 {:else if src}
     <img {src} {alt} style="z-index:{zIndex}" />
 {/if}

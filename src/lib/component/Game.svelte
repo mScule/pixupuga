@@ -24,7 +24,7 @@
 
     const winningPoints = level.winningPoints;
 
-    let { player, grid } = readLevel(level);
+    let { player, traps, grid } = readLevel(level);
     let lastMovement: Movement = Movement.None;
 
     let points = 0;
@@ -32,6 +32,9 @@
 
     let boulders: ({ location: number; movement: Movement } | null)[] = [];
     let boulderInterval = null;
+
+    let trapSpikes: number[] = traps;
+    let trapSpikesInterval = null;
 
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
@@ -236,12 +239,29 @@
         boulders = [...boulders.filter((boulder) => boulder !== null)];
     }
 
+    function updateTraps() {
+        for (const trap of trapSpikes) {
+            if (getLowerTileAt(trap) === TileType.LowerTrapSpikesOff) {
+                setLowerTileAt(trap, TileType.LowerTrapSpikesOn);
+                if (getHigherTileAt(trap) === TileType.Player) {
+
+                } else {
+                    setHigherTileAt(trap, TileType.Void);
+                }
+            } else {
+                setLowerTileAt(trap, TileType.LowerTrapSpikesOff);
+            }
+        }
+    }
+
     onMount(() => {
         boulderInterval = setInterval(updateBoulders, 200);
+        trapSpikesInterval = setInterval(updateTraps, 1000);
     });
 
     onDestroy(() => {
         clearInterval(boulderInterval);
+        clearInterval(trapSpikesInterval);
     });
 </script>
 

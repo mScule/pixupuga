@@ -8,6 +8,8 @@ enum LevelAtom {
     Boulder = "r",
     BoulderAfloat = "R",
     Player = "p",
+    TrapSpikesOff = "t",
+    TrapSpikesOn = "T",
 
     // Collectable
     CollectableBox = "B",
