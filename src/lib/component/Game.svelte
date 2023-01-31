@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { onMount, onDestroy } from "svelte";
+    import { onMount, onDestroy, getContext } from "svelte";
+    import Context, { type DJContext } from "../types/Context";
 
     import type Level from "../types/Level";
 
@@ -15,9 +16,11 @@
 
     import readLevel from "../game/LevelReader";
     import StackLevel from "../types/StackLevel";
+    import type Track from "../types/Track";
 
     export let title: string;
     export let level: Level;
+    export let track: Track;
 
     export let handleWinning: () => void;
     export let handleExit: () => void;
@@ -36,6 +39,8 @@
 
     let trapSpikes: number[] = traps;
     let trapSpikesInterval = null;
+
+    const { requestTrack } = getContext<DJContext>(Context.DJ);
 
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
@@ -265,6 +270,7 @@
     onMount(() => {
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
+        requestTrack(track);
     });
 
     onDestroy(() => {

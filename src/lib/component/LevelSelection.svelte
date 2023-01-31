@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { onMount, getContext } from "svelte";
+    import Context, { type DJContext } from "../types/Context";
 
     import boolean from "../parse/boolean";
     import clamp from "../math/clamp";
@@ -13,12 +14,15 @@
     import Controls from "./Controls.svelte";
     import Title from "./Title.svelte";
     import KeyboardInput from "../types/KeyboardInput";
+    import Track from "../types/Track";
 
     export let handleLevelSelection: (levelIndex: number) => void;
     export let levelAmount: number;
     export let cursorLocation: number = 0;
 
     let levels = [];
+
+    const { requestTrack } = getContext<DJContext>(Context.DJ);
 
     function isLevelOpened(levelIndex: number) {
         return (
@@ -71,6 +75,7 @@
 
     onMount(() => {
         renderLevelGrid();
+        requestTrack(Track.LevelSelection);
     });
 </script>
 
