@@ -4,22 +4,25 @@
     import ActiveView from "./lib/types/ActiveView";
     import type Level from "./lib/types/Level";
 
-    import Lvl1 from "./assets/level/1.json";
-    import Lvl2 from "./assets/level/2.json";
-    import Lvl3 from "./assets/level/3.json";
-    import Lvl4 from "./assets/level/4.json";
-    import Lvl5 from "./assets/level/5.json";
-    import Lvl6 from "./assets/level/6.json";
-    import Lvl7 from "./assets/level/7.json";
-    import Lvl8 from "./assets/level/8.json";
-    import Lvl9 from "./assets/level/9.json";
-    import Lvl10 from "./assets/level/10.json";
-    import Lvl11 from "./assets/level/11.json";
-    import Lvl12 from "./assets/level/12.json";
-    import Lvl13 from "./assets/level/13.json";
-    import Lvl14 from "./assets/level/14.json";
-    import Lvl15 from "./assets/level/15.json";
-    import Lvl16 from "./assets/level/16.json";
+    import Lvl1 from "./assets/level/type-1-boxes/1.json";
+    import Lvl2 from "./assets/level/type-1-boxes/2.json";
+    import Lvl3 from "./assets/level/type-1-boxes/3.json";
+    import Lvl4 from "./assets/level/type-1-boxes/4.json";
+
+    import Lvl5 from "./assets/level/type-2-rock-boulders/5.json";
+    import Lvl6 from "./assets/level/type-2-rock-boulders/6.json";
+    import Lvl7 from "./assets/level/type-2-rock-boulders/7.json";
+    import Lvl8 from "./assets/level/type-2-rock-boulders/8.json";
+
+    import Lvl9 from "./assets/level/type-3-trap-spikes/9.json";
+    import Lvl10 from "./assets/level/type-3-trap-spikes/10.json";
+    import Lvl11 from "./assets/level/type-3-trap-spikes/11.json";
+    import Lvl12 from "./assets/level/type-3-trap-spikes/12.json";
+
+    import Lvl13 from "./assets/level/type-4-hard/13.json";
+    import Lvl14 from "./assets/level/type-4-hard/14.json";
+    import Lvl15 from "./assets/level/type-4-hard/15.json";
+    import Lvl16 from "./assets/level/type-4-hard/16.json";
 
     import StartScreen from "./lib/component/StartScreen.svelte";
     import LevelSelection from "./lib/component/LevelSelection.svelte";
@@ -70,7 +73,7 @@
     }
 
     function handleLevelSelection(levelIndex: number) {
-        if (isLevelOpen(levelIndex)) {
+        if (isLevelOpen(levelIndex) || levelIndex === 0) {
             selectedLevel = levelIndex;
             activeView = ActiveView.Game;
         }
