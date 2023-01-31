@@ -27,6 +27,8 @@
     import StartScreen from "./lib/component/StartScreen.svelte";
     import LevelSelection from "./lib/component/LevelSelection.svelte";
     import Game from "./lib/component/Game.svelte";
+    import DJ from "./lib/component/DJ.svelte";
+    import Track from "./lib/types/Track";
 
     const levels: Level[] = [
         Lvl1,
@@ -47,8 +49,8 @@
         Lvl16,
     ];
 
-    let activeView: ActiveView = ActiveView.Game;
-    let selectedLevel: number = 5;
+    let activeView: ActiveView = ActiveView.StartScreen;
+    let selectedLevel: number = 0;
 
     function handleStart() {
         activeView = ActiveView.LevelSelection;
@@ -81,26 +83,29 @@
 </script>
 
 <main>
-    {#if activeView === ActiveView.StartScreen}
-        <StartScreen {handleStart} />
-    {/if}
+    <DJ>
+        {#if activeView === ActiveView.StartScreen}
+            <StartScreen {handleStart} />
+        {/if}
 
-    {#if activeView === ActiveView.LevelSelection}
-        <LevelSelection
-            cursorLocation={selectedLevel}
-            levelAmount={levels.length}
-            {handleLevelSelection}
-        />
-    {/if}
+        {#if activeView === ActiveView.LevelSelection}
+            <LevelSelection
+                cursorLocation={selectedLevel}
+                levelAmount={levels.length}
+                {handleLevelSelection}
+            />
+        {/if}
 
-    {#if activeView === ActiveView.Game}
-        <Game
-            title={`Level - ${selectedLevel + 1}`}
-            level={levels[selectedLevel]}
-            handleWinning={() => handleWinning(selectedLevel)}
-            handleExit={() => handleExit(selectedLevel)}
-        />
-    {/if}
+        {#if activeView === ActiveView.Game}
+            <Game
+                track={Track.LevelType1}
+                title={`Level - ${selectedLevel + 1}`}
+                level={levels[selectedLevel]}
+                handleWinning={() => handleWinning(selectedLevel)}
+                handleExit={() => handleExit(selectedLevel)}
+            />
+        {/if}
+    </DJ>
 </main>
 
 <style>
