@@ -20,7 +20,6 @@
 
     export let title: string;
     export let level: Level;
-    export let track: Track;
 
     export let handleWinning: () => void;
     export let handleExit: () => void;
@@ -268,9 +267,10 @@
     }
 
     onMount(() => {
+        console.log("DJ: track", level.track);
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
-        requestTrack(track);
+        requestTrack(level.track);
     });
 
     onDestroy(() => {

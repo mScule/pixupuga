@@ -98,7 +98,6 @@
 
         {#if activeView === ActiveView.Game}
             <Game
-                track={Track.LevelType1}
                 title={`Level - ${selectedLevel + 1}`}
                 level={levels[selectedLevel]}
                 handleWinning={() => handleWinning(selectedLevel)}

@@ -42,7 +42,7 @@
     }
 
     onMount(() => {
-        trackSwitchInterval = setInterval(setTrack, 2000);
+        trackSwitchInterval = setInterval(setTrack, 500);
     });
     onDestroy(() => {
         clearInterval(trackSwitchInterval);
