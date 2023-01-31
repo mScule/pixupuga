@@ -1,5 +1,6 @@
 {
   "winningPoints": 0,
+  "track": "start-screen",
   "winningText": "Wow you played all the way at the end!? :,) Thanks for playing!",
   "lower": {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
