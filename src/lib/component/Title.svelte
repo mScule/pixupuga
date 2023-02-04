@@ -1,10 +1,13 @@
 <script lang="ts">
+    import isFullscreenEnabled from "../settings/Fullscreen";
     export let title: string = "";
 </script>
 
-<header>
-    <h1>{title}</h1>
-</header>
+{#if !isFullscreenEnabled()}
+    <header>
+        <h1>{title}</h1>
+    </header>
+{/if}
 
 <style>
     h1 {
