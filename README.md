@@ -14,7 +14,6 @@ EditorConfig for VS Code ([Link](https://marketplace.visualstudio.com/items?item
 ### After that, run following:
 Run `yarn install` to install dependencies.
 
-
 ## Commands
 
 `yarn dev` Starts the dev server. \

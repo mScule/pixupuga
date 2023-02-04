@@ -7,6 +7,8 @@
     import actionPrimary from "../../assets/img/16x16/button/icon/action/primary.png";
     import actionSecondary from "../../assets/img/16x16/button/icon/action/secondary.png";
 
+    import isFullscreenEnabled from "../settings/Fullscreen";
+
     export let handleUp: () => void | null = null;
     export let handleDown: () => void | null = null;
     export let handleLeft: () => void | null = null;
@@ -42,36 +44,42 @@
     });
 </script>
 
-<nav>
-    <div class="d-pad">
-        <button class="up" on:click={handleUp} disabled={!handleUp}>
-            <img src={arrow} alt="Arrow - Up" />
-        </button>
-        <button class="down" on:click={handleDown} disabled={!handleDown}>
-            <img src={arrow} alt="Arrow - Down" />
-        </button>
-        <button class="left" on:click={handleLeft} disabled={!handleLeft}>
-            <img src={arrow} alt="Arrow - Left" />
-        </button>
-        <button class="right" on:click={handleRight} disabled={!handleRight}>
-            <img src={arrow} alt="Arrow - Right" />
-        </button>
-    </div>
+{#if !isFullscreenEnabled()}
+    <nav>
+        <div class="d-pad">
+            <button class="up" on:click={handleUp} disabled={!handleUp}>
+                <img src={arrow} alt="Arrow - Up" />
+            </button>
+            <button class="down" on:click={handleDown} disabled={!handleDown}>
+                <img src={arrow} alt="Arrow - Down" />
+            </button>
+            <button class="left" on:click={handleLeft} disabled={!handleLeft}>
+                <img src={arrow} alt="Arrow - Left" />
+            </button>
+            <button
+                class="right"
+                on:click={handleRight}
+                disabled={!handleRight}
+            >
+                <img src={arrow} alt="Arrow - Right" />
+            </button>
+        </div>
 
-    <div class="action-buttons">
-        <button class="action-primary" on:click={handleActionPrimary}>
-            <img src={actionPrimary} alt="Action button - Primary" />
-        </button>
+        <div class="action-buttons">
+            <button class="action-primary" on:click={handleActionPrimary}>
+                <img src={actionPrimary} alt="Action button - Primary" />
+            </button>
 
-        <button
-            class="action-secondary"
-            on:click={handleActionSecondary}
-            disabled={!handleActionSecondary}
-        >
-            <img src={actionSecondary} alt="Action button - Secondary" />
-        </button>
-    </div>
-</nav>
+            <button
+                class="action-secondary"
+                on:click={handleActionSecondary}
+                disabled={!handleActionSecondary}
+            >
+                <img src={actionSecondary} alt="Action button - Secondary" />
+            </button>
+        </div>
+    </nav>
+{/if}
 
 <style>
     nav {

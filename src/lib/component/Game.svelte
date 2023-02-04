@@ -16,7 +16,6 @@
 
     import readLevel from "../game/LevelReader";
     import StackLevel from "../types/StackLevel";
-    import type Track from "../types/Track";
 
     export let title: string;
     export let level: Level;
