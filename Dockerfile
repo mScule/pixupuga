@@ -15,3 +15,5 @@ RUN \
 
 # Copy the built project into the nginx html folder
 RUN cp -a /usr/home/adventure-4096/dist/. /usr/share/nginx/html/
+
+EXPOSE 80:8080
