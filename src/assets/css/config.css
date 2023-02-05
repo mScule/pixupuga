@@ -18,6 +18,7 @@
 
     --size-game-width: calc((var(--size-8x8) * 16) + 2rem);
     --size-game-height: calc((var(--size-8x8) * 16) + 2rem);
+    --size-game-gap: var(--size-buffer-large);
 
     --size-tile: var(--size-8x8);
     --size-control-button: var(--size-16x16);
@@ -55,6 +56,8 @@
 
 @media only screen and (max-width: 330px) {
     :root {
+        --size-game-gap: var(--size-buffer-medium);
+
         --size-p: 0.25rem;
         --size-8x8: 8px;
         --size-16x16: 24px;

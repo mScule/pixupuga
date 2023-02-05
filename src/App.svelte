@@ -28,6 +28,9 @@
     import LevelSelection from "./lib/component/LevelSelection.svelte";
     import Game from "./lib/component/Game.svelte";
     import DJ from "./lib/component/DJ.svelte";
+    import SoundSettings from "./lib/component/SoundSettings.svelte";
+    import SoundPlayer from "./lib/component/SoundPlayer.svelte";
+    import Version from "./lib/component/Version.svelte";
 
     const levels: Level[] = [
         Lvl1,
@@ -82,31 +85,36 @@
 </script>
 
 <main>
+    <SoundSettings />
     <DJ>
-        {#if activeView === ActiveView.StartScreen}
-            <StartScreen {handleStart} />
-        {:else if activeView === ActiveView.LevelSelection}
-            <LevelSelection
-                cursorLocation={selectedLevel}
-                levelAmount={levels.length}
-                {handleLevelSelection}
-            />
-        {:else if activeView === ActiveView.Game}
-            <Game
-                title={`Level - ${selectedLevel + 1}`}
-                level={levels[selectedLevel]}
-                handleWinning={() => handleWinning(selectedLevel)}
-                handleExit={() => handleExit(selectedLevel)}
-            />
-        {/if}
+        <SoundPlayer>
+            {#if activeView === ActiveView.StartScreen}
+                <StartScreen {handleStart} />
+            {:else if activeView === ActiveView.LevelSelection}
+                <LevelSelection
+                    cursorLocation={selectedLevel}
+                    levelAmount={levels.length}
+                    {handleLevelSelection}
+                />
+            {:else if activeView === ActiveView.Game}
+                <Game
+                    title={`Level - ${selectedLevel + 1}`}
+                    level={levels[selectedLevel]}
+                    handleWinning={() => handleWinning(selectedLevel)}
+                    handleExit={() => handleExit(selectedLevel)}
+                />
+            {/if}
+        </SoundPlayer>
     </DJ>
+    <Version major={0} minor={1} patch={0} />
 </main>
 
 <style>
     main {
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
         align-items: center;
-        height: 100vh;
+        height: 100vh
     }
 </style>

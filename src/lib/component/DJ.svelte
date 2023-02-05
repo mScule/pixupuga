@@ -2,6 +2,7 @@
     import { onMount, onDestroy, setContext } from "svelte";
 
     import Context, { type DJContext } from "../types/Context";
+    import { playMusic } from "../stores/SoundSettings";
     import Track from "../types/Track";
 
     import trackStartScreen from "../../assets/audio/track/start-screen.mp3";
@@ -14,6 +15,9 @@
     let nextTrack = trackStartScreen;
     let selectedTrack = trackStartScreen;
     let trackSwitchInterval = null;
+
+    let play = false;
+    playMusic.subscribe((value) => (play = value));
 
     function requestTrack(track: Track) {
         switch (track) {
@@ -34,8 +38,6 @@
         }
     }
 
-    setContext<DJContext>(Context.DJ, { requestTrack });
-
     function setTrack() {
         if (selectedTrack !== nextTrack) {
             selectedTrack = nextTrack;
@@ -49,10 +51,11 @@
         clearInterval(trackSwitchInterval);
         selectedTrack = null;
     });
+
+    setContext<DJContext>(Context.DJ, { requestTrack });
 </script>
 
 <slot />
-
-{#if selectedTrack !== "no-track"}
+{#if selectedTrack !== "no-track" && play}
     <audio src={selectedTrack} autoplay loop />
 {/if}
