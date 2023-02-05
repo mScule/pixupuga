@@ -1,3 +1,4 @@
+import type SoundType from "./SoundType";
 import type Track from "./Track";
 
 enum Context {

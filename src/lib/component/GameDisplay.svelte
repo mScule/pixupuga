@@ -6,6 +6,9 @@
     import ScoreBoard from "./ScoreBoard.svelte";
     import Grid from "./Grid.svelte";
 
+    import playSound from "../game/SoundPlayer";
+    import SoundType from "../types/SoundType";
+
     export let title: string;
     export let points: number;
     export let boxes: number;
@@ -15,12 +18,18 @@
     export let winningText: string | null = null;
 
     export let stacks: TileGrid;
+
+    let winned = false;
+    $: winned = points >= winningPoints;
+
+    $: winned && playSound(SoundType.LevelWin);
+    $: died && playSound(SoundType.LevelLose);
 </script>
 
 <Display>
     <div class="game-display">
         <ScoreBoard {points} {boxes} {winningPoints} />
-        {#if points >= winningPoints}
+        {#if winned}
             <h2>{title} passed!</h2>
             {#if winningText}
                 <p>{winningText}</p>

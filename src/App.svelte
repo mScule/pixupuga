@@ -28,7 +28,6 @@
     import LevelSelection from "./lib/component/LevelSelection.svelte";
     import Game from "./lib/component/Game.svelte";
     import DJ from "./lib/component/DJ.svelte";
-    import Track from "./lib/types/Track";
 
     const levels: Level[] = [
         Lvl1,
@@ -86,17 +85,13 @@
     <DJ>
         {#if activeView === ActiveView.StartScreen}
             <StartScreen {handleStart} />
-        {/if}
-
-        {#if activeView === ActiveView.LevelSelection}
+        {:else if activeView === ActiveView.LevelSelection}
             <LevelSelection
                 cursorLocation={selectedLevel}
                 levelAmount={levels.length}
                 {handleLevelSelection}
             />
-        {/if}
-
-        {#if activeView === ActiveView.Game}
+        {:else if activeView === ActiveView.Game}
             <Game
                 title={`Level - ${selectedLevel + 1}`}
                 level={levels[selectedLevel]}

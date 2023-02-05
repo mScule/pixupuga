@@ -26,15 +26,11 @@
     let alt: string = "";
     let sClass: string | null = null;
 
-    const setTile = (
-        source: string,
-        alternative: string,
-        styleClass: string
-    ) => {
+    function setTile(source: string, alternative: string, styleClass: string) {
         src = source;
         alt = alternative;
         sClass = styleClass;
-    };
+    }
 
     $: {
         switch (type) {

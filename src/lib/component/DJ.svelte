@@ -14,10 +14,11 @@
     let nextTrack = trackStartScreen;
     let selectedTrack = trackStartScreen;
     let trackSwitchInterval = null;
-    let dj;
 
     function requestTrack(track: Track) {
         switch (track) {
+            case Track.Void:
+                return (nextTrack = Track.Void);
             case Track.StartScreen:
                 return (nextTrack = trackStartScreen);
             case Track.LevelSelection:
@@ -52,4 +53,6 @@
 
 <slot />
 
-<audio src={selectedTrack} bind:this={dj} autoplay loop />
+{#if selectedTrack !== "no-track"}
+    <audio src={selectedTrack} autoplay loop />
+{/if}

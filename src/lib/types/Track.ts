@@ -1,4 +1,5 @@
 enum Track {
+    Void = "no-track",
     StartScreen = "start-screen",
     LevelSelection = "level-selection",
     LevelType1 = "level-type-1",
