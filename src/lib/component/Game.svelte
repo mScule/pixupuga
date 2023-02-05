@@ -1,6 +1,9 @@
 <script lang="ts">
     import { onMount, onDestroy, getContext } from "svelte";
-    import Context, { type DJContext } from "../types/Context";
+    import Context, {
+        type DJContext,
+        type SoundPlayerContext
+    } from "../types/Context";
 
     import type Level from "../types/Level";
 
@@ -16,6 +19,9 @@
 
     import readLevel from "../game/LevelReader";
     import StackLevel from "../types/StackLevel";
+
+    import SoundType from "../types/SoundType";
+    import SoundPlayer from "./SoundPlayer.svelte";
 
     export let title: string;
     export let level: Level;
@@ -39,6 +45,7 @@
     let trapSpikesInterval = null;
 
     const { requestTrack } = getContext<DJContext>(Context.DJ);
+    const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
 
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
@@ -73,11 +80,16 @@
             const newLocationIsOutsideGrid = () =>
                 newBoxLocation === newLocation;
 
-            if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation))
+            if (newLocationIsOutsideGrid() || tileIsNotVoidAt(newBoxLocation)) {
+                playSound(SoundType.HigherHit);
                 return false;
-            else if (getLowerTileAt(newBoxLocation) === TileType.Void)
+            } else if (getLowerTileAt(newBoxLocation) === TileType.Void) {
                 setLowerTileAt(newBoxLocation, TileType.LowerBox);
-            else setHigherTileAt(newBoxLocation, TileType.UpperBox);
+                playSound(SoundType.LowerHit);
+            } else {
+                setHigherTileAt(newBoxLocation, TileType.UpperBox);
+                playSound(SoundType.HigherBox);
+            }
             return true;
         };
 
@@ -95,14 +107,17 @@
                 newLocationIsOutsideGrid() ||
                 tileIsNotVoidAt(newBoulderLocation)
             ) {
+                playSound(SoundType.HigherHit);
                 return false;
             } else if (getLowerTileAt(newBoulderLocation) === TileType.Void) {
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
+                playSound(SoundType.LowerHit);
             } else if (
                 getLowerTileAt(newBoulderLocation) ===
                 TileType.LowerBoulderSunken
             ) {
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
+                playSound(SoundType.LowerHit);
             } else {
                 setHigherTileAt(
                     newBoulderLocation,
@@ -130,17 +145,27 @@
             if (getHigherTileAt(newLocation) === TileType.UpperBox)
                 if (!handleBoxInteraction()) return;
 
-            if (getLowerTileAt(player) === TileType.LowerBox)
+            if (getLowerTileAt(player) === TileType.LowerBox) {
                 setLowerTileAt(player, TileType.Void);
+                playSound(SoundType.HigherDestruction);
+            }
 
-            if (getHigherTileAt(newLocation) === TileType.CollectablePointOne)
+            if (getHigherTileAt(newLocation) === TileType.CollectablePointOne) {
                 points++;
+                playSound(SoundType.CollectablePointOne);
+            }
 
-            if (getHigherTileAt(newLocation) === TileType.CollectablePointFive)
+            if (
+                getHigherTileAt(newLocation) === TileType.CollectablePointFive
+            ) {
                 points += 5;
+                playSound(SoundType.CollectablePointFive);
+            }
 
-            if (getHigherTileAt(newLocation) === TileType.CollectableBox)
+            if (getHigherTileAt(newLocation) === TileType.CollectableBox) {
                 boxes++;
+                playSound(SoundType.CollectableBoxCollect);
+            }
 
             setHigherTileAt(player, TileType.Void);
             setHigherTileAt(newLocation, TileType.Player);
@@ -160,9 +185,13 @@
             ) {
                 boxes--;
 
-                if (getLowerTileAt(spawnPosition) === TileType.Void)
+                if (getLowerTileAt(spawnPosition) === TileType.Void) {
                     setLowerTileAt(spawnPosition, TileType.LowerBox);
-                else setHigherTileAt(spawnPosition, TileType.UpperBox);
+                } else {
+                    setHigherTileAt(spawnPosition, TileType.UpperBox);
+                }
+
+                playSound(SoundType.CollectableBoxPlace);
             }
         }
     }
@@ -188,12 +217,14 @@
         ) {
             setHigherTileAt(location, TileType.UpperBoulder);
             removeFromMovingBoulders();
+            playSound(SoundType.HigherHit);
             return;
         }
 
         if (getLowerTileAt(newBoulderLocation) === TileType.Void) {
             setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
             removeFromMovingBoulders();
+            playSound(SoundType.LowerHit);
             return;
         }
 
@@ -202,6 +233,7 @@
         ) {
             setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
             removeFromMovingBoulders();
+            playSound(SoundType.LowerHit);
             return;
         }
 
@@ -209,6 +241,8 @@
         const foundIndex = boulders.findIndex(
             (b) => b && b.location === location && b.movement === movement
         );
+
+        playSound(SoundType.HigherBoulder);
 
         if (foundIndex !== -1 && boulders[foundIndex])
             boulders[foundIndex].location = newBoulderLocation;
@@ -226,6 +260,7 @@
             grid = restartedLevel.grid;
             traps = restartedLevel.traps;
             died = false;
+            points = 0;
             boxes = 0;
         } else if (points < winningPoints) {
             spawnBox();
@@ -254,19 +289,21 @@
         for (const trap of trapSpikes) {
             if (getLowerTileAt(trap) === TileType.LowerTrapSpikesOff) {
                 setLowerTileAt(trap, TileType.LowerTrapSpikesOn);
+                playSound(SoundType.LowerTrapSpikesUp);
                 if (getHigherTileAt(trap) === TileType.Player) {
                     died = true;
-                } else {
+                } else if (getHigherTileAt(trap) !== TileType.Void) {
                     setHigherTileAt(trap, TileType.Void);
+                    playSound(SoundType.HigherDestruction);
                 }
             } else {
                 setLowerTileAt(trap, TileType.LowerTrapSpikesOff);
+                playSound(SoundType.LowerTrapSpikesDown);
             }
         }
     }
 
     onMount(() => {
-        console.log("DJ: track", level.track);
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
         requestTrack(level.track);

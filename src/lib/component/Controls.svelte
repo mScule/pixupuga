@@ -87,7 +87,6 @@
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        padding-top: var(--size-buffer-large);
 
         width: var(--size-game-width);
     }

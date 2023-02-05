@@ -75,7 +75,7 @@
 
     onMount(() => {
         renderLevelGrid();
-        requestTrack(Track.LevelSelection);
+        requestTrack(Track.Void);
     });
 </script>
 

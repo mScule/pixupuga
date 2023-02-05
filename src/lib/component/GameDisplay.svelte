@@ -1,10 +1,15 @@
 <script lang="ts">
+    import { getContext } from "svelte";
+    import Context, { type SoundPlayerContext } from "../types/Context";
+
     import KeyboardInput from "../types/KeyboardInput";
     import type TileGrid from "../types/TileGrid";
 
     import Display from "./Display.svelte";
     import ScoreBoard from "./ScoreBoard.svelte";
     import Grid from "./Grid.svelte";
+
+    import SoundType from "../types/SoundType";
 
     export let title: string;
     export let points: number;
@@ -15,12 +20,20 @@
     export let winningText: string | null = null;
 
     export let stacks: TileGrid;
+
+    const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
+
+    let winned = false;
+    $: winned = points >= winningPoints;
+
+    $: winned && playSound(SoundType.LevelWin);
+    $: died && playSound(SoundType.LevelLose);
 </script>
 
 <Display>
     <div class="game-display">
         <ScoreBoard {points} {boxes} {winningPoints} />
-        {#if points >= winningPoints}
+        {#if winned}
             <h2>{title} passed!</h2>
             {#if winningText}
                 <p>{winningText}</p>
