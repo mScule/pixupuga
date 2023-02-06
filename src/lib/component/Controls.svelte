@@ -3,10 +3,6 @@
 
     import KeyboardInput from "../types/KeyboardInput";
 
-    import arrow from "../../assets/img/16x16/button/icon/arrow.png";
-    import actionPrimary from "../../assets/img/16x16/button/icon/action/primary.png";
-    import actionSecondary from "../../assets/img/16x16/button/icon/action/secondary.png";
-
     import isFullscreenEnabled from "../settings/Fullscreen";
 
     export let handleUp: () => void | null = null;
@@ -48,34 +44,34 @@
     <nav>
         <div class="d-pad">
             <button class="up" on:click={handleUp} disabled={!handleUp}>
-                <img src={arrow} alt="Arrow - Up" />
+                <div class="arrow" />
             </button>
             <button class="down" on:click={handleDown} disabled={!handleDown}>
-                <img src={arrow} alt="Arrow - Down" />
+                <div class="arrow" />
             </button>
             <button class="left" on:click={handleLeft} disabled={!handleLeft}>
-                <img src={arrow} alt="Arrow - Left" />
+                <div class="arrow" />
             </button>
             <button
                 class="right"
                 on:click={handleRight}
                 disabled={!handleRight}
             >
-                <img src={arrow} alt="Arrow - Right" />
+                <div class="arrow" />
             </button>
         </div>
 
         <div class="action-buttons">
-            <button class="action-primary" on:click={handleActionPrimary}>
-                <img src={actionPrimary} alt="Action button - Primary" />
+            <button class="action-primary-location" on:click={handleActionPrimary}>
+                <div class="action-primary" />
             </button>
 
             <button
-                class="action-secondary"
+                class="action-secondary-location"
                 on:click={handleActionSecondary}
                 disabled={!handleActionSecondary}
             >
-                <img src={actionSecondary} alt="Action button - Secondary" />
+                <div class="action-secondary" />
             </button>
         </div>
     </nav>
@@ -85,21 +81,10 @@
     nav {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
 
         width: var(--size-game-width);
-    }
-
-    img {
-        image-rendering: pixelated;
-
-        width: var(--size-control-button);
-        height: var(--size-control-button);
-
-        margin-top: calc(
-            (var(--size-control-button) / 1.2) - var(--size-control-button)
-        );
     }
 
     button {
@@ -116,19 +101,30 @@
         background-image: url("../../assets/img/16x16/button/up.png");
         background-size: var(--size-control-button);
         font-size: 1.3rem;
-
-        filter: var(--drop-shadow);
     }
-
-    button:active {
+    button:disabled, button:active {
         background-image: url("../../assets/img/16x16/button/down.png");
     }
-
-    button:active > img {
-        margin-top: 0;
+    button:disabled > div, button:active > div {
+        background: transparent
     }
-    button:disabled > img {
-        filter: opacity(45%);
+
+    .action-primary-location {
+        grid-area: primary;
+    }
+    .action-primary {
+        background: url(../../assets/img/16x16/button/icon/action/primary.png);
+    }
+
+    .action-secondary-location {
+        grid-area: secondary;
+    }
+    .action-secondary {
+        background: url(../../assets/img/16x16/button/icon/action/secondary.png);
+    }
+
+    .arrow {
+        background: url(../../assets/img/16x16/button/icon/arrow.png);
     }
 
     .d-pad {
@@ -145,46 +141,45 @@
     .up {
         grid-area: up;
     }
-    .up > img {
+    .up > div {
         transform: rotate(calc(90deg * 1));
     }
 
     .down {
         grid-area: down;
     }
-    .down > img {
+    .down > div {
         transform: rotate(calc(90deg * 3));
     }
 
     .left {
         grid-area: left;
     }
-    .left > img {
+    .left > div {
         transform: rotate(calc(90deg * 0));
     }
 
     .right {
         grid-area: right;
     }
-    .right > img {
+    .right > div {
         transform: rotate(calc(90deg * 2));
     }
 
     .action-buttons {
         display: grid;
 
-        grid-template-columns: repeat(3, var(--size-control-button));
-        grid-template-rows: repeat(3, var(--size-control-button));
+        grid-template-columns: repeat(2, var(--size-control-button));
+        grid-template-rows: repeat(2, var(--size-control-button));
+        column-gap: var(--size-buffer-medium);
         grid-template-areas:
-            ".         . .      "
-            "secondary . primary"
-            ".         . .      ";
+            ".         primary"
+            "secondary .      ";
     }
 
-    .action-primary {
-        grid-area: primary;
-    }
-    .action-secondary {
-        grid-area: secondary;
+    .arrow, .action-primary, .action-secondary {
+        width: var(--size-control-button);
+        height: var(--size-control-button);
+        background-size:contain;
     }
 </style>

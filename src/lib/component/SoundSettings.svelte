@@ -14,21 +14,25 @@
 <slot />
 
 <section>
-    <p>Music:</p>
-    <button on:click={() => playMusic.set(!music)}>
-        <img
-            src={music ? imageChecked : imageUnchecked}
-            alt="Checkbox - unchecked"
-        />
-    </button>
+    <div>
+        <button on:click={() => playMusic.set(!music)}>
+            <img
+                src={music ? imageChecked : imageUnchecked}
+                alt="Checkbox - unchecked"
+            />
+        </button>
+        <p>Music</p>
+    </div>
 
-    <p>Sounds:</p>
-    <button on:click={() => playSounds.set(!sounds)}>
-        <img
-            src={sounds ? imageChecked : imageUnchecked}
-            alt="Checkbox - checked"
-        />
-    </button>
+    <div>
+        <button on:click={() => playSounds.set(!sounds)}>
+            <img
+                src={sounds ? imageChecked : imageUnchecked}
+                alt="Checkbox - checked"
+            />
+        </button>
+        <p>Sounds</p>
+    </div>
 </section>
 
 <style>
@@ -36,7 +40,14 @@
         width: var(--size-game-width);
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
+        align-items: center;
+        gap: var(--size-buffer-large);
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
     img {
@@ -48,5 +59,8 @@
         background: transparent;
         border: none;
         color: var(--color-font);
+    }
+    p {
+        font-size: x-small;
     }
 </style>
