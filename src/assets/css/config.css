@@ -6,7 +6,7 @@
 
     /* Colors */
     --color-game: var(--color-green-0);
-    --color-background: var(--color-green-25);
+    --color-background: var(--color-green-0);
     --color-fill: var(--color-green-50);
     --color-border: var(--color-green-50);
     --color-font: var(--color-green-75);
@@ -14,7 +14,7 @@
     /* Sizes */
     --size-p: 1rem;
     --size-8x8: 24px;
-    --size-16x16: 64px;
+    --size-16x16: 48px;
 
     --size-game-width: calc((var(--size-8x8) * 16) + 2rem);
     --size-game-height: calc((var(--size-8x8) * 16) + 2rem);
@@ -24,7 +24,7 @@
     --size-control-button: var(--size-16x16);
     --size-selection: var(--size-16x16);
 
-    --size-border: 4px;
+    --size-border: 2px;
     --size-border-radius: 0px;
 
     --size-buffer-small: 0.5rem;
@@ -42,8 +42,6 @@
 @media only screen and (max-width: 470px) {
     :root {
         --drop-shadow-game: none;
-
-        --size-game-width: 100%;
 
         --size-p: 0.5rem;
         --size-8x8: 16px;

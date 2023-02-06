@@ -85,7 +85,6 @@
 </script>
 
 <main>
-    <SoundSettings />
     <DJ>
         <SoundPlayer>
             {#if activeView === ActiveView.StartScreen}
@@ -106,6 +105,7 @@
             {/if}
         </SoundPlayer>
     </DJ>
+    <SoundSettings />
     <Version major={0} minor={1} patch={0} />
 </main>
 
@@ -115,6 +115,6 @@
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        height: 100vh
+        height: 90vh
     }
 </style>
