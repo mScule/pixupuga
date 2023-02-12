@@ -4,7 +4,8 @@ import type Track from "./Track";
 export interface Level {
     winningPoints: number;
     winningText?: string;
-    track: Track;
+    track?: Track;
+    type: "island" | "dungeon" | "jungle"
 
     lower: GridDefinition;
     upper: GridDefinition;
