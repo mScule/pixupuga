@@ -4,25 +4,25 @@
     import ActiveView from "./lib/types/ActiveView";
     import type Level from "./lib/types/Level";
 
-    import Lvl1 from "./assets/level/type-1-boxes/1.json";
-    import Lvl2 from "./assets/level/type-1-boxes/2.json";
-    import Lvl3 from "./assets/level/type-1-boxes/3.json";
-    import Lvl4 from "./assets/level/type-1-boxes/4.json";
+    import Type1Level1 from "./assets/level/1/1";
+    import Type1Level2 from "./assets/level/1/2";
+    import Type1Level3 from "./assets/level/1/3";
+    import Type1Level4 from "./assets/level/1/4";
 
-    import Lvl5 from "./assets/level/type-2-rock-boulders/5.json";
-    import Lvl6 from "./assets/level/type-2-rock-boulders/6.json";
-    import Lvl7 from "./assets/level/type-2-rock-boulders/7.json";
-    import Lvl8 from "./assets/level/type-2-rock-boulders/8.json";
+    import Type2Level1 from "./assets/level/2/1";
+    import Type2Level2 from "./assets/level/2/2";
+    import Type2Level3 from "./assets/level/2/3";
+    import Type2Level4 from "./assets/level/2/4";
 
-    import Lvl9 from "./assets/level/type-3-trap-spikes/9.json";
-    import Lvl10 from "./assets/level/type-3-trap-spikes/10.json";
-    import Lvl11 from "./assets/level/type-3-trap-spikes/11.json";
-    import Lvl12 from "./assets/level/type-3-trap-spikes/12.json";
+    import Type3Level1 from "./assets/level/3/1";
+    import Type3Level2 from "./assets/level/3/2";
+    import Type3Level3 from "./assets/level/3/3";
+    import Type3Level4 from "./assets/level/3/4";
 
-    import Lvl13 from "./assets/level/type-4-hard/13.json";
-    import Lvl14 from "./assets/level/type-4-hard/14.json";
-    import Lvl15 from "./assets/level/type-4-hard/15.json";
-    import Lvl16 from "./assets/level/type-4-hard/16.json";
+    import Type4Level1 from "./assets/level/4/1";
+    import Type4Level2 from "./assets/level/4/2";
+    import Type4Level3 from "./assets/level/4/3";
+    import Type4Level4 from "./assets/level/4/4";
 
     import StartScreen from "./lib/component/StartScreen.svelte";
     import LevelSelection from "./lib/component/LevelSelection.svelte";
@@ -33,22 +33,25 @@
     import Version from "./lib/component/Version.svelte";
 
     const levels: Level[] = [
-        Lvl1,
-        Lvl2,
-        Lvl3,
-        Lvl4,
-        Lvl5,
-        Lvl6,
-        Lvl7,
-        Lvl8,
-        Lvl9,
-        Lvl10,
-        Lvl11,
-        Lvl12,
-        Lvl13,
-        Lvl14,
-        Lvl15,
-        Lvl16,
+        Type1Level1,
+        Type1Level2,
+        Type1Level3,
+        Type1Level4,
+
+        Type2Level1,
+        Type2Level2,
+        Type2Level3,
+        Type2Level4,
+
+        Type3Level1,
+        Type3Level2,
+        Type3Level3,
+        Type3Level4,
+
+        Type4Level1,
+        Type4Level2,
+        Type4Level3,
+        Type4Level4
     ];
 
     let activeView: ActiveView = ActiveView.StartScreen;

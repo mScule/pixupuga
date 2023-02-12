@@ -3,13 +3,15 @@
     import type TileGrid from "../types/TileGrid";
 
     import Stack from "./Stack.svelte";
+    import LevelWorld from "../types/LevelWorld";
 
+    export let world: LevelWorld = LevelWorld.Dungeon;
     export let stacks: TileGrid = [[TileType.Void, TileType.Void]];
 </script>
 
 <section>
     {#each stacks as tiles}
-        <Stack {tiles} />
+        <Stack {tiles} {world}/>
     {/each}
 </section>
 
@@ -20,12 +22,13 @@
 
         width: fit-content;
 
-        background: url(../../assets/img/16x16/background/water.gif);
         background-size: calc(var(--size-tile) * 2);
         image-rendering: pixelated;
 
         animation-name: water;
         animation-duration: 1s;
         animation-iteration-count: infinite;
+
+        background-image: url(../../assets/img/16x16/background.gif);
     }
 </style>

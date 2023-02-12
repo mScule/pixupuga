@@ -10,11 +10,13 @@
     import Grid from "./Grid.svelte";
 
     import SoundType from "../types/SoundType";
+    import type LevelWorld from "../types/LevelWorld";
 
     export let title: string;
     export let points: number;
     export let boxes: number;
     export let died: boolean;
+    export let world: LevelWorld;
 
     export let winningPoints: number;
     export let winningText: string | null = null;
@@ -43,7 +45,7 @@
             <h2>You DIED</h2>
             <p>Press "{KeyboardInput.ActionPrimary}" to retry</p>
         {:else}
-            <Grid {stacks} />
+            <Grid {stacks} {world}/>
         {/if}
     </div>
 </Display>
