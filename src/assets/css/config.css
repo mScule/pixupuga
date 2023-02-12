@@ -37,11 +37,13 @@
     /* Filters */
     --drop-shadow: drop-shadow(0px var(--size-buffer-small) 0px #00000055);
     --drop-shadow-game: drop-shadow(0px var(--size-buffer-small) 0px var(--color-green-black));
+    --translate-y-game-solid: calc(-1 * var(--size-buffer-small));
 }
 
 @media only screen and (max-width: 470px) {
     :root {
         --drop-shadow-game: none;
+        --translate-y-game-solid: 0;
 
         --size-p: 0.5rem;
         --size-8x8: 16px;
