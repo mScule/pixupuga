@@ -97,7 +97,8 @@
 
             case TileType.LowerSolid:
                 setTile(
-                    switchExpression(world,
+                    switchExpression(
+                        world,
                         [LevelWorld.Island, LowerSolidIsland],
                         [LevelWorld.Jungle, LowerSolidJungle],
                         [LevelWorld.Dungeon, LowerSolidDungeon]
@@ -132,29 +133,39 @@
                 break;
 
             case TileType.UpperBox:
-                setTile(UpperBox, "Upper box", [setZIndex()], ["cast-shadow"]);
+                setTile(UpperBox, "Upper box", [setZIndex()], ["shift-up"]);
                 break;
 
             case TileType.UpperSolid:
                 setTile(
-                    switchExpression(world,
+                    switchExpression(
+                        world,
                         [LevelWorld.Island, UpperSolidIsland],
                         [LevelWorld.Jungle, UpperSolidJungle],
                         [LevelWorld.Dungeon, UpperSolidDungeon]
                     ),
                     "Upper solid",
-                    [setZIndex()]
+                    [setZIndex()],
+                    ["shift-up"]
                 );
                 break;
 
             case TileType.UpperBoulder:
-                setTile(UpperBoulderStill, "Upper Boulder", [setZIndex()]);
+                setTile(
+                    UpperBoulderStill,
+                    "Upper Boulder",
+                    [setZIndex()],
+                    ["shift-up"]
+                );
                 break;
 
             case TileType.UpperBoulderMoving:
-                setTile(UpperBoulderMoving, "Upper Boulder - Moving", [
-                    setZIndex(),
-                ]);
+                setTile(
+                    UpperBoulderMoving,
+                    "Upper Boulder - Moving",
+                    [setZIndex()],
+                    ["shift-up"]
+                );
                 break;
 
             case TileType.Player:
@@ -192,6 +203,10 @@
         animation-duration: 2s;
         animation-iteration-count: infinite;
         animation-timing-function: ease-in-out;
+    }
+
+    .shift-up {
+        transform: translateY(var(--translate-y-game-solid));
     }
 
     @keyframes collectable-hover {
