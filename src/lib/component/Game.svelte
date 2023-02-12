@@ -321,6 +321,7 @@
     {boxes}
     {died}
     {winningPoints}
+    world={level.world}
     winningText={level.winningText}
     stacks={grid}
 />

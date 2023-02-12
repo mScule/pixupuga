@@ -35,8 +35,8 @@
     --size-h2: large;
 
     /* Filters */
-    --drop-shadow: drop-shadow(0px var(--size-buffer-small) 4px #00000055);
-    --drop-shadow-game: drop-shadow(0px var(--size-buffer-small) 0px #00000055);
+    --drop-shadow: drop-shadow(0px var(--size-buffer-small) 0px #00000055);
+    --drop-shadow-game: drop-shadow(0px var(--size-buffer-small) 0px var(--color-green-black));
 }
 
 @media only screen and (max-width: 470px) {
