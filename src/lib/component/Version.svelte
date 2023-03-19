@@ -7,3 +7,10 @@
 <footer>
     <p>Version: <b>{major}</b>.<b>{minor}</b>.<b>{patch}</b></p>
 </footer>
+
+<style>
+    footer > p {
+        font-size: 0.6rem;
+        padding-bottom: var(--size-buffer-small);
+    }
+</style>
