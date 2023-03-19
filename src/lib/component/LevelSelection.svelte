@@ -12,7 +12,6 @@
 
     import Display from "./Display.svelte";
     import Controls from "./Controls.svelte";
-    import Title from "./Title.svelte";
     import KeyboardInput from "../types/KeyboardInput";
     import Track from "../types/Track";
 
@@ -104,7 +103,7 @@
         </div>
     </div>
 </Display>
-<Title title="Adventure 4096" />
+
 <Controls
     {handleUp}
     {handleDown}

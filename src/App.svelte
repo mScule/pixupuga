@@ -116,8 +116,8 @@
     main {
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
-        height: 90vh;
+        height: 100vh;
     }
 </style>

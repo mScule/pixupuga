@@ -9,7 +9,6 @@
 
     import Controls from "./Controls.svelte";
     import Display from "./Display.svelte";
-    import Title from "./Title.svelte";
 
     export let handleStart: () => void;
 
@@ -28,7 +27,7 @@
         <h2>Press "{KeyboardInput.ActionPrimary}" to play</h2>
     </div>
 </Display>
-<Title title={"Adventure 4096"} />
+
 <Controls {handleActionPrimary} />
 
 <style>

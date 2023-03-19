@@ -14,6 +14,7 @@
         max-height: var(--size-game-height);
         height: var(--size-game-height);
 
-        border: solid var(--size-border);
+        padding-top: var(--size-buffer-small);
+        padding-bottom: calc(var(--size-buffer-small) * 3);
     }
 </style>

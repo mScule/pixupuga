@@ -11,7 +11,6 @@
     import Movement from "../types/Movement";
 
     import GameDisplay from "./GameDisplay.svelte";
-    import Title from "./Title.svelte";
     import Controls from "./Controls.svelte";
 
     import { isInsideGrid, moveTileInGrid } from "../game/Grid";
@@ -319,7 +318,6 @@
     winningText={level.winningText}
     stacks={grid}
 />
-<Title {title} />
 <Controls
     {handleUp}
     {handleDown}
