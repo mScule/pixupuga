@@ -3,6 +3,7 @@ enum TileType {
     Player,
 
     LowerBox,
+    LowerBoxOnTopOfSunkenBoulder,
     LowerSolid,
     LowerBoulderSunken,
     LowerBoulderAfloat,

@@ -85,6 +85,11 @@
             }
 
             switch (lowerTileAtNewBoxLocation) {
+                case TileType.LowerBoulderSunken:
+                    setLowerTileAt(newBoxLocation, TileType.LowerBoxOnTopOfSunkenBoulder);
+                    playSound(SoundType.LowerHit);
+                    return true;
+
                 case TileType.Void:
                     setLowerTileAt(newBoxLocation, TileType.LowerBox);
                     playSound(SoundType.LowerHit);
@@ -161,13 +166,20 @@
                 return;
             }
 
-            if (lowerTileAtOldPlayerLocation === TileType.LowerBox) {
-                setLowerTileAt(oldPlayerLocation, TileType.Void);
-                playSound(SoundType.HigherDestruction);
-            }
-
             if (lowerTileAtNewPlayerLocation === TileType.LowerTrapSpikesOn) {
                 died = true;
+            }
+
+            switch (lowerTileAtOldPlayerLocation) {
+                case TileType.LowerBox:
+                    setLowerTileAt(oldPlayerLocation, TileType.Void);
+                    playSound(SoundType.HigherDestruction);
+                    break;
+
+                case TileType.LowerBoxOnTopOfSunkenBoulder:
+                    setLowerTileAt(oldPlayerLocation, TileType.LowerBoulderSunken);
+                    playSound(SoundType.HigherDestruction);
+                    break;
             }
 
             switch(higherTileAtNewPlayerLocation) {
