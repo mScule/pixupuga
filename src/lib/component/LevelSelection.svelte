@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount, getContext } from "svelte";
-    import Context, { type DJContext, type BackgroundContext } from "../types/Context";
+    import Context, { type DJContext } from "../types/Context";
 
     import boolean from "../parse/boolean";
     import clamp from "../math/clamp";
@@ -22,7 +22,6 @@
 
     let levels = [];
 
-    const { setBackground } = getContext<BackgroundContext>(Context.Background);
     const { requestTrack } = getContext<DJContext>(Context.DJ);
 
     function isLevelOpened(levelIndex: number) {
@@ -77,7 +76,6 @@
     onMount(() => {
         renderLevelGrid();
         requestTrack(Track.Void);
-        setBackground(null);
         console.log("Levelselection mount");
     });
 </script>

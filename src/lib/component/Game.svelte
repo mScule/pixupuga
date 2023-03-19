@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount, getContext } from "svelte";
     import Context, {
-        type BackgroundContext,
         type DJContext,
         type SoundPlayerContext,
     } from "../types/Context";
@@ -46,7 +45,6 @@
 
     const { requestTrack } = getContext<DJContext>(Context.DJ);
     const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
-    const { setBackground } = getContext<BackgroundContext>(Context.Background)
 
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
@@ -308,7 +306,6 @@
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
         requestTrack(level.track);
-        setBackground(level.world);
     });
 </script>
 
