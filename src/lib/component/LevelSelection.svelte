@@ -15,7 +15,6 @@
     import Title from "./Title.svelte";
     import KeyboardInput from "../types/KeyboardInput";
     import Track from "../types/Track";
-    import { defaultCase } from "../expression/switchExpression";
 
     export let handleLevelSelection: (levelIndex: number) => void;
     export let levelAmount: number;
@@ -78,7 +77,7 @@
     onMount(() => {
         renderLevelGrid();
         requestTrack(Track.Void);
-        setBackground(defaultCase);
+        setBackground(null);
         console.log("Levelselection mount");
     });
 </script>

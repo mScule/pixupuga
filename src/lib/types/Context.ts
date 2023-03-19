@@ -1,7 +1,6 @@
 import type Track from "./Track";
 import type SoundType from "./SoundType";
 import type LevelWorld from "./LevelWorld";
-import type { SwitchExpressionDefault } from "../expression/switchExpression";
 
 enum Context {
     DJ,
@@ -18,7 +17,7 @@ export interface SoundPlayerContext {
 }
 
 export interface BackgroundContext {
-    setBackground: (type: LevelWorld | SwitchExpressionDefault) => void
+    setBackground: (type: LevelWorld | null) => void
 }
 
 export default Context;

@@ -99,9 +99,12 @@
                 setTile(
                     switchExpression(
                         world,
-                        [LevelWorld.Island, LowerSolidIsland],
-                        [LevelWorld.Jungle, LowerSolidJungle],
-                        [LevelWorld.Dungeon, LowerSolidDungeon]
+                        [
+                            [LevelWorld.Island, LowerSolidIsland],
+                            [LevelWorld.Jungle, LowerSolidJungle],
+                            [LevelWorld.Dungeon, LowerSolidDungeon],
+                        ],
+                        LowerSolidIsland
                     ),
                     "Lower solid",
                     [setZIndex()]
@@ -140,9 +143,12 @@
                 setTile(
                     switchExpression(
                         world,
-                        [LevelWorld.Island, UpperSolidIsland],
-                        [LevelWorld.Jungle, UpperSolidJungle],
-                        [LevelWorld.Dungeon, UpperSolidDungeon]
+                        [
+                            [LevelWorld.Island, UpperSolidIsland],
+                            [LevelWorld.Jungle, UpperSolidJungle],
+                            [LevelWorld.Dungeon, UpperSolidDungeon],
+                        ],
+                        UpperSolidIsland
                     ),
                     "Upper solid",
                     [setZIndex()],

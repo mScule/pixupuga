@@ -8,23 +8,23 @@
 
 .background.island {
     filter: hue-rotate(20deg);
-    background-image: url(../img/16x16/background/island.png);
+    /*background-image: url(../img/16x16/background/island.png);*/
 }
 
 .background.jungle {
     filter: hue-rotate(-30deg);
-    background-image: url(../img/16x16/background/jungle.png);
+    /*background-image: url(../img/16x16/background/jungle.png);*/
 
 }
 
 .background.dungeon {
     filter: hue-rotate(180deg);
-    background-image: url(../img/16x16/background/dungeon.png);
+    /*background-image: url(../img/16x16/background/dungeon.png);*/
 }
 
 .background.aether {
     filter: hue-rotate(0deg);
-    background-image: url(../img/16x16/background/aether.png);
+    /*background-image: url(../img/16x16/background/aether.png);*/
 }
 
 @keyframes move {
