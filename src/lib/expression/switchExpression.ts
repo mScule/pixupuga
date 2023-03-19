@@ -1,4 +1,4 @@
-type SwitchExpressionDefault = null;
+export type SwitchExpressionDefault = null;
 export const defaultCase:SwitchExpressionDefault = null;
 
 export default function switchExpression<Comparable, Value>(

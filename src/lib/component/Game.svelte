@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { onMount, onDestroy, getContext } from "svelte";
+    import { onMount, getContext } from "svelte";
     import Context, {
+        type BackgroundContext,
         type DJContext,
-        type SoundPlayerContext
+        type SoundPlayerContext,
     } from "../types/Context";
 
     import type Level from "../types/Level";
@@ -21,7 +22,6 @@
     import StackLevel from "../types/StackLevel";
 
     import SoundType from "../types/SoundType";
-    import SoundPlayer from "./SoundPlayer.svelte";
 
     export let title: string;
     export let level: Level;
@@ -46,6 +46,7 @@
 
     const { requestTrack } = getContext<DJContext>(Context.DJ);
     const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
+    const { setBackground } = getContext<BackgroundContext>(Context.Background)
 
     const getLowerTileAt = (location: number): TileType =>
         isInsideGrid(grid, location)
@@ -307,11 +308,7 @@
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
         requestTrack(level.track);
-    });
-
-    onDestroy(() => {
-        clearInterval(boulderInterval);
-        clearInterval(trapSpikesInterval);
+        setBackground(level.world);
     });
 </script>
 
