@@ -91,6 +91,7 @@
                 );
                 break;
 
+            case TileType.LowerBoxOnTopOfSunkenBoulder:
             case TileType.LowerBox:
                 setTile(LowerBox, "Lower Box", [setZIndex()], ["in-water"]);
                 break;
