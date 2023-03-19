@@ -1,9 +1,9 @@
 /* Contains all the base colors that are used in the config.css */
 
 :root {
-    --color-green-black: #1e2919;
-    --color-green-0: #1b3715;
-    --color-green-25: #48603f;
-    --color-green-50: #94a84d;
-    --color-green-75: #9bbc0f;
+    --color-0:  #000000;
+    --color-20: #0f380f;
+    --color-40: #306230;
+    --color-60: #8bac0f;
+    --color-80: #9bbc0f;
 }

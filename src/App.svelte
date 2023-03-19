@@ -31,6 +31,7 @@
     import SoundSettings from "./lib/component/SoundSettings.svelte";
     import SoundPlayer from "./lib/component/SoundPlayer.svelte";
     import Version from "./lib/component/Version.svelte";
+    import Background from "./lib/component/Background.svelte";
 
     const levels: Level[] = [
         Type1Level1,
@@ -51,7 +52,7 @@
         Type4Level1,
         Type4Level2,
         Type4Level3,
-        Type4Level4
+        Type4Level4,
     ];
 
     let activeView: ActiveView = ActiveView.StartScreen;
@@ -90,22 +91,24 @@
 <main>
     <DJ>
         <SoundPlayer>
-            {#if activeView === ActiveView.StartScreen}
-                <StartScreen {handleStart} />
-            {:else if activeView === ActiveView.LevelSelection}
-                <LevelSelection
-                    cursorLocation={selectedLevel}
-                    levelAmount={levels.length}
-                    {handleLevelSelection}
-                />
-            {:else if activeView === ActiveView.Game}
-                <Game
-                    title={`Level - ${selectedLevel + 1}`}
-                    level={levels[selectedLevel]}
-                    handleWinning={() => handleWinning(selectedLevel)}
-                    handleExit={() => handleExit(selectedLevel)}
-                />
-            {/if}
+            <Background>
+                {#if activeView === ActiveView.StartScreen}
+                    <StartScreen {handleStart} />
+                {:else if activeView === ActiveView.LevelSelection}
+                    <LevelSelection
+                        cursorLocation={selectedLevel}
+                        levelAmount={levels.length}
+                        {handleLevelSelection}
+                    />
+                {:else if activeView === ActiveView.Game}
+                    <Game
+                        title={`Level - ${selectedLevel + 1}`}
+                        level={levels[selectedLevel]}
+                        handleWinning={() => handleWinning(selectedLevel)}
+                        handleExit={() => handleExit(selectedLevel)}
+                    />
+                {/if}
+            </Background>
         </SoundPlayer>
     </DJ>
     <SoundSettings />
@@ -118,6 +121,6 @@
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        height: 90vh
+        height: 90vh;
     }
 </style>
