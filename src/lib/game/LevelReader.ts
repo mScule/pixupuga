@@ -82,7 +82,7 @@ function readLevel(level: Level) {
         grid[i][1] = getUpperTile(upper[i] as unknown as LevelAtom);
     }
 
-    return { player: findPlayer(grid), traps: findTraps(grid), grid };
+    return { playerLocation: findPlayer(grid), trapLocations: findTraps(grid), grid };
 }
 
 export default readLevel;

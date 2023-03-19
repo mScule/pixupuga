@@ -68,6 +68,7 @@
 
         const sound = new Audio(getSound(type));
         sound.play();
+        sound.loop = false;
     }
 
     setContext<SoundPlayerContext>(Context.SoundPlayer, { playSound });
