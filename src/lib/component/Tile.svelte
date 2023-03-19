@@ -175,7 +175,7 @@
                 break;
 
             case TileType.Player:
-                setTile(Player, "Player", [setZIndex()]);
+                setTile(Player, "Player", [setZIndex()], ["shift-up"]);
                 break;
 
             case TileType.Void:
