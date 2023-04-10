@@ -256,6 +256,12 @@
 
         setHigherTileAt(location, TileType.Void);
 
+        switch (higherTileAtNewBoulderLocation) {
+            case TileType.Player:
+                died = true;
+                break;
+        }
+
         if (
             newLocationIsOutsideGrid ||
             higherTileAtNewBoulderLocation !== TileType.Void
