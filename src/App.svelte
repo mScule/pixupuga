@@ -4,25 +4,25 @@
     import ActiveView from "./lib/types/ActiveView";
     import type Level from "./lib/types/Level";
 
-    import Type1Level1 from "./assets/level/1/1";
-    import Type1Level2 from "./assets/level/1/2";
-    import Type1Level3 from "./assets/level/1/3";
-    import Type1Level4 from "./assets/level/1/4";
+    import Level1 from "./assets/level/islands/1";
+    import Level2 from "./assets/level/islands/2";
+    import Level3 from "./assets/level/islands/3";
+    import Level4 from "./assets/level/islands/4";
 
-    import Type2Level1 from "./assets/level/2/1";
-    import Type2Level2 from "./assets/level/2/2";
-    import Type2Level3 from "./assets/level/2/3";
-    import Type2Level4 from "./assets/level/2/4";
+    import Level5 from "./assets/level/islands/5";
+    import Level6 from "./assets/level/islands/6";
+    import Level7 from "./assets/level/islands/7";
+    import Level8 from "./assets/level/islands/8";
 
-    import Type3Level1 from "./assets/level/3/1";
-    import Type3Level2 from "./assets/level/3/2";
-    import Type3Level3 from "./assets/level/3/3";
-    import Type3Level4 from "./assets/level/3/4";
+    import Level9 from "./assets/level/jungle/9";
+    import Level10 from "./assets/level/jungle/10";
+    import Level11 from "./assets/level/jungle/11";
+    import Level12 from "./assets/level/jungle/12";
 
-    import Type4Level1 from "./assets/level/4/1";
-    import Type4Level2 from "./assets/level/4/2";
-    import Type4Level3 from "./assets/level/4/3";
-    import Type4Level4 from "./assets/level/4/4";
+    import Level13 from "./assets/level/dungeon/13";
+    import Level14 from "./assets/level/dungeon/14";
+    import Level15 from "./assets/level/dungeon/15";
+    import Level16 from "./assets/level/dungeon/16";
 
     import StartScreen from "./lib/component/StartScreen.svelte";
     import LevelSelection from "./lib/component/LevelSelection.svelte";
@@ -33,29 +33,26 @@
     import Version from "./lib/component/Version.svelte";
 
     const levels: Level[] = [
-        Type1Level1,
-        Type1Level2,
-        Type1Level3,
-        Type1Level4,
-
-        Type2Level1,
-        Type2Level2,
-        Type2Level3,
-        Type2Level4,
-
-        Type3Level1,
-        Type3Level2,
-        Type3Level3,
-        Type3Level4,
-
-        Type4Level1,
-        Type4Level2,
-        Type4Level3,
-        Type4Level4,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
+        Level10,
+        Level11,
+        Level12,
+        Level13,
+        Level14,
+        Level15,
+        Level16,
     ];
 
     let activeView: ActiveView = ActiveView.Game;
-    let selectedLevel: number = 8;
+    let selectedLevel: number = 5;
 
     function handleStart() {
         activeView = ActiveView.LevelSelection;
