@@ -9,6 +9,7 @@ enum TileType {
     LowerBoulderAfloat,
     LowerTrapSpikesOff,
     LowerTrapSpikesOn,
+    LowerCursed,
 
     UpperBox,
     UpperSolid,

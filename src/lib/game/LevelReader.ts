@@ -27,6 +27,7 @@ function getLowerTile(atom: LevelAtom): TileType {
         case LevelAtom.BoulderAfloat: return TileType.LowerBoulderAfloat;
         case LevelAtom.TrapSpikesOff: return TileType.LowerTrapSpikesOff;
         case LevelAtom.TrapSpikesOn: return TileType.LowerTrapSpikesOn;
+        case LevelAtom.Cursed: return TileType.LowerCursed;
 
         default: throw new Error(`Bad level atom for lower grid "${atom}"`);
     }

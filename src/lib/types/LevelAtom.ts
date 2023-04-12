@@ -10,6 +10,7 @@ enum LevelAtom {
     Player = "p",
     TrapSpikesOff = "t",
     TrapSpikesOn = "T",
+    Cursed = "c",
 
     // Collectable
     CollectableBox = "B",

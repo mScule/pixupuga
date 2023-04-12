@@ -167,9 +167,13 @@
                 return;
             }
 
-            if (lowerTileAtNewPlayerLocation === TileType.LowerTrapSpikesOn) {
-                died = true;
+            switch(lowerTileAtNewPlayerLocation) {
+                case TileType.LowerTrapSpikesOn:
+                case TileType.LowerCursed:
+                    died = true;
+                    break;
             }
+
 
             switch (lowerTileAtOldPlayerLocation) {
                 case TileType.LowerBox:

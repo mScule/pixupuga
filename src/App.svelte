@@ -51,8 +51,8 @@
         Level16,
     ];
 
-    let activeView: ActiveView = ActiveView.Game;
-    let selectedLevel: number = 8 - 1;
+    let activeView: ActiveView = ActiveView.StartScreen;
+    let selectedLevel: number = 0;
 
     function handleStart() {
         activeView = ActiveView.LevelSelection;

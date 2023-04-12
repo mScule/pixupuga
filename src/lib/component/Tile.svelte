@@ -7,6 +7,7 @@
     import LowerBoulderAfloat from "../../assets/img/8x8/lower/boulder/afloat.png";
     import LowerTrapSpikesOff from "../../assets/img/8x8/lower/trap-spikes/off.png";
     import LowerTrapSpikesOn from "../../assets/img/8x8/lower/trap-spikes/on.png";
+    import LowerCursed from "../../assets/img/8x8/lower/cursed.png";
 
     import UpperBox from "../../assets/img/8x8/upper/box.png";
     import UpperSolidIsland from "../../assets/img/8x8/upper/solid/island.png";
@@ -132,6 +133,12 @@
 
             case TileType.LowerTrapSpikesOn:
                 setTile(LowerTrapSpikesOn, "Lower Trap spikes - On", [
+                    setZIndex(),
+                ]);
+                break;
+
+            case TileType.LowerCursed:
+                setTile(LowerCursed, "Lower Cursed tile", [
                     setZIndex(),
                 ]);
                 break;
