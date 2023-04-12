@@ -2,6 +2,7 @@ import type Level from "../../../lib/types/Level"
 import LevelWorld from "../../../lib/types/LevelWorld";
 
 export default {
+  name: "Frindly five",
   winningPoints: 10,
   world: LevelWorld.Island,
   lower: {
@@ -18,7 +19,7 @@ export default {
     "9": ". s s . . . b . . . . . . b . .",
     "A": ". . . . . . . . s . . . . b . .",
     "B": ". . s s s s s . s . . . . b . .",
-    "C": ". . s s s s s r R r R r R b . .",
+    "C": ". . s s s s s s s s . r s b . .",
     "D": ". . s s s s s . . . . . . . . .",
     "E": ". . s s s s s . s s s . . . . .",
     "F": ". . s s s s s . . . . . . . . ."
@@ -36,7 +37,7 @@ export default {
     "8": ". 1 . . B p r . . . . . B 1 . .",
     "9": ". . . . . . . . . . . . . . . .",
     "A": ". . . . . . . . 5 . . . . . . .",
-    "B": ". . . . s s . . b . . . . . . .",
+    "B": ". . . . s s s . b . . . . . . .",
     "C": ". . . . . . r . . . . . . . . .",
     "D": ". . . . . . . . . . . . . . . .",
     "E": ". . . r . r . . 1 1 1 . . . . .",

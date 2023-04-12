@@ -2,6 +2,7 @@ import type Level from "../../../lib/types/Level"
 import LevelWorld from "../../../lib/types/LevelWorld";
 
 export default {
+  name: "Boulders!",
   winningPoints: 2,
   world: LevelWorld.Island,
   lower: {

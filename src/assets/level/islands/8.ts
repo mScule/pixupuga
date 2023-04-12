@@ -2,7 +2,9 @@ import type Level from "../../../lib/types/Level"
 import LevelWorld from "../../../lib/types/LevelWorld";
 
 export default {
+  name: "Nice boxes finish last",
   winningPoints: 8,
+  winningText: "Awesome! You have now passed all the island levels.",
   world: LevelWorld.Island,
   lower: {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
