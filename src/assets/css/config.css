@@ -31,7 +31,9 @@
     --size-buffer-medium: 1rem;
     --size-buffer-large:  4rem;
 
-    --size-h1: large;
+    --size-font-small: 0.5rem;
+
+    --size-h1: small;
     --size-h2: small;
 
     /* Filters */

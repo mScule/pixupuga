@@ -2,6 +2,7 @@ import type Level from "../../../lib/types/Level";
 import LevelWorld from "../../../lib/types/LevelWorld";
 
 export default {
+    name: "Floating BOX arithmetics",
     winningPoints: 4,
     track: "no-track",
     world: LevelWorld.Island,

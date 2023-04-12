@@ -14,12 +14,18 @@
     import Controls from "./Controls.svelte";
     import KeyboardInput from "../types/KeyboardInput";
     import Track from "../types/Track";
+    import Title from "./Title.svelte";
+    import { isLevelOpen } from "../game/Progress";
 
     export let handleLevelSelection: (levelIndex: number) => void;
     export let levelAmount: number;
     export let cursorLocation: number = 0;
+    export let levelNames: string[];
 
-    let levels = [];
+    let selectionGrid: Selection[] = [];
+    let selectionDescription = "";
+
+    $: selectionDescription = "Level: " + (isLevelOpen(cursorLocation) ? levelNames[cursorLocation]: "Locked");
 
     const { requestTrack } = getContext<DJContext>(Context.DJ);
 
@@ -37,8 +43,8 @@
     }
 
     function renderLevelGrid() {
-        levels = Array(levelAmount).fill(Selection.Unselected);
-        levels[cursorLocation] = Selection.Selected;
+        selectionGrid = Array(levelAmount).fill(Selection.Unselected);
+        selectionGrid[cursorLocation] = Selection.Selected;
     }
 
     function moveCursor(movement: Movement) {
@@ -86,7 +92,7 @@
             Navigate to level with d-pad, and select it with the action button "{KeyboardInput.ActionPrimary}"
         </p>
         <div class="level-grid">
-            {#each levels as selection, level}
+            {#each selectionGrid as selection, level}
                 <div
                     class="level-selection {getSelectionClasses(
                         level,
@@ -103,6 +109,8 @@
         </div>
     </div>
 </Display>
+
+<Title text={selectionDescription}/>
 
 <Controls
     {handleUp}
