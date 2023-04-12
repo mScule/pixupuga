@@ -2,6 +2,7 @@ import type Level from "../../../lib/types/Level"
 import LevelWorld from "../../../lib/types/LevelWorld";
 
 export default {
+  name: "Voodoo people",
   winningPoints: 10,
   world: LevelWorld.Jungle,
   lower: {
