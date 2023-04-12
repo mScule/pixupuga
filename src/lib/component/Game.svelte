@@ -11,6 +11,7 @@
     import readLevel from "../game/LevelReader";
     import StackLevel from "../types/StackLevel";
     import SoundType from "../types/SoundType";
+    import Title from "./Title.svelte";
 
     export let title: string;
     export let level: Level;
@@ -392,7 +393,7 @@
 </script>
 
 <GameDisplay
-    {title}
+    title={level.name}
     {points}
     {boxes}
     {died}
@@ -401,6 +402,7 @@
     winningText={level.winningText}
     stacks={grid}
 />
+<Title text={`${title}: ${level.name}`} />
 <Controls
     {handleUp}
     {handleDown}

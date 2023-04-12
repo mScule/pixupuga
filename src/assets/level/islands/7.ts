@@ -3,7 +3,7 @@ import LevelWorld from "../../../lib/types/LevelWorld";
 
 export default {
   name: "Build a bridge",
-  winningPoints: 4,
+  winningPoints: 5,
   world: LevelWorld.Island,
   lower: {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
@@ -27,7 +27,7 @@ export default {
   upper: {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
     "0": "s s s s s s s s s . . . . . . .",
-    "1": "s . . s . . . . . . . . . . . .",
+    "1": "s . . s . . . . 1 . . . . . . .",
     "2": "s r . r . r . . . . . . . . . .",
     "3": "s . . . . . . . . . . . . . . s",
     "4": "s r . r . . . . . . . . . . 1 s",

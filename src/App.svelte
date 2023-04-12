@@ -91,13 +91,14 @@
                 <StartScreen {handleStart} />
             {:else if activeView === ActiveView.LevelSelection}
                 <LevelSelection
+                    levelNames={levels.map(level => level.name)}
                     cursorLocation={selectedLevel}
                     levelAmount={levels.length}
                     {handleLevelSelection}
                 />
             {:else if activeView === ActiveView.Game}
                 <Game
-                    title={`Level - ${selectedLevel + 1}`}
+                    title={`${selectedLevel + 1}`}
                     level={levels[selectedLevel]}
                     handleWinning={() => handleWinning(selectedLevel)}
                     handleExit={() => handleExit(selectedLevel)}
