@@ -1,7 +1,7 @@
 import type TileGrid from "../types/TileGrid";
-import type Level from "../types/Level";
+import type Level    from "../types/Level";
 
-import TileType from "../types/TileType";
+import TileType  from "../types/TileType";
 import LevelAtom from "../types/LevelAtom";
 
 import createGrid from "./GridCreator";
