@@ -428,6 +428,10 @@
                     return;
                 }
 
+                if (getHigherTileAt(newLocation) !== TileType.Void) {
+                    return;
+                }
+
                 setHigherTileAt(rollerLocation, TileType.Void);
                 setHigherTileAt(newLocation, item);
 
@@ -440,6 +444,10 @@
                     return;
                 }
 
+                if (getHigherTileAt(newLocation) !== TileType.Void) {
+                    return;
+                }
+
                 setHigherTileAt(rollerLocation, TileType.Void);
                 setHigherTileAt(newLocation, item);
                 break;
@@ -447,6 +455,7 @@
             }
             case TileType.UpperBoulder:
                 pushBoulder(rollerLocation, movement);
+                setHigherTileAt(rollerLocation, TileType.Void);
                 break;
 
             case TileType.UpperBoulderMoving:
