@@ -1,6 +1,9 @@
 <script lang="ts">
     import { onMount, getContext, onDestroy } from "svelte";
-    import Context, { type DJContext, type SoundPlayerContext } from "../types/Context";
+    import Context, {
+        type DJContext,
+        type SoundPlayerContext,
+    } from "../types/Context";
     import type Level from "../types/Level";
     import TileType from "../types/TileType";
     import Movement from "../types/Movement";
@@ -21,7 +24,8 @@
 
     const winningPoints = level.winningPoints;
 
-    let { playerLocation, trapLocations, grid } = readLevel(level);
+    let { playerLocation, trapLocations, rollerLocations, grid } =
+        readLevel(level);
     let lastMovement: Movement = Movement.None;
 
     let points = 0;
@@ -34,6 +38,9 @@
     let trapSpikes: number[] = trapLocations;
     let trapSpikesInterval = null;
     let trapSpikeSoundUpDown = false;
+
+    let rollers: number[] = rollerLocations;
+    let rollersInterval = null;
 
     const { requestTrack } = getContext<DJContext>(Context.DJ);
     const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
@@ -68,26 +75,42 @@
         lastMovement = movement;
 
         const oldPlayerLocation = playerLocation;
-        const newPlayerLocation = moveTileInGrid(grid, playerLocation, movement);
+        const newPlayerLocation = moveTileInGrid(
+            grid,
+            playerLocation,
+            movement
+        );
 
-        const higherTileAtNewPlayerLocation = getHigherTileAt(newPlayerLocation);
+        const higherTileAtNewPlayerLocation =
+            getHigherTileAt(newPlayerLocation);
         const lowerTileAtNewPlayerLocation = getLowerTileAt(newPlayerLocation);
         const lowerTileAtOldPlayerLocation = getLowerTileAt(oldPlayerLocation);
 
         function handleBoxInteraction() {
-            const newBoxLocation = moveTileInGrid(grid, newPlayerLocation, movement);
+            const newBoxLocation = moveTileInGrid(
+                grid,
+                newPlayerLocation,
+                movement
+            );
 
-            const newBoxLocationIsOutsideTheGrid = newBoxLocation === newPlayerLocation;
+            const newBoxLocationIsOutsideTheGrid =
+                newBoxLocation === newPlayerLocation;
             const lowerTileAtNewBoxLocation = getLowerTileAt(newBoxLocation);
 
-            if (newBoxLocationIsOutsideTheGrid || tileIsNotVoidAt(newBoxLocation)) {
+            if (
+                newBoxLocationIsOutsideTheGrid ||
+                tileIsNotVoidAt(newBoxLocation)
+            ) {
                 playSound(SoundType.HigherHit);
                 return false;
             }
 
             switch (lowerTileAtNewBoxLocation) {
                 case TileType.LowerBoulderSunken:
-                    setLowerTileAt(newBoxLocation, TileType.LowerBoxOnTopOfSunkenBoulder);
+                    setLowerTileAt(
+                        newBoxLocation,
+                        TileType.LowerBoxOnTopOfSunkenBoulder
+                    );
                     playSound(SoundType.LowerHit);
                     return true;
 
@@ -106,48 +129,6 @@
             return true;
         }
 
-        function handleBoulderInteraction() {
-            const newBoulderLocation = moveTileInGrid(grid, newPlayerLocation, movement);
-
-            const newBoulderLocationIsOutsideTheGrid = newBoulderLocation === newPlayerLocation;
-            const lowerTileAtNewBoulderLocation = getLowerTileAt(newBoulderLocation);
-
-            if (newBoulderLocationIsOutsideTheGrid || tileIsNotVoidAt(newBoulderLocation)) {
-                playSound(SoundType.HigherHit);
-                return false;
-            }
-
-            switch(lowerTileAtNewBoulderLocation) {
-                case TileType.LowerTrapSpikesOn:
-                    playSound(SoundType.HigherDestruction);
-                    return true;
-
-                case TileType.Void:
-                    setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
-                    playSound(SoundType.LowerHit);
-                    return true;
-
-                case TileType.LowerBoulderSunken:
-                    setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
-                    playSound(SoundType.LowerHit);
-                    return true;
-
-                default:
-                    setHigherTileAt(
-                        newBoulderLocation,
-                        TileType.UpperBoulderMoving
-                    );
-                    boulders = [
-                        ...boulders,
-                        {
-                            location: newBoulderLocation,
-                            movement: movement,
-                        },
-                    ];
-                    return true;
-            }
-        }
-
         if (
             isWalkable(lowerTileAtNewPlayerLocation) &&
             higherTileAtNewPlayerLocation !== TileType.UpperSolid &&
@@ -155,7 +136,7 @@
         ) {
             if (
                 higherTileAtNewPlayerLocation === TileType.UpperBoulder &&
-                !handleBoulderInteraction()
+                !pushBoulder(newPlayerLocation, movement)
             ) {
                 return;
             }
@@ -167,13 +148,12 @@
                 return;
             }
 
-            switch(lowerTileAtNewPlayerLocation) {
+            switch (lowerTileAtNewPlayerLocation) {
                 case TileType.LowerTrapSpikesOn:
                 case TileType.LowerCursed:
                     died = true;
                     break;
             }
-
 
             switch (lowerTileAtOldPlayerLocation) {
                 case TileType.LowerBox:
@@ -182,12 +162,15 @@
                     break;
 
                 case TileType.LowerBoxOnTopOfSunkenBoulder:
-                    setLowerTileAt(oldPlayerLocation, TileType.LowerBoulderSunken);
+                    setLowerTileAt(
+                        oldPlayerLocation,
+                        TileType.LowerBoulderSunken
+                    );
                     playSound(SoundType.HigherDestruction);
                     break;
             }
 
-            switch(higherTileAtNewPlayerLocation) {
+            switch (higherTileAtNewPlayerLocation) {
                 case TileType.CollectablePointOne:
                     points++;
                     playSound(SoundType.CollectablePointOne);
@@ -201,7 +184,7 @@
                 case TileType.CollectableBox:
                     boxes++;
                     playSound(SoundType.CollectableBoxCollect);
-                    break
+                    break;
             }
 
             setHigherTileAt(oldPlayerLocation, TileType.Void);
@@ -216,7 +199,11 @@
             return;
         }
 
-        const spawnPosition = moveTileInGrid(grid, playerLocation, lastMovement);
+        const spawnPosition = moveTileInGrid(
+            grid,
+            playerLocation,
+            lastMovement
+        );
 
         const higherTileAtSpawnPosition = getHigherTileAt(spawnPosition);
         const lowerTileAtSpawnPosition = getLowerTileAt(spawnPosition);
@@ -224,10 +211,8 @@
         if (
             isInsideGrid(grid, spawnPosition) &&
             higherTileAtSpawnPosition === TileType.Void &&
-            (
-                lowerTileAtSpawnPosition === TileType.LowerSolid ||
-                lowerTileAtSpawnPosition === TileType.Void
-            )
+            (lowerTileAtSpawnPosition === TileType.LowerSolid ||
+                lowerTileAtSpawnPosition === TileType.Void)
         ) {
             boxes--;
 
@@ -241,17 +226,66 @@
         }
     }
 
+    function pushBoulder(pusher: number, movement: Movement) {
+        const newBoulderLocation = moveTileInGrid(grid, pusher, movement);
+
+        const newBoulderLocationIsOutsideTheGrid =
+            newBoulderLocation === pusher;
+        const lowerTileAtNewBoulderLocation =
+            getLowerTileAt(newBoulderLocation);
+
+        if (
+            newBoulderLocationIsOutsideTheGrid ||
+            tileIsNotVoidAt(newBoulderLocation)
+        ) {
+            playSound(SoundType.HigherHit);
+            return false;
+        }
+
+        switch (lowerTileAtNewBoulderLocation) {
+            case TileType.LowerTrapSpikesOn:
+                playSound(SoundType.HigherDestruction);
+                return true;
+
+            case TileType.Void:
+                setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
+                playSound(SoundType.LowerHit);
+                return true;
+
+            case TileType.LowerBoulderSunken:
+                setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
+                playSound(SoundType.LowerHit);
+                return true;
+
+            default:
+                setHigherTileAt(
+                    newBoulderLocation,
+                    TileType.UpperBoulderMoving
+                );
+                boulders = [
+                    ...boulders,
+                    {
+                        location: newBoulderLocation,
+                        movement: movement,
+                    },
+                ];
+                return true;
+        }
+    }
+
     function moveBoulder(location: number, movement: Movement) {
         const newBoulderLocation = moveTileInGrid(grid, location, movement);
         const newLocationIsOutsideGrid = newBoulderLocation === location;
 
-        const higherTileAtNewBoulderLocation = getHigherTileAt(newBoulderLocation);
-        const lowerTileAtNewBoulderLocation = getLowerTileAt(newBoulderLocation);
+        const higherTileAtNewBoulderLocation =
+            getHigherTileAt(newBoulderLocation);
+        const lowerTileAtNewBoulderLocation =
+            getLowerTileAt(newBoulderLocation);
 
         function removeFromMovingBoulders() {
             boulders[
                 boulders.findIndex(
-                    boulder =>
+                    (boulder) =>
                         boulder &&
                         boulder.location === location &&
                         boulder.movement === movement
@@ -288,7 +322,7 @@
                 removeFromMovingBoulders();
                 playSound(SoundType.LowerHit);
                 return;
-            
+
             case TileType.LowerBoulderSunken:
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
                 removeFromMovingBoulders();
@@ -301,7 +335,7 @@
         playSound(SoundType.HigherBoulder);
 
         const boulderIndex = boulders.findIndex(
-            boulder =>
+            (boulder) =>
                 boulder &&
                 boulder.location === location &&
                 boulder.movement === movement
@@ -384,15 +418,99 @@
         }
     }
 
+    function handleRolling(rollerLocation: number, movement: Movement) {
+        const item = getHigherTileAt(rollerLocation);
+
+        switch(item) {
+            case TileType.Player: {
+                const newLocation = moveTileInGrid(grid, rollerLocation, movement);
+                if (newLocation === rollerLocation) {
+                    return;
+                }
+
+                setHigherTileAt(rollerLocation, TileType.Void);
+                setHigherTileAt(newLocation, item);
+
+                playerLocation = newLocation;
+            }
+            case TileType.UpperBox:
+            case TileType.UpperSolid: {
+                const newLocation = moveTileInGrid(grid, rollerLocation, movement);
+                if (newLocation === rollerLocation) {
+                    return;
+                }
+
+                setHigherTileAt(rollerLocation, TileType.Void);
+                setHigherTileAt(newLocation, item);
+                break;
+
+            }
+            case TileType.UpperBoulder:
+                pushBoulder(rollerLocation, movement);
+                break;
+
+            case TileType.UpperBoulderMoving:
+                boulders.find(boulder => boulder.location === rollerLocation).movement = movement;
+                break;
+        }
+    }
+
+    function updateRollers() {
+        if (rollers.length === 0) {
+            return;
+        }
+
+        for (const roller of rollers) {
+            const lowerTileAtRoller = getLowerTileAt(roller);
+
+            switch (lowerTileAtRoller) {
+                case TileType.LowerRollerUpOff:
+                    setLowerTileAt(roller, TileType.LowerRollerUpOn);
+                    handleRolling(roller, Movement.Up);
+                    break;
+                case TileType.LowerRollerUpOn:
+                    setLowerTileAt(roller, TileType.LowerRollerUpOff);
+                    break;
+
+                case TileType.LowerRollerDownOff:
+                    setLowerTileAt(roller, TileType.LowerRollerDownOn);
+                    handleRolling(roller, Movement.Down);
+                    break;
+                case TileType.LowerRollerDownOn:
+                    setLowerTileAt(roller, TileType.LowerRollerDownOff);
+                    break;
+
+                case TileType.LowerRollerLeftOff:
+                    setLowerTileAt(roller, TileType.LowerRollerLeftOn);
+                    handleRolling(roller, Movement.Left);
+                    break;
+                case TileType.LowerRollerLeftOn:
+                    setLowerTileAt(roller, TileType.LowerRollerLeftOff);
+                    break;
+
+                case TileType.LowerRollerRightOff:
+                    setLowerTileAt(roller, TileType.LowerRollerRightOn);
+                    handleRolling(roller, Movement.Right);
+                    break;
+                case TileType.LowerRollerRightOn:
+                    setLowerTileAt(roller, TileType.LowerRollerRightOff);
+                    break;
+            }
+        }
+    }
+
     onMount(() => {
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
+        rollersInterval = setInterval(updateRollers, 500);
+
         requestTrack(level.track);
     });
 
     onDestroy(() => {
         boulderInterval !== null && clearInterval(boulderInterval);
         trapSpikesInterval !== null && clearInterval(trapSpikesInterval);
+        rollerLocations !== null && clearInterval(rollersInterval);
     });
 </script>
 

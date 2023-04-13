@@ -11,6 +11,15 @@ enum TileType {
     LowerTrapSpikesOn,
     LowerCursed,
 
+    LowerRollerUpOff,
+    LowerRollerUpOn,
+    LowerRollerDownOff,
+    LowerRollerDownOn,
+    LowerRollerLeftOff,
+    LowerRollerLeftOn,
+    LowerRollerRightOff,
+    LowerRollerRightOn,
+
     UpperBox,
     UpperSolid,
     UpperBoulder,

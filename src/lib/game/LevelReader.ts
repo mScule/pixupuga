@@ -20,14 +20,23 @@ function definitionToString(definition: Record<string, string>): string {
 
 function getLowerTile(atom: LevelAtom): TileType {
     switch (atom) {
-        case LevelAtom.Void: return TileType.Void;
-        case LevelAtom.Solid: return TileType.LowerSolid;
-        case LevelAtom.Box: return TileType.LowerBox;
-        case LevelAtom.Boulder: return TileType.LowerBoulderSunken;
+        case LevelAtom.Void:          return TileType.Void;
+        case LevelAtom.Solid:         return TileType.LowerSolid;
+        case LevelAtom.Box:           return TileType.LowerBox;
+        case LevelAtom.Boulder:       return TileType.LowerBoulderSunken;
         case LevelAtom.BoulderAfloat: return TileType.LowerBoulderAfloat;
         case LevelAtom.TrapSpikesOff: return TileType.LowerTrapSpikesOff;
-        case LevelAtom.TrapSpikesOn: return TileType.LowerTrapSpikesOn;
-        case LevelAtom.Cursed: return TileType.LowerCursed;
+        case LevelAtom.TrapSpikesOn:  return TileType.LowerTrapSpikesOn;
+        case LevelAtom.Cursed:        return TileType.LowerCursed;
+
+        case LevelAtom.RollerUpOff:    return TileType.LowerRollerUpOff;
+        case LevelAtom.RollerUpOn:     return TileType.LowerRollerUpOn;
+        case LevelAtom.RollerDownOff:  return TileType.LowerRollerDownOff;
+        case LevelAtom.RollerDownOn:   return TileType.LowerRollerDownOn;
+        case LevelAtom.RollerLeftOff:  return TileType.LowerRollerLeftOff;
+        case LevelAtom.RollerLeftOn:   return TileType.LowerRollerLeftOn;
+        case LevelAtom.RollerRightOff: return TileType.LowerRollerRightOff;
+        case LevelAtom.RollerRightOn:  return TileType.LowerRollerRightOn;
 
         default: throw new Error(`Bad level atom for lower grid "${atom}"`);
     }
@@ -72,6 +81,27 @@ function findTraps(grid: TileGrid): number[] {
     return traps;
 }
 
+function findRollers(grid: TileGrid): number[] {
+    let rollers = [];
+
+    grid.map((stack, location) => {
+        switch(stack[0]) {
+            case TileType.LowerRollerUpOff:
+            case TileType.LowerRollerUpOn:
+            case TileType.LowerRollerDownOff:
+            case TileType.LowerRollerDownOn:
+            case TileType.LowerRollerLeftOff:
+            case TileType.LowerRollerLeftOn:
+            case TileType.LowerRollerRightOff:
+            case TileType.LowerRollerRightOn:
+                rollers.push(location);
+            break;
+        }
+    })
+
+    return rollers;
+}
+
 function readLevel(level: Level) {
     const grid = createGrid();
 
@@ -83,7 +113,11 @@ function readLevel(level: Level) {
         grid[i][1] = getUpperTile(upper[i] as unknown as LevelAtom);
     }
 
-    return { playerLocation: findPlayer(grid), trapLocations: findTraps(grid), grid };
+    return {
+        playerLocation: findPlayer(grid),
+        trapLocations: findTraps(grid),
+        rollerLocations: findRollers(grid),
+        grid };
 }
 
 export default readLevel;

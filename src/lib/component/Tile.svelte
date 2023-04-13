@@ -8,6 +8,14 @@
     import LowerTrapSpikesOff from "../../assets/img/8x8/lower/trap-spikes/off.png";
     import LowerTrapSpikesOn from "../../assets/img/8x8/lower/trap-spikes/on.png";
     import LowerCursed from "../../assets/img/8x8/lower/cursed.png";
+    import LowerRollerUpOff from "../../assets/img/8x8/lower/roller/off/up.png";
+    import LowerRollerUpOn from "../../assets/img/8x8/lower/roller/on/up.png";
+    import LowerRollerDownOff from "../../assets/img/8x8/lower/roller/off/down.png";
+    import LowerRollerDownOn from "../../assets/img/8x8/lower/roller/on/down.png";
+    import LowerRollerLeftOff from "../../assets/img/8x8/lower/roller/off/left.png";
+    import LowerRollerLeftOn from "../../assets/img/8x8/lower/roller/on/left.png";
+    import LowerRollerRightOff from "../../assets/img/8x8/lower/roller/off/right.png";
+    import LowerRollerRightOn from "../../assets/img/8x8/lower/roller/on/right.png";
 
     import UpperBox from "../../assets/img/8x8/upper/box.png";
     import UpperSolidIsland from "../../assets/img/8x8/upper/solid/island.png";
@@ -141,6 +149,31 @@
                 setTile(LowerCursed, "Lower Cursed tile", [
                     setZIndex(),
                 ]);
+                break;
+
+            case TileType.LowerRollerUpOff:
+                setTile(LowerRollerUpOff,"Lower Roller Up - Off", [setZIndex()]);
+                break;
+            case TileType.LowerRollerUpOn:
+                setTile(LowerRollerUpOn,"Lower Roller Up - On", [setZIndex()]);
+                break;
+            case TileType.LowerRollerDownOff:
+                setTile(LowerRollerDownOff,"Lower Roller Down - Off", [setZIndex()]);
+                break;
+            case TileType.LowerRollerDownOn:
+                setTile(LowerRollerDownOn,"Lower Roller Down - On", [setZIndex()]);
+                break;
+            case TileType.LowerRollerLeftOff:
+                setTile(LowerRollerLeftOff,"Lower Roller Left - Off", [setZIndex()]);
+                break;
+            case TileType.LowerRollerLeftOn:
+                setTile(LowerRollerLeftOn,"Lower Roller Left - On", [setZIndex()]);
+                break;
+            case TileType.LowerRollerRightOff:
+                setTile(LowerRollerRightOff,"Lower Roller Right - Off", [setZIndex()]);
+                break;
+            case TileType.LowerRollerRightOn:
+                setTile(LowerRollerRightOn,"Lower Roller Right - On", [setZIndex()]);
                 break;
 
             case TileType.UpperBox:
