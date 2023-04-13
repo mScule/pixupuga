@@ -195,7 +195,7 @@
     }
 
     function spawnBox() {
-        if (lastMovement === Movement.None || boxes < 0) {
+        if (lastMovement === Movement.None || boxes <= 0) {
             return;
         }
 
