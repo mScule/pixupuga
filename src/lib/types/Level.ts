@@ -6,6 +6,7 @@ export interface Level {
     name: string;
     winningPoints: number;
     winningText?: string;
+    hint?: string;
     /** @deprecated Will be replaced with the type property */
     track?: Track;
     world: LevelWorld;
