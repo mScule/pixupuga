@@ -23,6 +23,6 @@ Run `yarn install` to install dependencies.
 `yarn dev` Starts the dev server. \
 `yarn dev --host` Starts the dev server, but also makes it avaliable for others
                   in the same network. \
-`yarn build` Builds the project. \
+`yarn build` Builds the project.
 
 _To terminate any of the commands in the terminal, hit `CTRL + C`_

@@ -5,6 +5,9 @@ export default {
   name: "Build a bridge",
   winningPoints: 5,
   world: LevelWorld.Island,
+  hint:
+    "When you walk over the edge of the map, you come " +
+    "through from the another side.",
   lower: {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
     "0": "s s s s s s s s s s . . . . . .",
@@ -14,7 +17,7 @@ export default {
     "4": "s s s s s . . . . . . . s s s s",
     "5": "s s s s s . . . . . . . s s s s",
     "6": "s s s s s . . . . . . . s s s s",
-    "7": "s s s s s R . . . . . R s s s s",
+    "7": "s s s s s R . . . . . R s ? s s",
     "8": "s s s s s . . . . . . . s s s s",
     "9": "s s s s s . . . . . . . s s s s",
     "A": "s s s s s . . . . . . . s s s s",
