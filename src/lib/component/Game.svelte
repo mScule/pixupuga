@@ -149,8 +149,9 @@
                 return;
             }
 
-            if (lowerTileAtNewPlayerLocation === TileType.LowerHint) {
+            if (lowerTileAtNewPlayerLocation === TileType.LowerHintUnused) {
                 showableHint = level.hint;
+                setLowerTileAt(newPlayerLocation, TileType.LowerHintUsed);
             } else {
                 showableHint = null;
             }

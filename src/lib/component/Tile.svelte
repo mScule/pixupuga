@@ -8,7 +8,8 @@
     import LowerTrapSpikesOff from "../../assets/img/8x8/lower/trap-spikes/off.png";
     import LowerTrapSpikesOn from "../../assets/img/8x8/lower/trap-spikes/on.png";
     import LowerCursed from "../../assets/img/8x8/lower/cursed.png";
-    import LowerHint from "../../assets/img/8x8/lower/hint.png";
+    import LowerHintUnused from "../../assets/img/8x8/lower/hint/unused.png";
+    import LowerHintUsed from "../../assets/img/8x8/lower/hint/used.png";
 
     import LowerRollerUpOff from "../../assets/img/8x8/lower/roller/off/up.png";
     import LowerRollerUpOn from "../../assets/img/8x8/lower/roller/on/up.png";
@@ -151,9 +152,13 @@
                 setTile(LowerCursed, "Lower Cursed tile", [setZIndex()]);
                 break;
 
-            case TileType.LowerHint:
-                setTile(LowerHint, "Lower Hint", [setZIndex()]);
+            case TileType.LowerHintUnused:
+                setTile(LowerHintUnused, "Lower Hint - Un used", [setZIndex()]);
                 break;
+            case TileType.LowerHintUsed:
+                setTile(LowerHintUsed, "Lower Hint - Used", [setZIndex()]);
+                break;
+
             case TileType.LowerRollerUpOff:
                 setTile(LowerRollerUpOff, "Lower Roller Up - Off", [
                     setZIndex(),

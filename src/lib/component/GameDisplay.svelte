@@ -50,7 +50,7 @@
             <h2>You DIED</h2>
             <p>Press "{KeyboardInput.ActionPrimary}" to retry</p>
         {:else if hint !== null}
-            <h3>?? hint ??</h3>
+            <h2>?? hint ??</h2>
             <p>{hint}</p>
         {:else}
             <Grid {stacks} {world}/>
