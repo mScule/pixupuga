@@ -16,6 +16,7 @@
     export let points: number;
     export let boxes: number;
     export let died: boolean;
+    export let hint: string | null = null;
     export let world: LevelWorld;
 
     export let winningPoints: number;
@@ -30,6 +31,10 @@
 
     $: winned && playSound(SoundType.LevelWin);
     $: died && playSound(SoundType.LevelLose);
+
+    if (hint) {
+        console.log("HINT");
+    }
 </script>
 
 <Display>
@@ -44,6 +49,9 @@
         {:else if died}
             <h2>You DIED</h2>
             <p>Press "{KeyboardInput.ActionPrimary}" to retry</p>
+        {:else if hint !== null}
+            <h2>?? hint ??</h2>
+            <p>{hint}</p>
         {:else}
             <Grid {stacks} {world}/>
         {/if}

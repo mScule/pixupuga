@@ -5,6 +5,10 @@ export default {
   name: "The dungeon enterance",
   winningPoints: 4,
   world: LevelWorld.Dungeon,
+  hint:
+    "Those things that comes from ground and goes back in are spikes and you die " +
+    "If you walk on them when they are up. You can also break boxes, boulders etc with them. " +
+    "Those pulsating arrows are rollers. They move things automatically to the pointed direction.",
   lower: {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
     "0": "s s s s s s s s s s s s s s s s",
@@ -13,7 +17,7 @@ export default {
     "3": "s s s s s s s s s s s s s s s s",
     "4": "s s s s s s s s s s s s s s s s",
     "5": "s s s s s s s s s s s s s s s s",
-    "6": "s s s s s k s s s s s s s s s s",
+    "6": "s s s ? s k s s s s s s s s s s",
     "7": "s s s s t s s s s r . r . s s s",
     "8": "s s s s t s s s s r . r . s s s",
     "9": "s s s s s j s s s s s s s s s s",

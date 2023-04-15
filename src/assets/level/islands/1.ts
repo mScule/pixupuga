@@ -5,6 +5,9 @@ export default {
     name: "The tutorial island",
     winningPoints: 2,
     world: LevelWorld.Island,
+    hint:
+        "You can push boxes by walking into them " +
+        "If you push box into water, you can walk on it  once ",
     lower: {
         "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
         "0": ". . . . . . . . . . . . . . . .",
@@ -14,7 +17,7 @@ export default {
         "4": ". . . . . . . . . . s s . . . .",
         "5": ". . . . . . . . . . s s . . . .",
         "6": ". . . . . . . . . . . . . . . .",
-        "7": ". . . s s s s s s s s s s . . .",
+        "7": ". . . s s ? s s s s s s s . . .",
         "8": ". . . . . . . . . . s s . . . .",
         "9": ". . . . . . . . . . . . . . . .",
         "A": ". . . . . . . . . . . . . . . .",
@@ -33,7 +36,7 @@ export default {
         "4": ". . . . . . . . . . 1 . . . . .",
         "5": ". . . . . . . . . . . . . . . .",
         "6": ". . . . . . . . . . . . . . . .",
-        "7": ". . . p . b . . . . . . 1 . . .",
+        "7": ". . . p . . . b . . . . 1 . . .",
         "8": ". . . . . . . . . . . . . . . .",
         "9": ". . . . . . . . . . . . . . . .",
         "A": ". . . . . . . . . . . . . . . .",

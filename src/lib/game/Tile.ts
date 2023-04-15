@@ -11,6 +11,9 @@ export const isWalkable = (tile: TileType): boolean =>
 
     tile === TileType.LowerCursed ||
 
+    tile === TileType.LowerHintUnused ||
+    tile === TileType.LowerHintUsed   ||
+
     tile === TileType.LowerRollerUpOff    ||
     tile === TileType.LowerRollerUpOn     ||
     tile === TileType.LowerRollerDownOff  ||

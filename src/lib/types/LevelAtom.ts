@@ -3,6 +3,7 @@ enum LevelAtom {
     Void   = ".",
     Solid  = "s",
     Cursed = "c",
+    Hint   = "?",
 
     // Dynamic
     Box           = "b",

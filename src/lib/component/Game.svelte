@@ -31,6 +31,7 @@
     let points = 0;
     let boxes = 0;
     let died = false;
+    let showableHint: string | null = null;
 
     let boulders: ({ location: number; movement: Movement } | null)[] = [];
     let boulderInterval = null;
@@ -146,6 +147,13 @@
                 !handleBoxInteraction()
             ) {
                 return;
+            }
+
+            if (lowerTileAtNewPlayerLocation === TileType.LowerHintUnused) {
+                showableHint = level.hint;
+                setLowerTileAt(newPlayerLocation, TileType.LowerHintUsed);
+            } else {
+                showableHint = null;
             }
 
             switch (lowerTileAtNewPlayerLocation) {
@@ -528,6 +536,7 @@
     {points}
     {boxes}
     {died}
+    hint={showableHint}
     {winningPoints}
     world={level.world}
     winningText={level.winningText}

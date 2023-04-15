@@ -5,6 +5,12 @@ export default {
     name: "False friends",
     winningPoints: 6,
     world: LevelWorld.Island,
+    hint:
+        "Remember to keep an eye on points. " +
+        "You only need the amount that's given there but " +
+        "maps might have more points than that. If thats the " +
+        "case, you need to figure out which ones are meant to be " +
+        "collected.",
     lower: {
         "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
         "0": ". . . . . . . . . . . . . . . .",
@@ -17,7 +23,7 @@ export default {
         "7": ". . . s . . s s s s s s s s . .",
         "8": ". b . s . . s s s s s s s s . .",
         "9": ". . . . . . s s s s . . . . . .",
-        "A": ". b . . . . . . . . . . s s . .",
+        "A": ". b . . . . . . . . . . s ? . .",
         "B": ". . . . . . . . s s . . s s . .",
         "C": ". b . s s s s s s s s . s s . .",
         "D": ". . . . . . . . s s s . . s . .",

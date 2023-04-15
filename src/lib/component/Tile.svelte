@@ -8,6 +8,9 @@
     import LowerTrapSpikesOff from "../../assets/img/8x8/lower/trap-spikes/off.png";
     import LowerTrapSpikesOn from "../../assets/img/8x8/lower/trap-spikes/on.png";
     import LowerCursed from "../../assets/img/8x8/lower/cursed.png";
+    import LowerHintUnused from "../../assets/img/8x8/lower/hint/unused.png";
+    import LowerHintUsed from "../../assets/img/8x8/lower/hint/used.png";
+
     import LowerRollerUpOff from "../../assets/img/8x8/lower/roller/off/up.png";
     import LowerRollerUpOn from "../../assets/img/8x8/lower/roller/on/up.png";
     import LowerRollerDownOff from "../../assets/img/8x8/lower/roller/off/down.png";
@@ -146,36 +149,54 @@
                 break;
 
             case TileType.LowerCursed:
-                setTile(LowerCursed, "Lower Cursed tile", [
-                    setZIndex(),
-                ]);
+                setTile(LowerCursed, "Lower Cursed tile", [setZIndex()]);
+                break;
+
+            case TileType.LowerHintUnused:
+                setTile(LowerHintUnused, "Lower Hint - Un used", [setZIndex()]);
+                break;
+            case TileType.LowerHintUsed:
+                setTile(LowerHintUsed, "Lower Hint - Used", [setZIndex()]);
                 break;
 
             case TileType.LowerRollerUpOff:
-                setTile(LowerRollerUpOff,"Lower Roller Up - Off", [setZIndex()]);
+                setTile(LowerRollerUpOff, "Lower Roller Up - Off", [
+                    setZIndex(),
+                ]);
                 break;
             case TileType.LowerRollerUpOn:
-                setTile(LowerRollerUpOn,"Lower Roller Up - On", [setZIndex()]);
+                setTile(LowerRollerUpOn, "Lower Roller Up - On", [setZIndex()]);
                 break;
             case TileType.LowerRollerDownOff:
-                setTile(LowerRollerDownOff,"Lower Roller Down - Off", [setZIndex()]);
+                setTile(LowerRollerDownOff, "Lower Roller Down - Off", [
+                    setZIndex(),
+                ]);
                 break;
             case TileType.LowerRollerDownOn:
-                setTile(LowerRollerDownOn,"Lower Roller Down - On", [setZIndex()]);
+                setTile(LowerRollerDownOn, "Lower Roller Down - On", [
+                    setZIndex(),
+                ]);
                 break;
             case TileType.LowerRollerLeftOff:
-                setTile(LowerRollerLeftOff,"Lower Roller Left - Off", [setZIndex()]);
+                setTile(LowerRollerLeftOff, "Lower Roller Left - Off", [
+                    setZIndex(),
+                ]);
                 break;
             case TileType.LowerRollerLeftOn:
-                setTile(LowerRollerLeftOn,"Lower Roller Left - On", [setZIndex()]);
+                setTile(LowerRollerLeftOn, "Lower Roller Left - On", [
+                    setZIndex(),
+                ]);
                 break;
             case TileType.LowerRollerRightOff:
-                setTile(LowerRollerRightOff,"Lower Roller Right - Off", [setZIndex()]);
+                setTile(LowerRollerRightOff, "Lower Roller Right - Off", [
+                    setZIndex(),
+                ]);
                 break;
             case TileType.LowerRollerRightOn:
-                setTile(LowerRollerRightOn,"Lower Roller Right - On", [setZIndex()]);
+                setTile(LowerRollerRightOn, "Lower Roller Right - On", [
+                    setZIndex(),
+                ]);
                 break;
-
             case TileType.UpperBox:
                 setTile(UpperBox, "Upper box", [setZIndex()], ["shift-up"]);
                 break;
@@ -216,12 +237,7 @@
                 break;
 
             case TileType.Player:
-                setTile(
-                    Player,
-                    "Player",
-                    [setZIndex()],
-                    ["shift-up"]
-                );
+                setTile(Player, "Player", [setZIndex()], ["shift-up"]);
                 break;
 
             case TileType.Void:
