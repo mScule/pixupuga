@@ -25,7 +25,11 @@
     let selectionGrid: Selection[] = [];
     let selectionDescription = "";
 
-    $: selectionDescription = "Level: " + (isLevelOpen(cursorLocation) ? levelNames[cursorLocation]: "Locked");
+    $: {
+        selectionDescription =
+            "Level: " +
+            (isLevelOpen(cursorLocation) ? levelNames[cursorLocation]: "Locked");
+    }
 
     const { requestTrack } = getContext<DJContext>(Context.DJ);
 

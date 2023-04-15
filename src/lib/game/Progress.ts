@@ -7,5 +7,5 @@ export function setLevelOpen(levelIndex: number) {
 }
 
 export function isLevelOpen(levelIndex: number) {
-    return boolean.fromString(localStorage.getItem(levelKey(levelIndex)));
+    return levelIndex === 0 || boolean.fromString(localStorage.getItem(levelKey(levelIndex)));
 }
