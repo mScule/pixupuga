@@ -5,6 +5,9 @@ export default {
   name: "Cursed village",
   winningPoints: 12,
   world: LevelWorld.Jungle,
+  hint:
+    "Ground tiles that have a face on them are CURSED! " +
+    "You die if you walk on them. Boulders can roll on top of them though.",
   lower: {
     "_": "0 1 2 3 4 5 6 7 8 9 A B C D E F",
     "0": "s s s s s s s . . s s s s s s s",
@@ -20,7 +23,7 @@ export default {
     "A": "s c c c c c . . . . c c c c c s",
     "B": "s s s s s R R R R R R s s s s s",
     "C": "s s s s s s s s s s s s s s s s",
-    "D": "s s s s s s s s s s s s s s s s",
+    "D": "s s s s s s s s ? s s s s s s s",
     "E": "s s s s s s s s s s s s s s s s",
     "F": "s s s s s s s s s s s s s s s s"
   },
