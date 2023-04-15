@@ -28,6 +28,7 @@ function getLowerTile(atom: LevelAtom): TileType {
         case LevelAtom.TrapSpikesOff: return TileType.LowerTrapSpikesOff;
         case LevelAtom.TrapSpikesOn:  return TileType.LowerTrapSpikesOn;
         case LevelAtom.Cursed:        return TileType.LowerCursed;
+        case LevelAtom.Hint:          return TileType.LowerHint;
 
         case LevelAtom.RollerUpOff:    return TileType.LowerRollerUpOff;
         case LevelAtom.RollerUpOn:     return TileType.LowerRollerUpOn;

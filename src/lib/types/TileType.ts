@@ -20,6 +20,8 @@ enum TileType {
     LowerRollerRightOff,
     LowerRollerRightOn,
 
+    LowerHint,
+
     UpperBox,
     UpperSolid,
     UpperBoulder,
