@@ -11,6 +11,7 @@
     import trackLevelType2 from "../../assets/audio/track/level/2.mp3";
     import trackLevelType3 from "../../assets/audio/track/level/3.mp3";
     import trackLevelType4 from "../../assets/audio/track/level/4.mp3";
+    import LevelWorld from "../types/LevelWorld";
 
     let nextTrack = trackStartScreen;
     let selectedTrack = trackStartScreen;
@@ -38,6 +39,17 @@
         }
     }
 
+    function requestTrackByLevelWorld(world: LevelWorld) {
+        switch (world) {
+            case LevelWorld.Island:
+                break;
+            case LevelWorld.Jungle:
+                break;
+            case LevelWorld.Dungeon:
+                break;
+        }
+    }
+
     function setTrack() {
         if (selectedTrack !== nextTrack) {
             selectedTrack = nextTrack;
@@ -52,7 +64,7 @@
         selectedTrack = null;
     });
 
-    setContext<DJContext>(Context.DJ, { requestTrack });
+    setContext<DJContext>(Context.DJ, { requestTrack, requestTrackByLevelWorld });
 </script>
 
 <slot />

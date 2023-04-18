@@ -1,8 +1,10 @@
 import type TileGrid from "../types/TileGrid";
 import type Level    from "../types/Level";
+import TileType      from "../types/TileType";
+import LevelAtom     from "../types/LevelAtom";
+import StackLevel    from "../types/StackLevel";
 
-import TileType  from "../types/TileType";
-import LevelAtom from "../types/LevelAtom";
+import range from "../util/range";
 
 import createGrid from "./GridCreator";
 
@@ -43,20 +45,20 @@ function getLowerTile(atom: LevelAtom): TileType {
     }
 }
 
-function getUpperTile(atom: LevelAtom): TileType {
+function getHigherTile(atom: LevelAtom): TileType {
     switch (atom) {
-        case LevelAtom.Void: return TileType.Void;
-        case LevelAtom.Solid: return TileType.UpperSolid;
-        case LevelAtom.Box: return TileType.UpperBox;
+        case LevelAtom.Void:    return TileType.Void;
+        case LevelAtom.Solid:   return TileType.UpperSolid;
+        case LevelAtom.Box:     return TileType.UpperBox;
         case LevelAtom.Boulder: return TileType.UpperBoulder;
 
         case LevelAtom.Player: return TileType.Player;
 
-        case LevelAtom.CollectableBox: return TileType.CollectableBox;
-        case LevelAtom.CollectableOne: return TileType.CollectablePointOne;
+        case LevelAtom.CollectableBox:  return TileType.CollectableBox;
+        case LevelAtom.CollectableOne:  return TileType.CollectablePointOne;
         case LevelAtom.CollectableFive: return TileType.CollectablePointFive;
 
-        default: throw new Error(`Bad level atom for upper grid "${atom}"`);
+        default: throw new Error(`Bad level atom for higher grid "${atom}"`);
     }
 }
 
@@ -64,8 +66,9 @@ function findPlayer(grid: TileGrid): number {
     let player = 0;
 
     grid.map((stack, location) => {
-        if (stack[1] === TileType.Player)
+        if (stack[StackLevel.Higher] === TileType.Player) {
             player = location;
+        }
     });
 
     return player;
@@ -74,9 +77,13 @@ function findPlayer(grid: TileGrid): number {
 function findTraps(grid: TileGrid): number[] {
     let traps = [];
 
-    grid.map((stack, location) => {
-        if (stack[0] === TileType.LowerTrapSpikesOff || stack[0] === TileType.LowerTrapSpikesOn)
-            traps.push(location);
+    grid.forEach((stack, location) => {
+        switch (stack[StackLevel.Lower]) {
+            case TileType.LowerTrapSpikesOff:
+            case TileType.LowerTrapSpikesOn:
+                traps.push(location);
+                break;
+        }
     });
 
     return traps;
@@ -85,8 +92,8 @@ function findTraps(grid: TileGrid): number[] {
 function findRollers(grid: TileGrid): number[] {
     let rollers = [];
 
-    grid.map((stack, location) => {
-        switch(stack[0]) {
+    grid.forEach((stack, location) => {
+        switch (stack[StackLevel.Lower]) {
             case TileType.LowerRollerUpOff:
             case TileType.LowerRollerUpOn:
             case TileType.LowerRollerDownOff:
@@ -96,7 +103,7 @@ function findRollers(grid: TileGrid): number[] {
             case TileType.LowerRollerRightOff:
             case TileType.LowerRollerRightOn:
                 rollers.push(location);
-            break;
+                break;
         }
     })
 
@@ -106,19 +113,20 @@ function findRollers(grid: TileGrid): number[] {
 function readLevel(level: Level) {
     const grid = createGrid();
 
-    const lower = definitionToString(level.lower);
-    const upper = definitionToString(level.upper);
+    const lower  = definitionToString(level.lower);
+    const higher = definitionToString(level.higher);
 
-    for (let i = 0; i < grid.length; i++) {
-        grid[i][0] = getLowerTile(lower[i] as unknown as LevelAtom);
-        grid[i][1] = getUpperTile(upper[i] as unknown as LevelAtom);
+    for (const i of range(grid.length)) {
+        grid[i][StackLevel.Lower]  = getLowerTile(lower[i] as unknown as LevelAtom);
+        grid[i][StackLevel.Higher] = getHigherTile(higher[i] as unknown as LevelAtom);
     }
 
     return {
-        playerLocation: findPlayer(grid),
-        trapLocations: findTraps(grid),
+        playerLocation:  findPlayer(grid),
+        trapLocations:   findTraps(grid),
         rollerLocations: findRollers(grid),
-        grid };
+        grid
+    };
 }
 
 export default readLevel;

@@ -1,8 +1,9 @@
 <script lang="ts">
-    import Tile from "./Tile.svelte";
-    import TileType from "../types/TileType";
+    import TileType       from "../types/TileType";
     import type TileStack from "../types/TileStack";
-    import LevelWorld from "../types/LevelWorld";
+    import LevelWorld     from "../types/LevelWorld";
+
+    import Tile from "./Tile.svelte";
 
     export let world: LevelWorld = LevelWorld.Dungeon;
     export let tiles: TileStack = [TileType.Void, TileType.Void];

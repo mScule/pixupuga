@@ -1,20 +1,21 @@
 <script lang="ts">
     import { onMount, getContext, onDestroy } from "svelte";
-    import Context, {
-        type DJContext,
-        type SoundPlayerContext,
-    } from "../types/Context";
-    import type Level from "../types/Level";
-    import TileType from "../types/TileType";
-    import Movement from "../types/Movement";
+
+    import Context, { type DJContext, type SoundPlayerContext } from "../types/Context";
+    import type Level                                           from "../types/Level";
+    import StackLevel                                           from "../types/StackLevel";
+    import Movement                                             from "../types/Movement";
+    import TileType                                             from "../types/TileType";
+    import SoundType                                            from "../types/SoundType";
+
+    import { isInsideGrid, moveHigherTileInGrid } from "../game/Grid";
+    import { isWalkable }                         from "../game/Tile";
+    import readLevel                              from "../game/LevelReader";
+
+
     import GameDisplay from "./GameDisplay.svelte";
-    import Controls from "./Controls.svelte";
-    import { isInsideGrid, moveTileInGrid } from "../game/Grid";
-    import { isWalkable } from "../game/Tile";
-    import readLevel from "../game/LevelReader";
-    import StackLevel from "../types/StackLevel";
-    import SoundType from "../types/SoundType";
-    import Title from "./Title.svelte";
+    import Title       from "./Title.svelte";
+    import Controls    from "./Controls.svelte";
 
     export let title: string;
     export let level: Level;
@@ -22,28 +23,23 @@
     export let handleWinning: () => void;
     export let handleExit: () => void;
 
-    const winningPoints = level.winningPoints;
-
-    let { playerLocation, trapLocations, rollerLocations, grid } =
-        readLevel(level);
+    let { playerLocation, trapLocations, rollerLocations, grid } = readLevel(level);
     let lastMovement: Movement = Movement.None;
 
     let points = 0;
-    let boxes = 0;
-    let died = false;
+    let boxes  = 0;
+    let died   = false;
     let showableHint: string | null = null;
 
     let boulders: ({ location: number; movement: Movement } | null)[] = [];
     let boulderInterval = null;
 
-    let trapSpikes: number[] = trapLocations;
     let trapSpikesInterval = null;
     let trapSpikeSoundUpDown = false;
 
-    let rollers: number[] = rollerLocations;
     let rollersInterval = null;
 
-    const { requestTrack } = getContext<DJContext>(Context.DJ);
+    const { requestTrackByLevelWorld } = getContext<DJContext>(Context.DJ);
     const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
 
     function getLowerTileAt(location: number): TileType {
@@ -76,7 +72,7 @@
         lastMovement = movement;
 
         const oldPlayerLocation = playerLocation;
-        const newPlayerLocation = moveTileInGrid(
+        const newPlayerLocation = moveHigherTileInGrid(
             grid,
             playerLocation,
             movement
@@ -88,7 +84,7 @@
         const lowerTileAtOldPlayerLocation = getLowerTileAt(oldPlayerLocation);
 
         function handleBoxInteraction() {
-            const newBoxLocation = moveTileInGrid(
+            const newBoxLocation = moveHigherTileInGrid(
                 grid,
                 newPlayerLocation,
                 movement
@@ -207,7 +203,7 @@
             return;
         }
 
-        const spawnPosition = moveTileInGrid(
+        const spawnPosition = moveHigherTileInGrid(
             grid,
             playerLocation,
             lastMovement
@@ -235,7 +231,7 @@
     }
 
     function pushBoulder(pusher: number, movement: Movement) {
-        const newBoulderLocation = moveTileInGrid(grid, pusher, movement);
+        const newBoulderLocation = moveHigherTileInGrid(grid, pusher, movement);
 
         const newBoulderLocationIsOutsideTheGrid =
             newBoulderLocation === pusher;
@@ -282,7 +278,7 @@
     }
 
     function moveBoulder(location: number, movement: Movement) {
-        const newBoulderLocation = moveTileInGrid(grid, location, movement);
+        const newBoulderLocation = moveHigherTileInGrid(grid, location, movement);
         const newLocationIsOutsideGrid = newBoulderLocation === location;
 
         const higherTileAtNewBoulderLocation =
@@ -368,7 +364,7 @@
             died = false;
             points = 0;
             boxes = 0;
-        } else if (points < winningPoints) {
+        } else if (points < level.winningPoints) {
             spawnBox();
         } else {
             handleWinning();
@@ -392,11 +388,11 @@
     }
 
     function updateTraps() {
-        if (trapSpikes.length === 0) {
+        if (trapLocations.length === 0) {
             return;
         }
 
-        for (const trap of trapSpikes) {
+        for (const trap of trapLocations) {
             const lowerTileAtTrap = getLowerTileAt(trap);
             const higherTileAtTrap = getHigherTileAt(trap);
 
@@ -431,7 +427,7 @@
 
         switch(item) {
             case TileType.Player: {
-                const newLocation = moveTileInGrid(grid, rollerLocation, movement);
+                const newLocation = moveHigherTileInGrid(grid, rollerLocation, movement);
                 if (newLocation === rollerLocation) {
                     return;
                 }
@@ -447,7 +443,7 @@
             }
             case TileType.UpperBox:
             case TileType.UpperSolid: {
-                const newLocation = moveTileInGrid(grid, rollerLocation, movement);
+                const newLocation = moveHigherTileInGrid(grid, rollerLocation, movement);
                 if (newLocation === rollerLocation) {
                     return;
                 }
@@ -473,11 +469,11 @@
     }
 
     function updateRollers() {
-        if (rollers.length === 0) {
+        if (rollerLocations.length === 0) {
             return;
         }
 
-        for (const roller of rollers) {
+        for (const roller of rollerLocations) {
             const lowerTileAtRoller = getLowerTileAt(roller);
 
             switch (lowerTileAtRoller) {
@@ -521,7 +517,7 @@
         trapSpikesInterval = setInterval(updateTraps, 1000);
         rollersInterval = setInterval(updateRollers, 500);
 
-        requestTrack(level.track);
+        requestTrackByLevelWorld(level.world);
     });
 
     onDestroy(() => {
@@ -537,7 +533,7 @@
     {boxes}
     {died}
     hint={showableHint}
-    {winningPoints}
+    winningPoints={level.winningPoints}
     world={level.world}
     winningText={level.winningText}
     stacks={grid}
@@ -549,7 +545,5 @@
     {handleLeft}
     {handleRight}
     {handleActionPrimary}
-    handleActionSecondary={!died && points < winningPoints
-        ? handleActionSecondary
-        : null}
+    handleActionSecondary={!died && points < level.winningPoints ? handleActionSecondary : null}
 />

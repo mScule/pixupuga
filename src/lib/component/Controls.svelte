@@ -5,12 +5,12 @@
 
     import isFullscreenEnabled from "../settings/Fullscreen";
 
-    export let handleUp: () => void | null = null;
-    export let handleDown: () => void | null = null;
-    export let handleLeft: () => void | null = null;
+    export let handleUp:    () => void | null = null;
+    export let handleDown:  () => void | null = null;
+    export let handleLeft:  () => void | null = null;
     export let handleRight: () => void | null = null;
 
-    export let handleActionPrimary: () => void = () => {};
+    export let handleActionPrimary:   () => void = () => {};
     export let handleActionSecondary: () => void | null = null;
 
     function handleKeyboardInput(event: KeyboardEvent) {
@@ -20,14 +20,10 @@
             case KeyboardInput.ActionSecondary:
                 return handleActionSecondary && handleActionSecondary();
 
-            case KeyboardInput.Up:
-                return handleUp && handleUp();
-            case KeyboardInput.Down:
-                return handleDown && handleDown();
-            case KeyboardInput.Left:
-                return handleLeft && handleLeft();
-            case KeyboardInput.Right:
-                return handleRight && handleRight();
+            case KeyboardInput.Up:    return handleUp    && handleUp();
+            case KeyboardInput.Down:  return handleDown  && handleDown();
+            case KeyboardInput.Left:  return handleLeft  && handleLeft();
+            case KeyboardInput.Right: return handleRight && handleRight();
         }
     }
 
@@ -52,11 +48,7 @@
             <button class="left" on:click={handleLeft} disabled={!handleLeft}>
                 <div class="arrow" />
             </button>
-            <button
-                class="right"
-                on:click={handleRight}
-                disabled={!handleRight}
-            >
+            <button class="right" on:click={handleRight} disabled={!handleRight}>
                 <div class="arrow" />
             </button>
         </div>

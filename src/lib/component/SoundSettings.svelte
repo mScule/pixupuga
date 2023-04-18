@@ -1,5 +1,5 @@
 <script lang="ts">
-    import imageChecked from "../../assets/img/8x8/form/checkbox/checked.png";
+    import imageChecked   from "../../assets/img/8x8/form/checkbox/checked.png";
     import imageUnchecked from "../../assets/img/8x8/form/checkbox/unchecked.png";
 
     import { playSounds, playMusic } from "../stores/SoundSettings";
@@ -51,8 +51,8 @@
         align-items: center;
     }
     img {
-        height: calc(var(--size-8x8) / 2);
-        width:  calc(var(--size-8x8) / 2);
+        height: calc(var(--size-8x8));
+        width:  calc(var(--size-8x8));
         image-rendering: pixelated;
     }
     button {

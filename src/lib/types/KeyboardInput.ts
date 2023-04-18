@@ -1,10 +1,10 @@
 enum KeyboardInput {
-    Up = "w",
-    Down = "s",
-    Left = "a",
+    Up    = "w",
+    Down  = "s",
+    Left  = "a",
     Right = "d",
 
-    ActionPrimary = "e",
+    ActionPrimary   = "e",
     ActionSecondary = "q",
 }
 

@@ -30,7 +30,6 @@
     import DJ from "./lib/component/DJ.svelte";
     import SoundSettings from "./lib/component/SoundSettings.svelte";
     import SoundPlayer from "./lib/component/SoundPlayer.svelte";
-    import Version from "./lib/component/Version.svelte";
 
     const levels: Level[] = [
         Level1,
@@ -107,7 +106,6 @@
         </SoundPlayer>
     </DJ>
     <SoundSettings />
-    <Version major={0} minor={1} patch={0} />
 </main>
 
 <style>

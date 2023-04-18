@@ -1,16 +1,15 @@
 <script lang="ts">
     import { getContext } from "svelte";
+
     import Context, { type SoundPlayerContext } from "../types/Context";
+    import KeyboardInput                        from "../types/KeyboardInput";
+    import type TileGrid                        from "../types/TileGrid";
+    import SoundType                            from "../types/SoundType";
+    import type LevelWorld                      from "../types/LevelWorld";
 
-    import KeyboardInput from "../types/KeyboardInput";
-    import type TileGrid from "../types/TileGrid";
-
-    import Display from "./Display.svelte";
+    import Display    from "./Display.svelte";
     import ScoreBoard from "./ScoreBoard.svelte";
-    import Grid from "./Grid.svelte";
-
-    import SoundType from "../types/SoundType";
-    import type LevelWorld from "../types/LevelWorld";
+    import Grid       from "./Grid.svelte";
 
     export let title: string;
     export let points: number;
