@@ -1,26 +1,25 @@
 import Movement      from "../types/Movement";
 import type TileGrid from "../types/TileGrid";
-
-const width  = 16;
+import { gridWidth } from "./GridCreator";
 
 const getRowOf = (location: number, grid: TileGrid) =>
-    Math.floor(location / width);
+    Math.floor(location / gridWidth);
 
 const getColumnOf = (location: number, grid: TileGrid) =>
-    location - getRowOf(location, grid) * width;
+    location - getRowOf(location, grid) * gridWidth;
 
 function up(location: number, grid: TileGrid): number {
-    const newLocation = location - width;
+    const newLocation = location - gridWidth;
 
     if (newLocation < 0) {
-        return getRowOf(grid.length - 1, grid) * width + getColumnOf(location, grid);
+        return getRowOf(grid.length - 1, grid) * gridWidth + getColumnOf(location, grid);
     }
 
     return newLocation;
 }
 
 function down(location: number, grid: TileGrid): number {
-    const newLocation = location + width;
+    const newLocation = location + gridWidth;
 
     if (newLocation >= grid.length) {
         return getColumnOf(location, grid);
@@ -36,7 +35,7 @@ function left(location: number, grid: TileGrid): number {
     const newRow = getRowOf(newLocation, grid);
 
     if (oldRow !== newRow) {
-        return oldRow * width + width - 1;
+        return oldRow * gridWidth + gridWidth - 1;
     }
 
     return newLocation;
@@ -49,7 +48,7 @@ function right(location: number, grid: TileGrid): number {
     const newRow = getRowOf(newLocation, grid);
 
     if (oldRow !== newRow) {
-        return oldRow * width;
+        return oldRow * gridWidth;
     }
 
     return newLocation;
@@ -58,7 +57,7 @@ function right(location: number, grid: TileGrid): number {
 export const isInsideGrid = (grid: TileGrid, location: number): boolean =>
     location >= 0 && location < grid.length;
 
-export function moveTileInGrid(grid: TileGrid, location: number, movement: Movement): number {
+export function moveHigherTileInGrid(grid: TileGrid, location: number, movement: Movement): number {
     let newLocation = location;
     let oldLocation = location;
 

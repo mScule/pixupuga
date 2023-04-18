@@ -1,5 +1,6 @@
-import type Track from "./Track";
-import type SoundType from "./SoundType";
+import type Track      from "./Track";
+import type SoundType  from "./SoundType";
+import type LevelWorld from "./LevelWorld";
 
 enum Context {
     DJ,
@@ -7,7 +8,8 @@ enum Context {
 }
 
 export interface DJContext {
-    requestTrack: (track: Track) => void
+    requestTrack: (track: Track) => void,
+    requestTrackByLevelWorld: (world: LevelWorld) => void
 }
 
 export interface SoundPlayerContext {

@@ -1,13 +1,18 @@
 import type TileGrid from "../types/TileGrid";
-import TileType from "../types/TileType";
+import TileType      from "../types/TileType";
+import range         from "../util/range";
 
-const gridArea: number = 16 * 16;
+export const gridWidth  = 16;
+export const gridHeight = 16;
+export const gridArea   = gridWidth * gridHeight;
 
 export function createGrid(): TileGrid {
     const grid = Array(gridArea);
-    for (let i = 0; i < gridArea; i++) {
+
+    for (const i of range(gridArea)) {
         grid[i] = [TileType.Void, TileType.Void];
     }
+
     return grid;
 }
 

@@ -1,5 +1,5 @@
 import type GridDefinition from "./GridDefinition";
-import type LevelWorld from "./LevelWorld";
+import type LevelWorld     from "./LevelWorld";
 
 export interface Level {
     /** Name of the level. */

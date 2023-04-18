@@ -1,8 +1,10 @@
 import type TileGrid from "../types/TileGrid";
 import type Level    from "../types/Level";
+import TileType      from "../types/TileType";
+import LevelAtom     from "../types/LevelAtom";
+import StackLevel    from "../types/StackLevel";
 
-import TileType  from "../types/TileType";
-import LevelAtom from "../types/LevelAtom";
+import range from "../util/range";
 
 import createGrid from "./GridCreator";
 
@@ -75,9 +77,13 @@ function findPlayer(grid: TileGrid): number {
 function findTraps(grid: TileGrid): number[] {
     let traps = [];
 
-    grid.map((stack, location) => {
-        if (stack[0] === TileType.LowerTrapSpikesOff || stack[0] === TileType.LowerTrapSpikesOn)
-            traps.push(location);
+    grid.forEach((stack, location) => {
+        switch (stack[StackLevel.Lower]) {
+            case TileType.LowerTrapSpikesOff:
+            case TileType.LowerTrapSpikesOn:
+                traps.push(location);
+                break;
+        }
     });
 
     return traps;
@@ -86,8 +92,8 @@ function findTraps(grid: TileGrid): number[] {
 function findRollers(grid: TileGrid): number[] {
     let rollers = [];
 
-    grid.map((stack, location) => {
-        switch (stack[0]) {
+    grid.forEach((stack, location) => {
+        switch (stack[StackLevel.Lower]) {
             case TileType.LowerRollerUpOff:
             case TileType.LowerRollerUpOn:
             case TileType.LowerRollerDownOff:
@@ -107,17 +113,17 @@ function findRollers(grid: TileGrid): number[] {
 function readLevel(level: Level) {
     const grid = createGrid();
 
-    const lower = definitionToString(level.lower);
+    const lower  = definitionToString(level.lower);
     const higher = definitionToString(level.higher);
 
-    for (let i = 0; i < grid.length; i++) {
-        grid[i][0] = getLowerTile(lower[i] as unknown as LevelAtom);
-        grid[i][1] = getHigherTile(higher[i] as unknown as LevelAtom);
+    for (const i of range(grid.length)) {
+        grid[i][StackLevel.Lower]  = getLowerTile(lower[i] as unknown as LevelAtom);
+        grid[i][StackLevel.Higher] = getHigherTile(higher[i] as unknown as LevelAtom);
     }
 
     return {
-        playerLocation: findPlayer(grid),
-        trapLocations: findTraps(grid),
+        playerLocation:  findPlayer(grid),
+        trapLocations:   findTraps(grid),
         rollerLocations: findRollers(grid),
         grid
     };
