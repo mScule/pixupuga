@@ -1,26 +1,26 @@
-import Movement from "../types/Movement";
+import Movement      from "../types/Movement";
 import type TileGrid from "../types/TileGrid";
 
-export const isInsideGrid = (grid: TileGrid, location: number): boolean =>
-    location >= 0 && location < grid.length;
+const width  = 16;
 
 const getRowOf = (location: number, grid: TileGrid) =>
-    Math.floor(location / Math.sqrt(grid.length));
+    Math.floor(location / width);
 
 const getColumnOf = (location: number, grid: TileGrid) =>
-    location - getRowOf(location, grid) * Math.sqrt(grid.length);
+    location - getRowOf(location, grid) * width;
 
 function up(location: number, grid: TileGrid): number {
-    const newLocation = location - Math.sqrt(grid.length);
+    const newLocation = location - width;
 
     if (newLocation < 0) {
-        return getRowOf(grid.length - 1, grid) * Math.sqrt(grid.length) + getColumnOf(location, grid);
+        return getRowOf(grid.length - 1, grid) * width + getColumnOf(location, grid);
     }
 
     return newLocation;
 }
+
 function down(location: number, grid: TileGrid): number {
-    const newLocation = location + Math.sqrt(grid.length);
+    const newLocation = location + width;
 
     if (newLocation >= grid.length) {
         return getColumnOf(location, grid);
@@ -28,6 +28,7 @@ function down(location: number, grid: TileGrid): number {
 
     return newLocation;
 }
+
 function left(location: number, grid: TileGrid): number {
     const newLocation = location - 1;
 
@@ -35,11 +36,12 @@ function left(location: number, grid: TileGrid): number {
     const newRow = getRowOf(newLocation, grid);
 
     if (oldRow !== newRow) {
-        return oldRow * Math.sqrt(grid.length) + (Math.sqrt(grid.length) - 1);
+        return oldRow * width + width - 1;
     }
 
     return newLocation;
 }
+
 function right(location: number, grid: TileGrid): number {
     const newLocation = location + 1;
 
@@ -47,25 +49,29 @@ function right(location: number, grid: TileGrid): number {
     const newRow = getRowOf(newLocation, grid);
 
     if (oldRow !== newRow) {
-        return oldRow * Math.sqrt(grid.length);
+        return oldRow * width;
     }
 
     return newLocation;
 }
+
+export const isInsideGrid = (grid: TileGrid, location: number): boolean =>
+    location >= 0 && location < grid.length;
 
 export function moveTileInGrid(grid: TileGrid, location: number, movement: Movement): number {
     let newLocation = location;
     let oldLocation = location;
 
     switch (movement) {
-        case Movement.Up: newLocation = up(location, grid); break;
-        case Movement.Down: newLocation = down(location, grid); break;
-
-        case Movement.Left: newLocation = left(location, grid); break;
+        case Movement.Up:    newLocation = up(location, grid);    break;
+        case Movement.Down:  newLocation = down(location, grid);  break;
+        case Movement.Left:  newLocation = left(location, grid);  break;
         case Movement.Right: newLocation = right(location, grid); break;
     }
 
-    if (isInsideGrid(grid, newLocation))
+    if (isInsideGrid(grid, newLocation)) {
         return newLocation;
+    }
+
     return oldLocation;
 }
