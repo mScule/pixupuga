@@ -1,5 +1,5 @@
 <script lang="ts">
-    import imageChecked from "../../assets/img/8x8/form/checkbox/checked.png";
+    import imageChecked   from "../../assets/img/8x8/form/checkbox/checked.png";
     import imageUnchecked from "../../assets/img/8x8/form/checkbox/unchecked.png";
 
     import { playSounds, playMusic } from "../stores/SoundSettings";

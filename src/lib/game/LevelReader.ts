@@ -66,7 +66,7 @@ function findPlayer(grid: TileGrid): number {
     let player = 0;
 
     grid.map((stack, location) => {
-        if (stack[1] === TileType.Player) {
+        if (stack[StackLevel.Higher] === TileType.Player) {
             player = location;
         }
     });

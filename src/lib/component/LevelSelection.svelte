@@ -1,21 +1,23 @@
 <script lang="ts">
     import { onMount, getContext } from "svelte";
+
     import Context, { type DJContext } from "../types/Context";
+    import KeyboardInput               from "../types/KeyboardInput";
+    import Track                       from "../types/Track";
+    import Selection                   from "../types/Selection";
+    import Movement                    from "../types/Movement";
 
     import boolean from "../parse/boolean";
-    import clamp from "../math/clamp";
+    import clamp   from "../math/clamp";
 
-    import Selection from "../types/Selection";
-    import Movement from "../types/Movement";
+    import Display  from "./Display.svelte";
+    import Controls from "./Controls.svelte";
+
+    import { isLevelOpen } from "../game/Progress";
 
     import Locked from "../../assets/img/16x16/selection/lock.png";
 
-    import Display from "./Display.svelte";
-    import Controls from "./Controls.svelte";
-    import KeyboardInput from "../types/KeyboardInput";
-    import Track from "../types/Track";
     import Title from "./Title.svelte";
-    import { isLevelOpen } from "../game/Progress";
 
     export let handleLevelSelection: (levelIndex: number) => void;
     export let levelAmount: number;
@@ -55,18 +57,10 @@
         let newLocation = cursorLocation;
 
         switch (movement) {
-            case Movement.Up:
-                newLocation = cursorLocation - 4;
-                break;
-            case Movement.Down:
-                newLocation = cursorLocation + 4;
-                break;
-            case Movement.Left:
-                newLocation = cursorLocation - 1;
-                break;
-            case Movement.Right:
-                newLocation = cursorLocation + 1;
-                break;
+            case Movement.Up:    newLocation = cursorLocation - 4; break;
+            case Movement.Down:  newLocation = cursorLocation + 4; break;
+            case Movement.Left:  newLocation = cursorLocation - 1; break;
+            case Movement.Right: newLocation = cursorLocation + 1; break;
         }
 
         newLocation = clamp(newLocation, 0, levelAmount - 1);
@@ -75,17 +69,16 @@
         renderLevelGrid();
     }
 
-    const handleUp = () => moveCursor(Movement.Up);
-    const handleDown = () => moveCursor(Movement.Down);
-    const handleLeft = () => moveCursor(Movement.Left);
+    const handleUp    = () => moveCursor(Movement.Up);
+    const handleDown  = () => moveCursor(Movement.Down);
+    const handleLeft  = () => moveCursor(Movement.Left);
     const handleRight = () => moveCursor(Movement.Right);
 
     const handleActionPrimary = () => handleLevelSelection(cursorLocation);
 
     onMount(() => {
         renderLevelGrid();
-        requestTrack(Track.Void);
-        console.log("Levelselection mount");
+        requestTrack(Track.LevelSelection);
     });
 </script>
 
@@ -93,7 +86,8 @@
     <div class="level-menu">
         <h2>Levels</h2>
         <p>
-            Navigate to level with d-pad, and select it with the action button "{KeyboardInput.ActionPrimary}"
+            Navigate to level with d-pad, and select it with the action button
+            "{KeyboardInput.ActionPrimary}"
         </p>
         <div class="level-grid">
             {#each selectionGrid as selection, level}

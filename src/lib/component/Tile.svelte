@@ -52,8 +52,8 @@
         `animation-delay:${(Math.random() * 1000 * 2).toFixed(2)}ms`;
 
     function setTile(
-        source: string,
-        alternative: string,
+        source:        string,
+        alternative:   string,
         inlineStyles?: string[],
         styleClasses?: string[]
     ) {
