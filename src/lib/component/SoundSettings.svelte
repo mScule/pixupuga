@@ -51,8 +51,8 @@
         align-items: center;
     }
     img {
-        height: calc(var(--size-8x8) / 2);
-        width:  calc(var(--size-8x8) / 2);
+        height: calc(var(--size-8x8));
+        width:  calc(var(--size-8x8));
         image-rendering: pixelated;
     }
     button {
