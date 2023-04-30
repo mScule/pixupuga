@@ -27,9 +27,6 @@
     import StartScreen from "./lib/component/StartScreen.svelte";
     import LevelSelection from "./lib/component/LevelSelection.svelte";
     import Game from "./lib/component/Game.svelte";
-    import DJ from "./lib/component/DJ.svelte";
-    import SoundSettings from "./lib/component/SoundSettings.svelte";
-    import SoundPlayer from "./lib/component/SoundPlayer.svelte";
 
     const levels: Level[] = [
         Level1,
@@ -84,36 +81,32 @@
 </script>
 
 <main>
-    <DJ>
-        <SoundPlayer>
-            {#if activeView === ActiveView.StartScreen}
-                <StartScreen {handleStart} />
-            {:else if activeView === ActiveView.LevelSelection}
-                <LevelSelection
-                    levelNames={levels.map(level => level.name)}
-                    cursorLocation={selectedLevel}
-                    levelAmount={levels.length}
-                    {handleLevelSelection}
-                />
-            {:else if activeView === ActiveView.Game}
-                <Game
-                    title={`${selectedLevel + 1}`}
-                    level={levels[selectedLevel]}
-                    handleWinning={() => handleWinning(selectedLevel)}
-                    handleExit={() => handleExit(selectedLevel)}
-                />
-            {/if}
-        </SoundPlayer>
-    </DJ>
-    <SoundSettings />
+    {#if activeView === ActiveView.StartScreen}
+        <StartScreen {handleStart} />
+    {:else if activeView === ActiveView.LevelSelection}
+        <LevelSelection
+            levelNames={levels.map((level) => level.name)}
+            cursorLocation={selectedLevel}
+            levelAmount={levels.length}
+            {handleLevelSelection}
+        />
+    {:else if activeView === ActiveView.Game}
+        <Game
+            title={`${selectedLevel + 1}`}
+            level={levels[selectedLevel]}
+            handleWinning={() => handleWinning(selectedLevel)}
+            handleExit={() => handleExit(selectedLevel)}
+        />
+    {/if}
 </main>
 
 <style>
     main {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: start;
         align-items: center;
         height: 100vh;
+        gap: calc(var(--size-buffer-medium) * 2);
     }
 </style>

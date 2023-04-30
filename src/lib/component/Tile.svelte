@@ -1,39 +1,39 @@
 <script lang="ts">
-    import LowerBox           from "../../assets/img/8x8/lower/box.png";
-    import LowerSolidIsland   from "../../assets/img/8x8/lower/solid/island.png";
-    import LowerSolidJungle   from "../../assets/img/8x8/lower/solid/jungle.png";
-    import LowerSolidDungeon  from "../../assets/img/8x8/lower/solid/dungeon.png";
+    import LowerBox from "../../assets/img/8x8/lower/box.png";
+    import LowerSolidIsland from "../../assets/img/8x8/lower/solid/island.png";
+    import LowerSolidJungle from "../../assets/img/8x8/lower/solid/jungle.png";
+    import LowerSolidDungeon from "../../assets/img/8x8/lower/solid/dungeon.png";
     import LowerBoulderSunken from "../../assets/img/8x8/lower/boulder/sunken.gif";
     import LowerBoulderAfloat from "../../assets/img/8x8/lower/boulder/afloat.png";
     import LowerTrapSpikesOff from "../../assets/img/8x8/lower/trap-spikes/off.png";
-    import LowerTrapSpikesOn  from "../../assets/img/8x8/lower/trap-spikes/on.png";
-    import LowerCursed        from "../../assets/img/8x8/lower/cursed.png";
-    import LowerHintUnused    from "../../assets/img/8x8/lower/hint/unused.png";
-    import LowerHintUsed      from "../../assets/img/8x8/lower/hint/used.png";
+    import LowerTrapSpikesOn from "../../assets/img/8x8/lower/trap-spikes/on.png";
+    import LowerCursed from "../../assets/img/8x8/lower/cursed.png";
+    import LowerHintUnused from "../../assets/img/8x8/lower/hint/unused.png";
+    import LowerHintUsed from "../../assets/img/8x8/lower/hint/used.png";
 
-    import LowerRollerUpOff    from "../../assets/img/8x8/lower/roller/off/up.png";
-    import LowerRollerUpOn     from "../../assets/img/8x8/lower/roller/on/up.png";
-    import LowerRollerDownOff  from "../../assets/img/8x8/lower/roller/off/down.png";
-    import LowerRollerDownOn   from "../../assets/img/8x8/lower/roller/on/down.png";
-    import LowerRollerLeftOff  from "../../assets/img/8x8/lower/roller/off/left.png";
-    import LowerRollerLeftOn   from "../../assets/img/8x8/lower/roller/on/left.png";
+    import LowerRollerUpOff from "../../assets/img/8x8/lower/roller/off/up.png";
+    import LowerRollerUpOn from "../../assets/img/8x8/lower/roller/on/up.png";
+    import LowerRollerDownOff from "../../assets/img/8x8/lower/roller/off/down.png";
+    import LowerRollerDownOn from "../../assets/img/8x8/lower/roller/on/down.png";
+    import LowerRollerLeftOff from "../../assets/img/8x8/lower/roller/off/left.png";
+    import LowerRollerLeftOn from "../../assets/img/8x8/lower/roller/on/left.png";
     import LowerRollerRightOff from "../../assets/img/8x8/lower/roller/off/right.png";
-    import LowerRollerRightOn  from "../../assets/img/8x8/lower/roller/on/right.png";
+    import LowerRollerRightOn from "../../assets/img/8x8/lower/roller/on/right.png";
 
-    import UpperBox           from "../../assets/img/8x8/upper/box.png";
-    import UpperSolidIsland   from "../../assets/img/8x8/upper/solid/island.png";
-    import UpperSolidJungle   from "../../assets/img/8x8/upper/solid/jungle.png";
-    import UpperSolidDungeon  from "../../assets/img/8x8/upper/solid/dungeon.png";
-    import UpperBoulderStill  from "../../assets/img/8x8/upper/boulder/still.png";
+    import UpperBox from "../../assets/img/8x8/upper/box.png";
+    import UpperSolidIsland from "../../assets/img/8x8/upper/solid/island.png";
+    import UpperSolidJungle from "../../assets/img/8x8/upper/solid/jungle.png";
+    import UpperSolidDungeon from "../../assets/img/8x8/upper/solid/dungeon.png";
+    import UpperBoulderStill from "../../assets/img/8x8/upper/boulder/still.png";
     import UpperBoulderMoving from "../../assets/img/8x8/upper/boulder/moving.gif";
 
-    import PointOne       from "../../assets/img/8x8/collectable/point/1.png";
-    import PointFive      from "../../assets/img/8x8/collectable/point/5.png";
+    import PointOne from "../../assets/img/8x8/collectable/point/1.png";
+    import PointFive from "../../assets/img/8x8/collectable/point/5.png";
     import CollectableBox from "../../assets/img/8x8/collectable/box.png";
 
     import Player from "../../assets/img/8x8/player.png";
 
-    import TileType   from "../types/TileType";
+    import TileType from "../types/TileType";
     import LevelWorld from "../types/LevelWorld";
 
     import switchExpression from "../util/switchExpression";
@@ -52,8 +52,8 @@
         `animation-delay:${(Math.random() * 1000 * 2).toFixed(2)}ms`;
 
     function setTile(
-        source:        string,
-        alternative:   string,
+        source: string,
+        alternative: string,
         inlineStyles?: string[],
         styleClasses?: string[]
     ) {

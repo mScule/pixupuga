@@ -1,15 +1,11 @@
 <script lang="ts">
-    import { getContext } from "svelte";
+    import KeyboardInput from "../types/KeyboardInput";
+    import type TileGrid from "../types/TileGrid";
+    import type LevelWorld from "../types/LevelWorld";
 
-    import Context, { type SoundPlayerContext } from "../types/Context";
-    import KeyboardInput                        from "../types/KeyboardInput";
-    import type TileGrid                        from "../types/TileGrid";
-    import SoundType                            from "../types/SoundType";
-    import type LevelWorld                      from "../types/LevelWorld";
-
-    import Display    from "./Display.svelte";
+    import Display from "./Display.svelte";
     import ScoreBoard from "./ScoreBoard.svelte";
-    import Grid       from "./Grid.svelte";
+    import Grid from "./Grid.svelte";
 
     export let title: string;
     export let points: number;
@@ -23,13 +19,8 @@
 
     export let stacks: TileGrid;
 
-    const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
-
     let winned = false;
     $: winned = points >= winningPoints;
-
-    $: winned && playSound(SoundType.LevelWin);
-    $: died && playSound(SoundType.LevelLose);
 
     if (hint) {
         console.log("HINT");
@@ -52,7 +43,7 @@
             <h2>?? hint ??</h2>
             <p>{hint}</p>
         {:else}
-            <Grid {stacks} {world}/>
+            <Grid {stacks} {world} />
         {/if}
     </div>
 </Display>
