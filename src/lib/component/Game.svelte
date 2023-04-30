@@ -1,21 +1,18 @@
 <script lang="ts">
-    import { onMount, getContext, onDestroy } from "svelte";
+    import { onMount, onDestroy } from "svelte";
 
-    import Context, { type DJContext, type SoundPlayerContext } from "../types/Context";
-    import type Level                                           from "../types/Level";
-    import StackLevel                                           from "../types/StackLevel";
-    import Movement                                             from "../types/Movement";
-    import TileType                                             from "../types/TileType";
-    import SoundType                                            from "../types/SoundType";
+    import type Level from "../types/Level";
+    import StackLevel from "../types/StackLevel";
+    import Movement from "../types/Movement";
+    import TileType from "../types/TileType";
 
     import { isInsideGrid, moveHigherTileInGrid } from "../game/Grid";
-    import { isWalkable }                         from "../game/Tile";
-    import readLevel                              from "../game/LevelReader";
-
+    import { isWalkable } from "../game/Tile";
+    import readLevel from "../game/LevelReader";
 
     import GameDisplay from "./GameDisplay.svelte";
-    import Title       from "./Title.svelte";
-    import Controls    from "./Controls.svelte";
+    import Title from "./Title.svelte";
+    import Controls from "./Controls.svelte";
 
     export let title: string;
     export let level: Level;
@@ -23,12 +20,13 @@
     export let handleWinning: () => void;
     export let handleExit: () => void;
 
-    let { playerLocation, trapLocations, rollerLocations, grid } = readLevel(level);
+    let { playerLocation, trapLocations, rollerLocations, grid } =
+        readLevel(level);
     let lastMovement: Movement = Movement.None;
 
     let points = 0;
-    let boxes  = 0;
-    let died   = false;
+    let boxes = 0;
+    let died = false;
     let showableHint: string | null = null;
 
     let boulders: ({ location: number; movement: Movement } | null)[] = [];
@@ -38,9 +36,6 @@
     let trapSpikeSoundUpDown = false;
 
     let rollersInterval = null;
-
-    const { requestTrackByLevelWorld } = getContext<DJContext>(Context.DJ);
-    const { playSound } = getContext<SoundPlayerContext>(Context.SoundPlayer);
 
     function getLowerTileAt(location: number): TileType {
         return isInsideGrid(grid, location)
@@ -98,7 +93,6 @@
                 newBoxLocationIsOutsideTheGrid ||
                 tileIsNotVoidAt(newBoxLocation)
             ) {
-                playSound(SoundType.HigherHit);
                 return false;
             }
 
@@ -108,21 +102,20 @@
                         newBoxLocation,
                         TileType.LowerBoxOnTopOfSunkenBoulder
                     );
-                    playSound(SoundType.LowerHit);
+
                     return true;
 
                 case TileType.Void:
                     setLowerTileAt(newBoxLocation, TileType.LowerBox);
-                    playSound(SoundType.LowerHit);
+
                     return true;
 
                 case TileType.LowerTrapSpikesOn:
-                    playSound(SoundType.HigherDestruction);
                     return true;
             }
 
             setHigherTileAt(newBoxLocation, TileType.UpperBox);
-            playSound(SoundType.HigherBox);
+
             return true;
         }
 
@@ -162,7 +155,7 @@
             switch (lowerTileAtOldPlayerLocation) {
                 case TileType.LowerBox:
                     setLowerTileAt(oldPlayerLocation, TileType.Void);
-                    playSound(SoundType.HigherDestruction);
+
                     break;
 
                 case TileType.LowerBoxOnTopOfSunkenBoulder:
@@ -170,24 +163,24 @@
                         oldPlayerLocation,
                         TileType.LowerBoulderSunken
                     );
-                    playSound(SoundType.HigherDestruction);
+
                     break;
             }
 
             switch (higherTileAtNewPlayerLocation) {
                 case TileType.CollectablePointOne:
                     points++;
-                    playSound(SoundType.CollectablePointOne);
+
                     break;
 
                 case TileType.CollectablePointFive:
                     points += 5;
-                    playSound(SoundType.CollectablePointFive);
+
                     break;
 
                 case TileType.CollectableBox:
                     boxes++;
-                    playSound(SoundType.CollectableBoxCollect);
+
                     break;
             }
 
@@ -225,8 +218,6 @@
             } else {
                 setHigherTileAt(spawnPosition, TileType.UpperBox);
             }
-
-            playSound(SoundType.CollectableBoxPlace);
         }
     }
 
@@ -242,23 +233,21 @@
             newBoulderLocationIsOutsideTheGrid ||
             tileIsNotVoidAt(newBoulderLocation)
         ) {
-            playSound(SoundType.HigherHit);
             return false;
         }
 
         switch (lowerTileAtNewBoulderLocation) {
             case TileType.LowerTrapSpikesOn:
-                playSound(SoundType.HigherDestruction);
                 return true;
 
             case TileType.Void:
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
-                playSound(SoundType.LowerHit);
+
                 return true;
 
             case TileType.LowerBoulderSunken:
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
-                playSound(SoundType.LowerHit);
+
                 return true;
 
             default:
@@ -278,7 +267,11 @@
     }
 
     function moveBoulder(location: number, movement: Movement) {
-        const newBoulderLocation = moveHigherTileInGrid(grid, location, movement);
+        const newBoulderLocation = moveHigherTileInGrid(
+            grid,
+            location,
+            movement
+        );
         const newLocationIsOutsideGrid = newBoulderLocation === location;
 
         const higherTileAtNewBoulderLocation =
@@ -311,32 +304,30 @@
         ) {
             setHigherTileAt(location, TileType.UpperBoulder);
             removeFromMovingBoulders();
-            playSound(SoundType.HigherHit);
+
             return;
         }
 
         switch (lowerTileAtNewBoulderLocation) {
             case TileType.LowerTrapSpikesOn:
                 removeFromMovingBoulders();
-                playSound(SoundType.HigherDestruction);
+
                 return;
 
             case TileType.Void:
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderSunken);
                 removeFromMovingBoulders();
-                playSound(SoundType.LowerHit);
+
                 return;
 
             case TileType.LowerBoulderSunken:
                 setLowerTileAt(newBoulderLocation, TileType.LowerBoulderAfloat);
                 removeFromMovingBoulders();
-                playSound(SoundType.LowerHit);
+
                 return;
         }
 
         setHigherTileAt(newBoulderLocation, TileType.UpperBoulderMoving);
-
-        playSound(SoundType.HigherBoulder);
 
         const boulderIndex = boulders.findIndex(
             (boulder) =>
@@ -402,7 +393,6 @@
                     died = true;
                 } else if (higherTileAtTrap !== TileType.Void) {
                     setHigherTileAt(trap, TileType.Void);
-                    playSound(SoundType.HigherDestruction);
                 }
             } else {
                 setLowerTileAt(trap, TileType.LowerTrapSpikesOff);
@@ -414,20 +404,18 @@
         if (died) {
             return;
         }
-
-        if (trapSpikeSoundUpDown) {
-            playSound(SoundType.LowerTrapSpikesUp);
-        } else {
-            playSound(SoundType.LowerTrapSpikesDown);
-        }
     }
 
     function handleRolling(rollerLocation: number, movement: Movement) {
         const item = getHigherTileAt(rollerLocation);
 
-        switch(item) {
+        switch (item) {
             case TileType.Player: {
-                const newLocation = moveHigherTileInGrid(grid, rollerLocation, movement);
+                const newLocation = moveHigherTileInGrid(
+                    grid,
+                    rollerLocation,
+                    movement
+                );
                 if (newLocation === rollerLocation) {
                     return;
                 }
@@ -443,7 +431,11 @@
             }
             case TileType.UpperBox:
             case TileType.UpperSolid: {
-                const newLocation = moveHigherTileInGrid(grid, rollerLocation, movement);
+                const newLocation = moveHigherTileInGrid(
+                    grid,
+                    rollerLocation,
+                    movement
+                );
                 if (newLocation === rollerLocation) {
                     return;
                 }
@@ -455,7 +447,6 @@
                 setHigherTileAt(rollerLocation, TileType.Void);
                 setHigherTileAt(newLocation, item);
                 break;
-
             }
             case TileType.UpperBoulder:
                 pushBoulder(rollerLocation, movement);
@@ -463,7 +454,9 @@
                 break;
 
             case TileType.UpperBoulderMoving:
-                boulders.find(boulder => boulder.location === rollerLocation).movement = movement;
+                boulders.find(
+                    (boulder) => boulder.location === rollerLocation
+                ).movement = movement;
                 break;
         }
     }
@@ -516,8 +509,6 @@
         boulderInterval = setInterval(updateBoulders, 200);
         trapSpikesInterval = setInterval(updateTraps, 1000);
         rollersInterval = setInterval(updateRollers, 500);
-
-        requestTrackByLevelWorld(level.world);
     });
 
     onDestroy(() => {
@@ -545,5 +536,7 @@
     {handleLeft}
     {handleRight}
     {handleActionPrimary}
-    handleActionSecondary={!died && points < level.winningPoints ? handleActionSecondary : null}
+    handleActionSecondary={!died && points < level.winningPoints
+        ? handleActionSecondary
+        : null}
 />

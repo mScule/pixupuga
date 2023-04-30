@@ -1,25 +1,15 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte";
-
-    import Context, { type DJContext } from "../types/Context";
-    import Track                       from "../types/Track";
-    import KeyboardInput               from "../types/KeyboardInput";
+    import KeyboardInput from "../types/KeyboardInput";
 
     import startScreen from "../../assets/img/128x128/start-screen.png";
 
     import Controls from "./Controls.svelte";
-    import Display  from "./Display.svelte";
-    import Title    from "./Title.svelte";
+    import Display from "./Display.svelte";
+    import Title from "./Title.svelte";
 
     export let handleStart: () => void;
 
-    const { requestTrack } = getContext<DJContext>(Context.DJ);
-
     const handleActionPrimary = () => handleStart();
-
-    onMount(() => {
-        requestTrack(Track.StartScreen);
-    });
 </script>
 
 <Display>

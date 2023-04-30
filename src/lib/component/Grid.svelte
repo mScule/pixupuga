@@ -1,7 +1,7 @@
 <script lang="ts">
-    import TileType      from "../types/TileType";
+    import TileType from "../types/TileType";
     import type TileGrid from "../types/TileGrid";
-    import LevelWorld    from "../types/LevelWorld";
+    import LevelWorld from "../types/LevelWorld";
 
     import Stack from "./Stack.svelte";
 
@@ -11,7 +11,7 @@
 
 <section>
     {#each stacks as tiles}
-        <Stack {tiles} {world}/>
+        <Stack {tiles} {world} />
     {/each}
 </section>
 

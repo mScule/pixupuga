@@ -1,7 +1,7 @@
 <script lang="ts">
-    import TileType       from "../types/TileType";
+    import TileType from "../types/TileType";
     import type TileStack from "../types/TileStack";
-    import LevelWorld     from "../types/LevelWorld";
+    import LevelWorld from "../types/LevelWorld";
 
     import Tile from "./Tile.svelte";
 
@@ -11,7 +11,7 @@
 
 <figure class="stack">
     {#each tiles as type, zIndex}
-        <Tile {type} {zIndex} {world}/>
+        <Tile {type} {zIndex} {world} />
     {/each}
 </figure>
 

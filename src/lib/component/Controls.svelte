@@ -5,12 +5,12 @@
 
     import isFullscreenEnabled from "../settings/Fullscreen";
 
-    export let handleUp:    () => void | null = null;
-    export let handleDown:  () => void | null = null;
-    export let handleLeft:  () => void | null = null;
+    export let handleUp: () => void | null = null;
+    export let handleDown: () => void | null = null;
+    export let handleLeft: () => void | null = null;
     export let handleRight: () => void | null = null;
 
-    export let handleActionPrimary:   () => void = () => {};
+    export let handleActionPrimary: () => void = () => {};
     export let handleActionSecondary: () => void | null = null;
 
     function handleKeyboardInput(event: KeyboardEvent) {
@@ -20,10 +20,14 @@
             case KeyboardInput.ActionSecondary:
                 return handleActionSecondary && handleActionSecondary();
 
-            case KeyboardInput.Up:    return handleUp    && handleUp();
-            case KeyboardInput.Down:  return handleDown  && handleDown();
-            case KeyboardInput.Left:  return handleLeft  && handleLeft();
-            case KeyboardInput.Right: return handleRight && handleRight();
+            case KeyboardInput.Up:
+                return handleUp && handleUp();
+            case KeyboardInput.Down:
+                return handleDown && handleDown();
+            case KeyboardInput.Left:
+                return handleLeft && handleLeft();
+            case KeyboardInput.Right:
+                return handleRight && handleRight();
         }
     }
 
@@ -48,13 +52,20 @@
             <button class="left" on:click={handleLeft} disabled={!handleLeft}>
                 <div class="arrow" />
             </button>
-            <button class="right" on:click={handleRight} disabled={!handleRight}>
+            <button
+                class="right"
+                on:click={handleRight}
+                disabled={!handleRight}
+            >
                 <div class="arrow" />
             </button>
         </div>
 
         <div class="action-buttons">
-            <button class="action-primary-location" on:click={handleActionPrimary}>
+            <button
+                class="action-primary-location"
+                on:click={handleActionPrimary}
+            >
                 <div class="action-primary" />
             </button>
 
@@ -94,11 +105,13 @@
         background-size: var(--size-control-button);
         font-size: 1.3rem;
     }
-    button:disabled, button:active {
+    button:disabled,
+    button:active {
         background-image: url("../../assets/img/16x16/button/down.png");
     }
-    button:disabled > div, button:active > div {
-        background: transparent
+    button:disabled > div,
+    button:active > div {
+        background: transparent;
     }
 
     .action-primary-location {
@@ -169,9 +182,11 @@
             "secondary .      ";
     }
 
-    .arrow, .action-primary, .action-secondary {
+    .arrow,
+    .action-primary,
+    .action-secondary {
         width: var(--size-control-button);
         height: var(--size-control-button);
-        background-size:contain;
+        background-size: contain;
     }
 </style>
