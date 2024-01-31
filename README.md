@@ -4,6 +4,8 @@
 
 A puzzle game made entirely with Svelte, vanilla CSS and TypeScript.
 
+You can try it [here](https://mscule.itch.io/pixupuga)!
+
 ## Prerequisites
 
 ### Install following:
